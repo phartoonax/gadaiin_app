@@ -1,0 +1,13 @@
+/* custom.css */
+
+.tab {
+    cursor: pointer;
+    padding: 10px 20px;
+    border: 1px solid #FFFFFF;
+    transition: border-color 0.8s ease-in-out;
+  }
+  
+  .active-tab {
+    border-color: #1F2933; /* Change border color to desired highlight color */
+  }
+  
