@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import store from "./redux/store/configureStore";
 import Rute from "./Routes";
 import { Provider } from "react-redux";
+
 class App extends Component {
   render() {
     return (

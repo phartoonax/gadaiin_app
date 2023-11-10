@@ -48,6 +48,8 @@ module.exports = {
       },
       colors: {
         themeColor: "#1EBF65",
+        lelang: "#B267FF",
+        lelangSurface: "#FAF5FF",
         primary: {
           Hover: "#00A9D1",
           Main: "#03B8E8",
@@ -65,6 +67,34 @@ module.exports = {
           30: "#F2F3F5",
           20: "#F8F9FA",
           10: "#FFFFFF",
+        },
+        danger: {
+          Hover: "#B91919",
+          Main: "#D21C1C",
+          Border: "#F4D2D2",
+          Surface: "#FCF3F2",
+          Pressed: "#9D1515",
+        },
+        sucess: {
+          Main: "#28A138",
+          Hover: "#238B31",
+          Pressed: "#1D7228",
+          Border: "#C3DFC7",
+          Surface: "#F0F7F5",
+        },
+        info: {
+          Main: "#0172CB",
+          Hover: "#0161AC",
+          Pressed: "#01508E",
+          Border: "#D0E9FB",
+          Surface: "#F2F8FC",
+        },
+        warning: {
+          Main: "#E98305",
+          Hover: "#DC7C05",
+          Pressed: "#CD7304",
+          Border: "#FAE2C7",
+          Surface: "#FCF9F2",
         },
       },
       display: ["before", "after"],
