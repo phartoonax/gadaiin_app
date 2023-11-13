@@ -1,7 +1,6 @@
 import { Card, CardHeader, CardContent, Divider } from "@mui/material";
 import { Icon } from "@iconify/react";
 
-
 const Rangkuman = (props) => {
   return (
     <>
