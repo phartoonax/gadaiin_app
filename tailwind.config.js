@@ -4,7 +4,7 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     fontFamily: {
-      inter: ["Inter", "sans-serif"],
+      inter: ["Inter", "Sans-serif"],
       body: [
         "Inter",
         "ui-sans-serif",
@@ -75,7 +75,7 @@ module.exports = {
           Surface: "#FCF3F2",
           Pressed: "#9D1515",
         },
-        sucess: {
+        success: {
           Main: "#28A138",
           Hover: "#238B31",
           Pressed: "#1D7228",

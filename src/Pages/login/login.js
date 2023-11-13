@@ -152,7 +152,10 @@ const Login = (props) => {
   return (
     <>
       <div className="App">
-        <section className="bg-[#F0F7F5] h-screen dark:bg-gray-900 font-inter">
+        <section
+          className="bg-[#F0F7F5] h-screen dark:bg-gray-900 font-inter flex
+        items-center justify-center"
+        >
           {isDialogOpenResetPass && (
             <div
               className="fixed z-10 inset-0 overflow-y-auto"

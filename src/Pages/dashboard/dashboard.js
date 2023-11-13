@@ -3,13 +3,63 @@ import iconFAB from "../../assets/images/balance-scale.png";
 import { UilQrcodeScan } from "@iconscout/react-unicons";
 import { HomeIcon } from "@heroicons/react/20/solid";
 
-import { IconButton } from "@mui/material";
+import { Divider, IconButton } from "@mui/material";
 import Rangkuman from "./rangkuman";
 import Grafik from "./grafik";
 import { useState } from "react";
+import { Icon } from "@iconify/react";
 
 const Dashboard = (props) => {
   const [activeTab, setActiveTab] = useState("Rangkuman");
+
+  const datatemp = [
+    {
+      id: "GDJBD231020",
+      name: "Gadai Aktif",
+      value: "Rp 126.000.000",
+      transaksi: "14/08/2023 16:40",
+    },
+    {
+      id: "GDJBD231020",
+      name: "Gadai Jatuh Tempo",
+      value: "Rp 82.430.000",
+      transaksi: "14/08/2023 16:40",
+    },
+    {
+      id: "GDJBD231020",
+      name: "Gadai Lelang Belum Terjual",
+      value: "Rp 52.150.000",
+      transaksi: "14/08/2023 16:40",
+    },
+  ];
+  const renderdat = datatemp.map((data) => (
+    <div className="w-full  px-2.5 flex-col justify-start items-start inline-flex font-inter">
+      <div className="w-full py-1 inline-flex flex-row items-center justify-center gap-2">
+        <div className="relative">
+          <Icon
+            className="text-success-Main"
+            icon="uil:balance-scale"
+            style={{ fontSize: "14px" }}
+          />
+        </div>
+        <div className="inline-flex flex-col items-start gap-0.5">
+          <div className="text-[10px] leading-3 tracking-wide font-normal">
+            {data.id}
+          </div>
+          <div className="text-xs tracking-wide font-semibold">{data.name}</div>
+        </div>
+        <div className="inline-flex flex-col items-end gap-0.5 flex-1">
+          <div className="text-[10px] leading-3 tracking-wide font-normal">
+            {data.transaksi}
+          </div>
+          <div className="text-xs tracking-wide font-normal">{data.value}</div>
+        </div>
+      </div>
+      <div className="w-full">
+        <Divider variant="middle"></Divider>
+      </div>
+    </div>
+  ));
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
@@ -22,7 +72,7 @@ const Dashboard = (props) => {
         </div>
         <div className="z-[3] w-full">
           <div className="absolute top-0 left-0 p-4 mt-6 flex items-center">
-            <div className=" rounded-full overflow-hidde drop-shadow-xl">
+            <div className=" rounded-full overflow-scroll drop-shadow-xl">
               <img
                 src="https://via.placeholder.com/150" // replace with the actual profile picture URL
                 alt="Profile"
@@ -31,7 +81,7 @@ const Dashboard = (props) => {
             </div>
             <div className="ml-1 flex flex-col">
               <span className="font-bold text-lg text-neutral-10">
-                Happy Working, Bagas!
+                Happy Working, Bagas !
               </span>{" "}
               {/* replace with the actual username */}
               <span className="text-neutral-10">Jabodetabek</span>{" "}
@@ -39,7 +89,9 @@ const Dashboard = (props) => {
             </div>
           </div>
           <div className="bg-neutral-20 w-full h-[78vh] absolute bottom-0 rounded-t-[30px] flex-col items-center justify-center ">
-            <div className="max-w-screen-2xl bg-neutral-10 h-16 mx-[35px] mt-[-32px] rounded-[10px] shadow-lg"></div>
+            <div className="max-w-screen-2xl bg-neutral-10 h-16 mx-[35px] mt-[-32px] rounded-[10px] shadow-lg overflow-auto">
+              {renderdat}
+            </div>
             <div className="bg-white m-4 max-w-screen-2xl pt-3 rounded-md flex items-center justify-center text-[14px] leading-[18px] font-bold">
               <div
                 id="Rangkuman"
@@ -116,7 +168,7 @@ const Dashboard = (props) => {
                 />
               </svg>
               <div className="relative">
-                <button className="absolute bottom-6 border-4 border-white left-1/2 transform -translate-x-1/2 w-[76px] h-[76px] bg-sucess-Main text-white rounded-full shadow-[0_12px_17px_0px_rgba(0,0,0,0.16)] ">
+                <button className="absolute bottom-6 border-4 border-white left-1/2 transform -translate-x-1/2 w-[76px] h-[76px] bg-success-Main text-white rounded-full focus:outline-none focus:ring-0 focus:ring-transparent shadow-[0_12px_17px_0px_rgba(0,0,0,0.16)] ">
                   <img
                     className="w-9 auto justify-center items-center inline"
                     src={iconFAB}
