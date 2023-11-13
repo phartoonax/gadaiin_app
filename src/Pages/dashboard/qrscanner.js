@@ -47,7 +47,7 @@ const QRScanner = () => {
       <QrScanner
         onDecode={handleScan}
         containerStyle={{ width: "100%", height: "320px" }}
-        videoStyle={{ width: "100%", height: "420px" }}
+        videoStyle={{ width: "100%", height: "430px" }}
         viewFinderBorder={40}
         onError={handleError}
         constraints={{ facingMode }}
