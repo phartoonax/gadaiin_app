@@ -208,6 +208,7 @@ const Dashboard = (props) => {
                       color="black"
                     />
                   }
+                  onClick={() => (window.location.href = "/main/qrscanner")}
                 ></IconButton>
               </div>
             </div>

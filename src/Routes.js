@@ -2,6 +2,7 @@ import React, { lazy, Suspense, useState, useEffect, useCallback } from "react";
 import { Route, useLocation, Routes, Navigate } from "react-router-dom";
 import Login from "./Pages/login/login";
 import Dashboard from "./Pages/dashboard/dashboard";
+import QRScanner from "./Pages/dashboard/qrscanner";
 
 /**
  * Description placeholder
@@ -17,6 +18,7 @@ const Rute = (props) => {
         <Route exact path="/" element={<Login />} />
         <Route exact path="/login" element={<Login />} />
         <Route path="/main" element={<Dashboard />} />
+        <Route path="/main/qrscanner" element={<QRScanner />} />
       </Routes>
     </>
   );

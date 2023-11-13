@@ -495,7 +495,7 @@ const Login = (props) => {
                   >
                     Login
                   </button>
-                  <p className="text-sm font-light text-[#1EBF65] dark:text-gray-400 ">
+                  <p className="text-sm font-light text-[#1EBF65] dark:text-gray-400 justify-center flex">
                     <button
                       className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
                       onClick={(event) => {
