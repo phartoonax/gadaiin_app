@@ -17,6 +17,11 @@ const QRScanner = () => {
   const handleError = (error) => {
     console.error(error);
   };
+  const toggleCamera = () => {
+    setFacingMode((prevFacingMode) =>
+      prevFacingMode === "environment" ? "face" : "environment"
+    );
+  };
 
   return (
     <div className="w-full h-full flex-col justify-start items-start flex font-inter">
