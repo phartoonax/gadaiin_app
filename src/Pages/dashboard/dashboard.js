@@ -3,7 +3,7 @@ import iconFAB from "../../assets/images/balance-scale.png";
 import { UilQrcodeScan } from "@iconscout/react-unicons";
 import { HomeIcon } from "@heroicons/react/20/solid";
 
-import { Divider, IconButton } from "@mui/material";
+import { Divider, Fab, IconButton } from "@mui/material";
 import Rangkuman from "./rangkuman";
 import Grafik from "./grafik";
 import { useState } from "react";
@@ -168,13 +168,22 @@ const Dashboard = (props) => {
                 />
               </svg>
               <div className="relative">
-                <button className="absolute bottom-6 border-4 border-white left-1/2 transform -translate-x-1/2 w-[76px] h-[76px] bg-success-Main text-white rounded-full focus:outline-none focus:ring-0 focus:ring-transparent shadow-[0_12px_17px_0px_rgba(0,0,0,0.16)] ">
+                <Fab
+                  size="large"
+                  sx={{
+                    position: "absolute",
+
+                    border: 1,
+                  }}
+                  className="w-[76px] h-[76px] bottom-6 border-4 border-white left-1/2 transform -translate-x-1/2 bg-success-Main hover:bg-success-Main shadow-[0_12px_17px_0px_rgba(0,0,0,0.16)] "
+                >
+                  {" "}
                   <img
                     className="w-9 auto justify-center items-center inline"
                     src={iconFAB}
                     alt="logo"
                   ></img>
-                </button>
+                </Fab>
               </div>{" "}
             </div>
             <div className="relative w-full">
