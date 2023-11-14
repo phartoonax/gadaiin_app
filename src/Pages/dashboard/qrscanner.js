@@ -17,6 +17,11 @@ const QRScanner = () => {
   const handleError = (error) => {
     console.error(error);
   };
+  const toggleCamera = () => {
+    setFacingMode((prevFacingMode) =>
+      prevFacingMode === "environment" ? "face" : "environment"
+    );
+  };
 
   return (
     <div className="w-full h-full flex-col justify-start items-start flex font-inter">
@@ -48,7 +53,7 @@ const QRScanner = () => {
         onDecode={handleScan}
         containerStyle={{ width: "100%", height: "320px" }}
         videoStyle={{ width: "100%", height: "430px" }}
-        viewFinderBorder={20}
+        viewFinderBorder={40}
         onError={handleError}
         constraints={{ facingMode }}
       />
