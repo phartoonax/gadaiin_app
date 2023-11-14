@@ -3,6 +3,7 @@ import { Route, useLocation, Routes, Navigate } from "react-router-dom";
 import Login from "./Pages/login/login";
 import Dashboard from "./Pages/dashboard/dashboard";
 import QRScanner from "./Pages/dashboard/qrscanner";
+import Profile from "./Pages/dashboard/profile";
 
 /**
  * Description placeholder
@@ -19,6 +20,7 @@ const Rute = (props) => {
         <Route exact path="/login" element={<Login />} />
         <Route path="/main" element={<Dashboard />} />
         <Route path="/main/qrscanner" element={<QRScanner />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </>
   );

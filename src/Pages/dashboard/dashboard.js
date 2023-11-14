@@ -77,6 +77,7 @@ const Dashboard = (props) => {
                 src="https://via.placeholder.com/150" // replace with the actual profile picture URL
                 alt="Profile"
                 className="h-[50px] w-[50px] rounded-full"
+                onClick={() => (window.location.href = "/profile")}
               />
             </div>
             <div className="ml-1 flex flex-col">

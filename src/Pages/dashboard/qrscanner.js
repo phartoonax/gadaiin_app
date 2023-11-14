@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { AppBar, IconButton } from "@mui/material";
+import { AppBar, IconButton, TextField } from "@mui/material";
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { QrScanner } from "@yudiel/react-qr-scanner";
@@ -55,7 +55,7 @@ const QRScanner = () => {
 
   return (
     <>
-      <div Name="w-full h-full flex-col justify-start items-start flex font-inter">
+      <div className="w-screen h-screen flex flex-col justify-start items-start  font-inter">
         <AppBar position="static" className="bg-neutral-10 p-4">
           <toolbar className="flex justify-start items-center">
             <IconButton
@@ -82,8 +82,8 @@ const QRScanner = () => {
         </AppBar>
         <QrScanner
           onDecode={handleScan}
-          containerStyle={{ width: "100vw", height: "70vh" }}
-          videoStyle={{ width: "100vw", height: "70vh", objectFit: "cover" }}
+          containerStyle={{ width: "100vw", height: "80vh" }}
+          videoStyle={{ width: "100vw", height: "80vh", objectFit: "cover" }}
           viewFinder={() => (
             <svg
               viewBox="0 0 100 100"
@@ -131,6 +131,28 @@ const QRScanner = () => {
           onError={handleError}
           constraints={{ facingMode }}
         />
+        <div className="bg-neutral-100 w-full flex flex-grow flex-row justify-between  items-center px-4 py-[26px] gap-2.5">
+          <TextField
+            className="border-neutral-40 bg-neutral-10
+          hover:bg-neutral-10 rounded-lg	 w-full"
+            height="48px"
+            id="filled-basic"
+            label="Masukkan Kode Gadai"
+            variant="filled"
+            size="small"
+            color="success"
+          />
+          <IconButton
+            className="bg-success-Main hover:bg-success-Main "
+            sx={{ borderRadius: "6px", width: "32px", height: "32px" }}
+          >
+            <Icon
+              className="text-neutral-10 "
+              icon="uil:search"
+              style={{ fontSize: "24px" }}
+            />
+          </IconButton>
+        </div>
       </div>
     </>
   );
