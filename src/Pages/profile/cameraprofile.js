@@ -5,17 +5,13 @@ import { useNavigate } from "react-router-dom";
 
 const CameraProfile = () => {
   const navigate = useNavigate();
-  const [isCameraAccessGranted, setIsCameraAccessGranted] = useState(false);
+  const [isCameraAccessGranted, setIsCameraAccessGranted] = useState(true);
 
   const [image, setImage] = useState(null);
   const videoRef = useRef(null);
   const [videoBorderHeight, setVideoBorderHeight] = useState(null);
   const [videoBorderWidth, setVideoBorderWidth] = useState(null);
   const [facingMode, setFacingMode] = useState("environment");
-
-  function handleCameraAccess() {
-    setIsCameraAccessGranted(true);
-  }
 
   useEffect(() => {
     let stream = null;
@@ -51,18 +47,6 @@ const CameraProfile = () => {
       }
     };
   }, [facingMode, isCameraAccessGranted]);
-
-  const handleStop = () => {
-    if (videoRef.current && videoRef.current.srcObject) {
-      const tracks = videoRef.current.srcObject.getTracks();
-      tracks.forEach((track) => {
-        track.stop();
-      });
-      videoRef.current.srcObject = null;
-    }
-    setIsCameraAccessGranted(false);
-    setImage(null);
-  };
 
   const handleCapture = () => {
     const canvas = document.createElement("canvas");
@@ -102,36 +86,29 @@ const CameraProfile = () => {
     );
   };
   return (
-    <div className="relative z-0">
-      <AppBar position="static" className="bg-neutral-10 p-4" elevation={1}>
-        <toolbar className="flex justify-start items-center">
-          <IconButton
-            sx={{ paddingY: "0px", paddingX: "6px" }}
-            onClick={() => navigate(-1)}
-          >
-            <Icon
-              className="text-neutral-70"
-              icon="feather:arrow-left"
-              style={{ fontSize: "24px" }}
-            />
-          </IconButton>
-          <p className="h-full text-base font-bold text-neutral-100 ml-3 grow">
-            Kamera
-          </p>
-        </toolbar>
-      </AppBar>
-      {isCameraAccessGranted ? (
-        <div className="relative justify-center text-center">
-          <div
-            className="video-wrapper"
-            style={{
-              display: "inline-block",
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
+    <>
+      <div className="relative z-0 w-screen h-screen flex flex-col">
+        <AppBar position="static" className="bg-neutral-10 p-4" elevation={1}>
+          <toolbar className="flex justify-start items-center">
+            <IconButton
+              sx={{ paddingY: "0px", paddingX: "6px" }}
+              onClick={() => navigate(-1)}
+            >
+              <Icon
+                className="text-neutral-70"
+                icon="feather:arrow-left"
+                style={{ fontSize: "24px" }}
+              />
+            </IconButton>
+            <p className="h-full text-base font-bold text-neutral-100 ml-3 grow">
+              Kamera
+            </p>
+          </toolbar>
+        </AppBar>
+        <div className="relative justify-center text-center flex flex-col">
+          <div className="video-wrapper inline-block relative overflow-hidden w-[100vw] h-[80vh]">
             <video
-              className="block ml-auto mr-auto relative z-[1]"
+              className="block ml-auto mr-auto relative z-[1] w-[100vw] h-[80vh] object-cover"
               ref={videoRef}
               autoPlay
             />
@@ -153,42 +130,38 @@ const CameraProfile = () => {
               }}
             ></div>
           </div>
-
-          <div className="flex relative justify-center z-[2]">
-            <button
-              className="bg-red-600 hover:bg-blue-500 text-white font-semibold hover:text-white py-1 px-2 border border-white hover:border-transparent rounded mx-2 my-2"
-              onClick={handleStop}
-            >
-              Stop
-            </button>
-            <button
-              className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-2 border border-blue-500 hover:border-transparent rounded mx-2 my-2"
-              onClick={handleCapture}
-            >
-              Capture
-            </button>
-            <button
-              className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-2 border border-blue-500 hover:border-transparent rounded mx-2 my-2"
-              onClick={toggleCamera}
-            >
-              Switch Camera
-            </button>
-          </div>
         </div>
-      ) : (
-        <div className="flex justify-center">
-          <button
-            className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-2 border border-blue-500 hover:border-transparent rounded mx-2 my-2"
-            onClick={handleCameraAccess}
+        <div className="flex relative justify-between z-[2] px-7 py-3.5 flex-grow bg-neutral-100 w-full flex-row ">
+          <IconButton
+            className="text-neutral-10 hover:text-neutral-10"
+            onClick={toggleCamera}
           >
-            Start
-          </button>
+            <Icon
+              width={"24px"}
+              height={"24px"}
+              icon={"feather:refresh-ccw"}
+            ></Icon>
+          </IconButton>
+          <button
+            className="bg-transparent hover:bg-green-500 text-blue-700 font-semibold hover:text-white py-1 px-2 border border-blue-500 hover:border-transparent rounded-full mx-2 my-2 w-[72px] h-[72px]"
+            onClick={null}
+          ></button>
+          <IconButton
+            className="text-danger-Hover hover:text-danger-Hover"
+            onClick={null}
+          >
+            <Icon
+              width={"24px"}
+              height={"24px"}
+              icon={"feather:zap-off"}
+            ></Icon>
+          </IconButton>
         </div>
-      )}
-      {image && (
-        <img className="block ml-auto mr-auto" src={image} alt="captured" />
-      )}
-    </div>
+        {image && (
+          <img className="block ml-auto mr-auto" src={image} alt="captured" />
+        )}
+      </div>
+    </>
   );
 };
 

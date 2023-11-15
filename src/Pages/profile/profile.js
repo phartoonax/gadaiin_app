@@ -143,7 +143,10 @@ function Profile() {
                         borderRadius: "6px",
                       }}
                     >
-                      <Icon className="text-danger-Main" icon="fe:trash"></Icon>
+                      <Icon
+                        className="text-danger-Main"
+                        icon="feather:trash-2"
+                      ></Icon>
                     </IconButton>
                   </Stack>
                   <p className="text-xs text-neutral-80 font-normal leading-5">
