@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { AppBar, IconButton } from "@mui/material";
+import { AppBar, Button, IconButton } from "@mui/material";
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -131,7 +131,7 @@ const CameraProfile = () => {
             ></div>
           </div>
         </div>
-        <div className="flex relative justify-between z-[2] px-7 py-3.5 flex-grow bg-neutral-100 w-full flex-row ">
+        <div className="flex relative justify-between z-[2] px-7 py-3.5 flex-grow bg-neutral-100 w-full flex-row items-center">
           <IconButton
             className="text-neutral-10 hover:text-neutral-10"
             onClick={toggleCamera}
@@ -142,10 +142,19 @@ const CameraProfile = () => {
               icon={"feather:refresh-ccw"}
             ></Icon>
           </IconButton>
-          <button
-            className="bg-transparent hover:bg-green-500 text-blue-700 font-semibold hover:text-white py-1 px-2 border border-blue-500 hover:border-transparent rounded-full mx-2 my-2 w-[72px] h-[72px]"
+          <Button
+            className="bg-transparent rounded-full w-[72px] h-[72px] p-0"
             onClick={null}
-          ></button>
+          >
+            {" "}
+            <div
+              className="w-[72px] h-[72px]  rounded-full border-[3px] border-white flex relative justify-center
+            items-center"
+            >
+              {" "}
+              <div className="w-[58px] h-[58px] bg-neutral-10 rounded-full"></div>
+            </div>
+          </Button>
           <IconButton
             className="text-danger-Hover hover:text-danger-Hover"
             onClick={null}
