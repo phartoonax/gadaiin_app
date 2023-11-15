@@ -56,7 +56,7 @@ const QRScanner = () => {
   return (
     <>
       <div className="w-screen h-screen flex flex-col justify-start items-start  font-inter">
-        <AppBar position="static" className="bg-neutral-10 p-4">
+        <AppBar position="static" className="bg-neutral-10 p-4" elevation={1}>
           <toolbar className="flex justify-start items-center">
             <IconButton
               sx={{ paddingY: "0px", paddingX: "6px" }}
