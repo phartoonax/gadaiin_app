@@ -3,6 +3,7 @@ import { AppBar, Box, Button, IconButton, Paper, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { useForm } from "react-hook-form";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Profile() {
   const navigate = useNavigate();
@@ -16,6 +17,36 @@ function Profile() {
     formState: { errors },
   } = useForm();
 
+  const {
+    register: registerChangePass,
+    handleSubmit: handleSubmitChangePass,
+    reset: resetChangePass,
+    setValue: setValueChangePass,
+    formState: { errors: errorsChangePass },
+  } = useForm();
+
+  const [isDialogOpenChangePass, setIsDialogOpenChangePass] = useState(false);
+  const [isChangePassFilled, setIsChangePassFilled] = useState(false);
+
+  const [isCurrentPasswordChangeVisible, setIsCurrentPasswordChangeVisible] =
+    useState(false);
+  const [isNewPasswordChangeVisible, setIsNewPasswordChangeVisible] =
+    useState(false);
+  const [
+    isConfrimNewPasswordChangeVisible,
+    setIsConfrimNewPasswordChangeVisible,
+  ] = useState(false);
+
+  function toggleCurrentPasswordChangeVisibility() {
+    setIsCurrentPasswordChangeVisible((prevState) => !prevState);
+  }
+  function toggleNewPasswordChangeVisibility() {
+    setIsNewPasswordChangeVisible((prevState) => !prevState);
+  }
+  function toggleConfirmNewPasswordChangeVisibility() {
+    setIsConfrimNewPasswordChangeVisible((prevState) => !prevState);
+  }
+
   function handleFormRegisterChange(event) {
     // Check if all forms are filled
     const isFormRegisterFilled =
@@ -23,6 +54,19 @@ function Profile() {
       event.target.form[1].value !== "" &&
       event.target.form[3].value !== "";
     setIsFormRegisterFilled(isFormRegisterFilled);
+  }
+
+  function toggleDialogChangePass() {
+    setValueChangePass("changeoldpassword", "");
+    setValueChangePass("changenewpassword", "");
+    setValueChangePass("changeconfirmnewpassword", "");
+
+    setIsCurrentPasswordChangeVisible(false);
+    setIsNewPasswordChangeVisible(false);
+    setIsConfrimNewPasswordChangeVisible(false);
+
+    setIsChangePassFilled(false);
+    setIsDialogOpenChangePass((prevState) => !prevState);
   }
 
   return (
@@ -45,6 +89,186 @@ function Profile() {
             </p>
           </toolbar>
         </AppBar>
+        {isDialogOpenChangePass && (
+          <div
+            className="fixed z-10 inset-0 overflow-y-auto"
+            aria-labelledby="modal-title"
+            role="dialog"
+            aria-modal="true"
+          >
+            <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+              <div
+                className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                aria-hidden="true"
+              ></div>
+              <span
+                className="hidden sm:inline-block sm:align-middle sm:h-screen"
+                aria-hidden="true"
+              >
+                &#8203;
+              </span>
+              <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
+                <form onChange={handleFormRegisterChange}>
+                  <div className="px-3 py-2 justify-between">
+                    <div className="text-start pb-2">
+                      <h4 className="font-bold leading-6">
+                        Masukkan Password lama Anda
+                      </h4>
+                    </div>
+                    <div className="relative w-full">
+                      <input
+                        placeholder=""
+                        {...registerChangePass("changeoldpassword", {
+                          required: true,
+                        })}
+                        type={
+                          isCurrentPasswordChangeVisible ? "text" : "password"
+                        }
+                        className={`pl-2 bg-gray-50 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                          isChangePassFilled
+                            ? "border-black"
+                            : "border-gray-300"
+                        } ${
+                          errorsChangePass.changeoldpassword
+                            ? "border-[#E53A34] bg-[#FCF3F2]"
+                            : "border-gray-300"
+                        }`}
+                      />
+                      <div>
+                        <button
+                          type="button"
+                          className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-600"
+                          onClick={toggleCurrentPasswordChangeVisibility}
+                        >
+                          <FontAwesomeIcon
+                            className="w-5 h-5 text-[#50555B]"
+                            icon={
+                              isCurrentPasswordChangeVisible
+                                ? "fa-solid fa-eye"
+                                : "fa-solid fa-eye-slash"
+                            }
+                          />
+                        </button>
+                      </div>
+                    </div>
+
+                    {errorsChangePass.changeoldpassword && (
+                      <span className="text-[#E53A34] text-xs leading-[14px] font-normal">
+                        Format email salah
+                      </span>
+                    )}
+                  </div>
+                  <div className="px-3 py-2 justify-between">
+                    <div className="text-start pb-2">
+                      <h4 className="font-bold leading-6">Password</h4>
+                    </div>
+                    <div className="relative w-full">
+                      <input
+                        placeholder=""
+                        {...registerChangePass("changenewpassword", {
+                          required: true,
+                        })}
+                        type={isNewPasswordChangeVisible ? "text" : "password"}
+                        className={`pl-2 bg-gray-50 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                          isChangePassFilled
+                            ? "border-black"
+                            : "border-gray-300"
+                        }`}
+                      />
+                      <div>
+                        <button
+                          type="button"
+                          className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-600"
+                          onClick={toggleNewPasswordChangeVisibility}
+                        >
+                          <FontAwesomeIcon
+                            className="w-5 h-5 text-[#50555B]"
+                            icon={
+                              isNewPasswordChangeVisible
+                                ? "fa-solid fa-eye"
+                                : "fa-solid fa-eye-slash"
+                            }
+                          />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="px-3 py-2 justify-between">
+                    <div className="text-start pb-2">
+                      <h4 className="font-bold leading-6">
+                        Konfirmasi Password
+                      </h4>
+                    </div>
+                    <div className="relative w-full">
+                      <input
+                        placeholder=""
+                        {...registerChangePass("changeconfirmnewpassword", {
+                          required: true,
+                        })}
+                        type={
+                          isConfrimNewPasswordChangeVisible
+                            ? "text"
+                            : "password"
+                        }
+                        className={`pl-2 bg-gray-50 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                          isChangePassFilled
+                            ? "border-black"
+                            : "border-gray-300"
+                        }  ${
+                          errorsChangePass.konfirmasipasswordregister
+                            ? "border-[#E53A34] bg-[#FCF3F2]"
+                            : "border-gray-300"
+                        }`}
+                      />
+                      <div>
+                        <button
+                          type="button"
+                          className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-600"
+                          onClick={toggleConfirmNewPasswordChangeVisibility}
+                        >
+                          <FontAwesomeIcon
+                            className="w-5 h-5 text-[#50555B]"
+                            icon={
+                              isConfrimNewPasswordChangeVisible
+                                ? "fa-solid fa-eye"
+                                : "fa-solid fa-eye-slash"
+                            }
+                          />
+                        </button>
+                      </div>
+                    </div>
+                    {errorsChangePass.konfirmasipasswordregister && (
+                      <span className="text-[#E53A34] text-xs leading-[14px] font-normal">
+                        Konfirmasi password tidak sama dengan password
+                      </span>
+                    )}
+                  </div>
+                </form>
+                <div className="px-3 pb-4 pt-2 sm:px-6 flex gap-2.5 justify-between">
+                  <button
+                    disabled={!isChangePassFilled}
+                    onClick={handleSubmitChangePass(null)}
+                    type="button"
+                    className={` font-bold py-3.5 px-5 w-2/4 rounded-xl ${
+                      isChangePassFilled
+                        ? "bg-[#28A138] text-white"
+                        : "bg-[#F2F3F5] text-[#7B8794]"
+                    }`}
+                  >
+                    Kirim
+                  </button>
+                  <button
+                    onClick={toggleDialogChangePass}
+                    type="button"
+                    className="bg-white border-[#28A138] border hover:bg-[#28A138] hover:text-white text-[#28A138] font-bold py-3.5 px-5 w-2/4 rounded-xl"
+                  >
+                    Kembali
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="px-4 pt-5 w-full">
           <form onChange={handleFormRegisterChange}>
             <Stack gap={"20px"}>
@@ -168,6 +392,10 @@ function Profile() {
                     borderColor: "neutral.100",
                     color: "neutral.100",
                   },
+                }}
+                onClick={(event) => {
+                  event.preventDefault();
+                  toggleDialogChangePass();
                 }}
               >
                 Ganti Password

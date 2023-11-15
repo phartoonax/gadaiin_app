@@ -6,6 +6,7 @@ import { QrScanner } from "@yudiel/react-qr-scanner";
 
 const QRScanner = () => {
   const [borderSizes, setSBorderSizes] = useState("");
+  const [videoBorderWidth, setVideoBorderWidth] = useState(null);
 
   useEffect(() => {
     const div = document.querySelector(".scanner");
@@ -20,9 +21,11 @@ const QRScanner = () => {
     if (viewportSize === newUsableSpace.width) {
       tempside = newUsableSpace.width - viewportSizes * 2;
       otherborder = (newUsableSpace.height - tempside) / 2;
+      setVideoBorderWidth(tempside);
     } else {
       tempside = newUsableSpace.height - viewportSizes * 2;
       otherborder = (newUsableSpace.width - tempside) / 2;
+      setVideoBorderWidth(otherborder);
     }
     setSBorderSizes(calculateBorderSizes(viewportSizes, otherborder));
   }, []);
@@ -48,8 +51,8 @@ const QRScanner = () => {
   };
   const calculateBorderSizes = (horizontalBorderSize, verticalBorderSize) => {
     return {
-      horizontal: `${horizontalBorderSize}px solid rgba(0, 0, 0, 0.6)`,
-      vertical: `${verticalBorderSize}px solid rgba(0, 0, 0, 0.6)`,
+      horizontal: `${horizontalBorderSize}px solid #1F2933C7`,
+      vertical: `${verticalBorderSize}px solid #1F2933C7`,
     };
   };
 
@@ -131,6 +134,13 @@ const QRScanner = () => {
           onError={handleError}
           constraints={{ facingMode }}
         />
+        <div
+          className="absolute top-[20%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-white text-center text-sm font-bold leading-[18px]"
+          style={{ width: `${videoBorderWidth}px` }}
+        >
+          Arahkan kamera pada QR dan pastikan dalam keadaan pencahayaan yang
+          cukup
+        </div>
         <div className="bg-neutral-100 w-full flex flex-grow flex-row justify-between  items-center px-4 py-[26px] gap-2.5">
           <TextField
             className="border-neutral-40 bg-neutral-10

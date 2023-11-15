@@ -87,7 +87,7 @@ const CameraProfile = () => {
   };
   return (
     <>
-      <div className="relative z-0 w-screen h-screen flex flex-col">
+      <div className="relative z-0 w-screen h-screen flex flex-col font-inter">
         <AppBar position="static" className="bg-neutral-10 p-4" elevation={1}>
           <toolbar className="flex justify-start items-center">
             <IconButton
@@ -112,6 +112,7 @@ const CameraProfile = () => {
               ref={videoRef}
               autoPlay
             />
+
             <div
               className="video-overlay"
               style={{
@@ -126,9 +127,16 @@ const CameraProfile = () => {
                 borderRadius: "10px",
                 border: "2px solid white",
                 boxSizing: "border-box",
-                boxShadow: "0 0 0 9999px rgba(0, 0, 0, 0.5)",
+                boxShadow: "0 0 0 9999px #1F2933C7",
               }}
             ></div>
+            <div
+              className="absolute top-[15%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-white text-sm font-bold leading-[18px]"
+              style={{ width: `${videoBorderWidth}px` }}
+            >
+              Pastikan wajah masuk dalam kotak dan dalam keadaan pencahayaan
+              yang cukup
+            </div>
           </div>
         </div>
         <div className="flex relative justify-between z-[2] px-7 py-3.5 flex-grow bg-neutral-100 w-full flex-row items-center">
