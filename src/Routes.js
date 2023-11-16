@@ -2,9 +2,10 @@ import React, { lazy, Suspense, useState, useEffect, useCallback } from "react";
 import { Route, useLocation, Routes, Navigate } from "react-router-dom";
 import Login from "./Pages/login/login";
 import Dashboard from "./Pages/dashboard/dashboard";
-import QRScanner from "./Pages/dashboard/qrscanner";
+import QRScanner from "./Pages/dashboard/qrScanner";
 import Profile from "./Pages/profile/profile";
-import CameraProfile from "./Pages/profile/cameraprofile";
+import CameraProfile from "./Pages/profile/cameraProfile";
+import ListGadai from "./Pages/gadai/listGadai";
 
 /**
  * Description placeholder
@@ -23,6 +24,7 @@ const Rute = (props) => {
         <Route path="/main/qrscanner" element={<QRScanner />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/camera" element={<CameraProfile />} />
+        <Route path="/list/gadai" element={<ListGadai />} />
       </Routes>
     </>
   );

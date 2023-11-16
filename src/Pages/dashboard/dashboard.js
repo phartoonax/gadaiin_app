@@ -3,7 +3,7 @@ import iconFAB from "../../assets/images/balance-scale.png";
 import { UilQrcodeScan } from "@iconscout/react-unicons";
 import { HomeIcon } from "@heroicons/react/20/solid";
 
-import { Divider, Fab, IconButton } from "@mui/material";
+import { Button, Divider, Fab, IconButton } from "@mui/material";
 import Rangkuman from "./rangkuman";
 import Grafik from "./grafik";
 import { useState } from "react";
@@ -11,6 +11,8 @@ import { Icon } from "@iconify/react";
 
 const Dashboard = (props) => {
   const [activeTab, setActiveTab] = useState("Rangkuman");
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const datatemp = [
     {
@@ -61,6 +63,10 @@ const Dashboard = (props) => {
     </div>
   ));
 
+  const openMenu = () => {
+    setIsMenuOpen(true);
+  };
+
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
   };
@@ -93,7 +99,7 @@ const Dashboard = (props) => {
             <div className="max-w-screen-2xl bg-neutral-10 h-16 mx-[35px] mt-[-32px] rounded-[10px] shadow-lg overflow-auto">
               {renderdat}
             </div>
-            <div className="bg-white m-4 max-w-screen-2xl pt-3 rounded-md flex items-center justify-center text-[14px] leading-[18px] font-bold">
+            <div className="bg-neutral-10 m-4 max-w-screen-2xl pt-3 rounded-md flex items-center justify-center text-[14px] leading-[18px] font-bold">
               <div
                 id="Rangkuman"
                 className={`flex-1 pb-[12px] text-center  ${
@@ -109,7 +115,7 @@ const Dashboard = (props) => {
                 id="Grafik"
                 className={`flex-1 pb-[12px] text-center  ${
                   activeTab === "Grafik"
-                    ? "border-black  border-b-4"
+                    ? "border-neutral-100  border-b-4"
                     : "text-neutral-70 border-neutral-10"
                 } rounded-br-md`}
                 onClick={() => handleTabClick("Grafik")}
@@ -173,10 +179,10 @@ const Dashboard = (props) => {
                   size="large"
                   sx={{
                     position: "absolute",
-
                     border: 1,
                   }}
-                  className="w-[76px] h-[76px] bottom-6 border-4 border-white left-1/2 transform -translate-x-1/2 bg-success-Main hover:bg-success-Main shadow-[0_12px_17px_0px_rgba(0,0,0,0.16)] "
+                  onClick={openMenu}
+                  className="w-[76px] h-[76px] bottom-6 border-4 border-neutral-10 left-1/2 transform -translate-x-1/2 bg-success-Main hover:bg-success-Main shadow-[0_12px_17px_0px_rgba(0,0,0,0.16)] "
                 >
                   {" "}
                   <img
@@ -185,7 +191,53 @@ const Dashboard = (props) => {
                     alt="logo"
                   ></img>
                 </Fab>
-              </div>{" "}
+                {isMenuOpen && (
+                  <div
+                    className="fixed inset-0 bg-neutral-100 opacity-50 z-50"
+                    onClick={() => setIsMenuOpen(false)}
+                  ></div>
+                )}
+                {isMenuOpen && (
+                  <div className="fixed inset-0 flex flex-col items-center justify-end z-50 pb-28">
+                    <div className="flex flex-col items-start transform translate-x-1/2 ">
+                      <Button
+                        startIcon={
+                          <Icon
+                            className="text-success-Main bg-neutral-10 rounded-full w-7 h-7 p-1"
+                            icon={"uil:money-withdraw"}
+                          ></Icon>
+                        }
+                        className="bg-transparent text-neutral-10"
+                      >
+                        {"Tebus"}
+                      </Button>
+                      <Button
+                        startIcon={
+                          <Icon
+                            className="text-success-Main bg-neutral-10 rounded-full w-7 h-7 p-1"
+                            icon={"uil:hourglass"}
+                          ></Icon>
+                        }
+                        className="bg-transparent text-neutral-10"
+                      >
+                        {"Perpanjang"}
+                      </Button>
+                      <Button
+                        startIcon={
+                          <Icon
+                            className="text-success-Main bg-neutral-10 rounded-full w-7 h-7 p-1"
+                            icon={"uil:balance-scale"}
+                          ></Icon>
+                        }
+                        className="bg-transparent text-neutral-10"
+                        onClick={() => (window.location.href = "/list/gadai")}
+                      >
+                        {"Gadai"}
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
             <div className="relative w-full">
               <svg
