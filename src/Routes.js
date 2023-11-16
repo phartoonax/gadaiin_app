@@ -2,10 +2,10 @@ import React, { lazy, Suspense, useState, useEffect, useCallback } from "react";
 import { Route, useLocation, Routes, Navigate } from "react-router-dom";
 import Login from "./Pages/login/login";
 import Dashboard from "./Pages/dashboard/dashboard";
-import QRScanner from "./Pages/dashboard/qrScanner";
+import QRScanner from "./Pages/dashboard/qrscanner";
 import Profile from "./Pages/profile/profile";
-import CameraProfile from "./Pages/profile/cameraProfile";
-import ListGadai from "./Pages/gadai/listGadai";
+import CameraProfile from "./Pages/profile/cameraprofile";
+import ListGadai from "./Pages/gadai/listgadai";
 
 /**
  * Description placeholder
