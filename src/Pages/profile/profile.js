@@ -8,7 +8,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function Profile() {
   const navigate = useNavigate();
 
-  const [isFormRegisterFilled, setIsFormRegisterFilled] = useState(false);
+  const [isFormProfileChangeFilled, setIsFormProfileChangeFilled] =
+    useState(false);
 
   const {
     register,
@@ -20,13 +21,14 @@ function Profile() {
   const {
     register: registerChangePass,
     handleSubmit: handleSubmitChangePass,
-    reset: resetChangePass,
+    // reset: resetChangePass,
     setValue: setValueChangePass,
     formState: { errors: errorsChangePass },
   } = useForm();
 
   const [isDialogOpenChangePass, setIsDialogOpenChangePass] = useState(false);
-  const [isChangePassFilled, setIsChangePassFilled] = useState(false);
+  const [isFormPasswordChangeFilled, setIsFormPasswordChangeFilled] =
+    useState(false);
 
   const [isCurrentPasswordChangeVisible, setIsCurrentPasswordChangeVisible] =
     useState(false);
@@ -47,15 +49,22 @@ function Profile() {
     setIsConfrimNewPasswordChangeVisible((prevState) => !prevState);
   }
 
-  function handleFormRegisterChange(event) {
+  function handleFormProfileChangeChange(event) {
     // Check if all forms are filled
-    const isFormRegisterFilled =
+    const isFormProfileChangeFilled =
       event.target.form[0].value !== "" &&
       event.target.form[1].value !== "" &&
-      event.target.form[3].value !== "";
-    setIsFormRegisterFilled(isFormRegisterFilled);
+      event.target.form[2].value !== "";
+    setIsFormProfileChangeFilled(isFormProfileChangeFilled);
   }
-
+  function handleFormPasswordChangeChange(event) {
+    // Check if all forms are filled
+    const isFormPasswordChangeFilled =
+      event.target.form[0].value !== "" &&
+      event.target.form[2].value !== "" &&
+      event.target.form[4].value !== "";
+    setIsFormPasswordChangeFilled(isFormPasswordChangeFilled);
+  }
   function toggleDialogChangePass() {
     setValueChangePass("changeoldpassword", "");
     setValueChangePass("changenewpassword", "");
@@ -65,7 +74,7 @@ function Profile() {
     setIsNewPasswordChangeVisible(false);
     setIsConfrimNewPasswordChangeVisible(false);
 
-    setIsChangePassFilled(false);
+    setIsFormPasswordChangeFilled(false);
     setIsDialogOpenChangePass((prevState) => !prevState);
   }
 
@@ -107,13 +116,11 @@ function Profile() {
               >
                 &#8203;
               </span>
-              <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
-                <form onChange={handleFormRegisterChange}>
-                  <div className="px-3 py-2 justify-between">
+              <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full pt-2">
+                <form onChange={handleFormPasswordChangeChange}>
+                  <div className="px-3 py-2">
                     <div className="text-start pb-2">
-                      <h4 className="font-bold leading-6">
-                        Masukkan Password lama Anda
-                      </h4>
+                      <h5 className="font-bold leading-6">Password Lama</h5>
                     </div>
                     <div className="relative w-full">
                       <input
@@ -125,7 +132,7 @@ function Profile() {
                           isCurrentPasswordChangeVisible ? "text" : "password"
                         }
                         className={`pl-2 bg-gray-50 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
-                          isChangePassFilled
+                          isFormPasswordChangeFilled
                             ? "border-black"
                             : "border-gray-300"
                         } ${
@@ -158,9 +165,9 @@ function Profile() {
                       </span>
                     )}
                   </div>
-                  <div className="px-3 py-2 justify-between">
+                  <div className="px-3 py-2">
                     <div className="text-start pb-2">
-                      <h4 className="font-bold leading-6">Password</h4>
+                      <h5 className="font-bold leading-6">Password Baru</h5>
                     </div>
                     <div className="relative w-full">
                       <input
@@ -170,7 +177,7 @@ function Profile() {
                         })}
                         type={isNewPasswordChangeVisible ? "text" : "password"}
                         className={`pl-2 bg-gray-50 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
-                          isChangePassFilled
+                          isFormPasswordChangeFilled
                             ? "border-black"
                             : "border-gray-300"
                         }`}
@@ -193,11 +200,11 @@ function Profile() {
                       </div>
                     </div>
                   </div>
-                  <div className="px-3 py-2 justify-between">
+                  <div className="px-3 py-2">
                     <div className="text-start pb-2">
-                      <h4 className="font-bold leading-6">
-                        Konfirmasi Password
-                      </h4>
+                      <h5 className="font-bold leading-6">
+                        Konfirmasi Password Baru
+                      </h5>
                     </div>
                     <div className="relative w-full">
                       <input
@@ -211,7 +218,7 @@ function Profile() {
                             : "password"
                         }
                         className={`pl-2 bg-gray-50 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
-                          isChangePassFilled
+                          isFormPasswordChangeFilled
                             ? "border-black"
                             : "border-gray-300"
                         }  ${
@@ -246,16 +253,16 @@ function Profile() {
                 </form>
                 <div className="px-3 pb-4 pt-2 sm:px-6 flex gap-2.5 justify-between">
                   <button
-                    disabled={!isChangePassFilled}
+                    disabled={!isFormPasswordChangeFilled}
                     onClick={handleSubmitChangePass(null)}
                     type="button"
                     className={` font-bold py-3.5 px-5 w-2/4 rounded-xl ${
-                      isChangePassFilled
-                        ? "bg-[#28A138] text-white"
-                        : "bg-[#F2F3F5] text-[#7B8794]"
+                      isFormPasswordChangeFilled
+                        ? "bg-success-Main text-neutral-10"
+                        : "bg-neutral-30 text-neutral-70"
                     }`}
                   >
-                    Kirim
+                    Simpan
                   </button>
                   <button
                     onClick={toggleDialogChangePass}
@@ -270,7 +277,7 @@ function Profile() {
           </div>
         )}
         <div className="px-4 pt-5 w-full">
-          <form onChange={handleFormRegisterChange}>
+          <form onChange={handleFormProfileChangeChange}>
             <Stack gap={"20px"}>
               <Stack gap={"8px"}>
                 <div className="text-base font-bold">
@@ -284,7 +291,9 @@ function Profile() {
                     required: true,
                   })}
                   className={`pl-2 bg-gray-50 border border-neutral-60 text-[#1F2933] sm:text-sm rounded-lg focus:ring-neborder-neutral-90 focus:border-neutral-90 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
-                    isFormRegisterFilled ? "border-black" : "border-neutral-60"
+                    isFormProfileChangeFilled
+                      ? "border-black"
+                      : "border-neutral-60"
                   } ${
                     errors.emailprofile
                       ? "border-[#E53A34] bg-[#FCF3F2]"
@@ -304,7 +313,9 @@ function Profile() {
                     required: true,
                   })}
                   className={`pl-2 bg-gray-50 border border-neutral-60 text-[#1F2933] sm:text-sm rounded-lg focus:ring-neborder-neutral-90 focus:border-neutral-90 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
-                    isFormRegisterFilled ? "border-black" : "border-neutral-60"
+                    isFormProfileChangeFilled
+                      ? "border-black"
+                      : "border-neutral-60"
                   } ${
                     errors.usernameprofile
                       ? "border-[#E53A34] bg-[#FCF3F2]"
@@ -324,7 +335,9 @@ function Profile() {
                     required: true,
                   })}
                   className={`pl-2 bg-gray-50 border border-neutral-60 text-[#1F2933] sm:text-sm rounded-lg focus:ring-neborder-neutral-90 focus:border-neutral-90 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
-                    isFormRegisterFilled ? "border-black" : "border-neutral-60"
+                    isFormProfileChangeFilled
+                      ? "border-black"
+                      : "border-neutral-60"
                   } ${
                     errors.phoneprofile
                       ? "border-[#E53A34] bg-[#FCF3F2]"
@@ -425,7 +438,11 @@ function Profile() {
               fontWeight: 500,
               fontSize: "15px",
             }}
-            className="bg-themeColor hover:bg-themeColor"
+            className={`${
+              isFormPasswordChangeFilled
+                ? "bg-themeColor text-neutral-10"
+                : "bg-neutral-30 text-neutral-70"
+            }`}
           >
             Simpan
           </Button>
