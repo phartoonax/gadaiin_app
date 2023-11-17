@@ -63,8 +63,8 @@ const Dashboard = (props) => {
     </div>
   ));
 
-  const openMenu = () => {
-    setIsMenuOpen(true);
+  const changeMenuState = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   const handleTabClick = (tabName) => {
@@ -136,12 +136,12 @@ const Dashboard = (props) => {
               )}
             </div>
           </div>
-          <div className="fixed inset-x-0 bottom-0 w-full bg-transparent flex">
+          <div className="fixed inset-x-0 bottom-0 w-full bg-transparent flex z-50">
             {" "}
-            <div className="relative w-full">
+            <div className="relative w-full z-50 -mr-1">
               {" "}
               <svg
-                className="w-full h-14 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]"
+                className="w-full h-14 z-50  drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]"
                 viewBox="0 0 118 56"
                 preserveAspectRatio="none"
                 fill="none"
@@ -160,7 +160,7 @@ const Dashboard = (props) => {
                 ></IconButton>{" "}
               </div>
             </div>
-            <div className="z-10">
+            <div className="z-[60]">
               {" "}
               <svg
                 className="w-32 h-14 drop-shadow-[0_-3px_10px_ 0px_rgba(0,0,0,0.3)] z-10"
@@ -181,7 +181,7 @@ const Dashboard = (props) => {
                     position: "absolute",
                     border: 1,
                   }}
-                  onClick={openMenu}
+                  onClick={changeMenuState}
                   className="w-[76px] h-[76px] bottom-6 border-4 border-neutral-10 left-1/2 transform -translate-x-1/2 bg-success-Main hover:bg-success-Main shadow-[0_12px_17px_0px_rgba(0,0,0,0.16)] "
                 >
                   {" "}
@@ -191,57 +191,11 @@ const Dashboard = (props) => {
                     alt="logo"
                   ></img>
                 </Fab>
-                {isMenuOpen && (
-                  <div
-                    className="fixed inset-0 bg-neutral-100 opacity-50 z-50"
-                    onClick={() => setIsMenuOpen(false)}
-                  ></div>
-                )}
-                {isMenuOpen && (
-                  <div className="fixed inset-0 flex flex-col items-center justify-end z-50 pb-28">
-                    <div className="flex flex-col items-start transform translate-x-1/2 ">
-                      <Button
-                        startIcon={
-                          <Icon
-                            className="text-success-Main bg-neutral-10 rounded-full w-7 h-7 p-1"
-                            icon={"uil:money-withdraw"}
-                          ></Icon>
-                        }
-                        className="bg-transparent text-neutral-10"
-                      >
-                        {"Tebus"}
-                      </Button>
-                      <Button
-                        startIcon={
-                          <Icon
-                            className="text-success-Main bg-neutral-10 rounded-full w-7 h-7 p-1"
-                            icon={"uil:hourglass"}
-                          ></Icon>
-                        }
-                        className="bg-transparent text-neutral-10"
-                      >
-                        {"Perpanjang"}
-                      </Button>
-                      <Button
-                        startIcon={
-                          <Icon
-                            className="text-success-Main bg-neutral-10 rounded-full w-7 h-7 p-1"
-                            icon={"uil:balance-scale"}
-                          ></Icon>
-                        }
-                        className="bg-transparent text-neutral-10"
-                        onClick={() => (window.location.href = "/list/gadai")}
-                      >
-                        {"Gadai"}
-                      </Button>
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
-            <div className="relative w-full">
+            <div className="relative w-full z-50 -ml-1">
               <svg
-                className="flex-grow w-full h-14 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]"
+                className="flex-grow w-full h-14 z-50 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]"
                 viewBox="0 0 121 56"
                 preserveAspectRatio="none"
                 fill="none"
@@ -252,7 +206,7 @@ const Dashboard = (props) => {
                   fill="white"
                 />
               </svg>
-              <div className="absolute bottom-3 right-[55%] transform translate-x-1/2">
+              <div className="absolute bottom-3 right-[55%] transform translate-x-1/2 z-50">
                 <IconButton
                   children={
                     <UilQrcodeScan
@@ -265,6 +219,52 @@ const Dashboard = (props) => {
                 ></IconButton>
               </div>
             </div>
+            {isMenuOpen && (
+              <div className="fixed inset-0 bg-neutral-100 opacity-50 z-30 transition-opacity duration-500 ease-in-out"></div>
+            )}
+            {isMenuOpen && (
+              <div
+                className="fixed inset-0 flex flex-col items-center justify-end z-50 mb-28 "
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <div className="flex flex-col items-start transform translate-x-1/2 -ml-8">
+                  <Button
+                    startIcon={
+                      <Icon
+                        className="text-success-Main bg-neutral-10 rounded-full w-7 h-7 p-1"
+                        icon={"uil:money-withdraw"}
+                      ></Icon>
+                    }
+                    className="bg-transparent text-neutral-10"
+                  >
+                    {"Tebus"}
+                  </Button>
+                  <Button
+                    startIcon={
+                      <Icon
+                        className="text-success-Main bg-neutral-10 rounded-full w-7 h-7 p-1"
+                        icon={"uil:hourglass"}
+                      ></Icon>
+                    }
+                    className="bg-transparent text-neutral-10"
+                  >
+                    {"Perpanjang"}
+                  </Button>
+                  <Button
+                    startIcon={
+                      <Icon
+                        className="text-success-Main bg-neutral-10 rounded-full w-7 h-7 p-1"
+                        icon={"uil:balance-scale"}
+                      ></Icon>
+                    }
+                    className="bg-transparent text-neutral-10"
+                    onClick={() => (window.location.href = "/list/gadai")}
+                  >
+                    {"Gadai"}
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

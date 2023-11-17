@@ -50,8 +50,7 @@ module.exports = withMT({
       },
       colors: {
         themeColor: "#1EBF65",
-        lelang: "#B267FF",
-        lelangSurface: "#FAF5FF",
+
         primary: {
           Hover: "#00A9D1",
           Main: "#03B8E8",
@@ -69,6 +68,10 @@ module.exports = withMT({
           30: "#F2F3F5",
           20: "#F8F9FA",
           10: "#FFFFFF",
+        },
+        lelang: {
+          Main: "#B267FF",
+          Surface: "#FAF5FF",
         },
         danger: {
           Hover: "#B91919",
