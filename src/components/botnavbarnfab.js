@@ -1,10 +1,13 @@
 import { HomeIcon } from "@heroicons/react/20/solid";
 
 import { Fab, IconButton } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { UilQrcodeScan } from "@iconscout/react-unicons";
+import BotDrawerFilter from "./botdrawerfilter";
 
 function BotNavBarNFab({ title, items, onClick }) {
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+
   return (
     <>
       <div>
@@ -26,6 +29,7 @@ function BotNavBarNFab({ title, items, onClick }) {
             </svg>
             <div className="absolute bottom-3 right-[45%] transform translate-x-1/2">
               <IconButton
+                onClick={() => setDrawerOpen(true)}
                 children={
                   <HomeIcon height={"24px"} width={"24px"} color="black" />
                 }
@@ -54,7 +58,7 @@ function BotNavBarNFab({ title, items, onClick }) {
                   border: 1,
                 }}
                 onClick={null}
-                className="w-[76px] h-[76px] bottom-6 border-4 border-neutral-10 left-1/2 transform -translate-x-1/2 bg-success-Main hover:bg-success-Main shadow-[0_12px_17px_0px_rgba(0,0,0,0.16)] "
+                className="w-[76px] h-[76px] bottom-5 border-4 border-neutral-10 left-1/2 transform -translate-x-1/2 bg-success-Main hover:bg-success-Main shadow-[0_12px_17px_0px_rgba(0,0,0,0.16)] "
               >
                 {" "}
                 <img
@@ -88,6 +92,7 @@ function BotNavBarNFab({ title, items, onClick }) {
             </div>
           </div>
         </div>
+        <BotDrawerFilter open={isDrawerOpen} setOpen={setDrawerOpen} />
       </div>
     </>
   );

@@ -4,26 +4,56 @@ import React from "react";
 
 const ListItem = ({ data }) => {
   const colorStatus = data.status;
-  const colorSelector = (colorstatus) => {
-    switch (colorstatus) {
+  const getCardBorderColor = () => {
+    switch (colorStatus) {
       case "gadai":
-        return "success";
+        return "border-t-success-Main";
       case "batal":
-        return "danger";
+        return "border-t-danger-Main";
       case "lunas":
-        return "warning";
+        return "border-t-warning-Main";
       case "proses":
-        return "lelang";
+        return "border-t-lelang-Main";
       case "terlambat":
-        return "primary";
+        return "border-t-primary-Main";
       default:
-        return "gray-500";
+        return "border-none";
     }
   };
 
-  const cardBorderColor = `border-t-${colorSelector(colorStatus)}-Main`;
-  const iconColor = `text-${colorSelector(colorStatus)}-Main`;
-  const dateColor = `bg-${colorSelector(colorStatus)}-Surface`;
+  const getIconColor = () => {
+    switch (colorStatus) {
+      case "gadai":
+        return "text-success-Main";
+      case "batal":
+        return "text-danger-Main";
+      case "lunas":
+        return "text-warning-Main";
+      case "proses":
+        return "text-lelang-Main";
+      case "terlambat":
+        return "text-primary-Main";
+      default:
+        return "text-neutral-500";
+    }
+  };
+
+  const getDateColor = () => {
+    switch (colorStatus) {
+      case "gadai":
+        return "bg-success-Surface";
+      case "batal":
+        return "bg-danger-Surface";
+      case "lunas":
+        return "bg-warning-Surface";
+      case "proses":
+        return "bg-lelang-Surface";
+      case "terlambat":
+        return "bg-primary-Surface";
+      default:
+        return "bg-neutral-100";
+    }
+  };
 
   const hitungBunga = (harga, bunga) => {
     const bunga1 = parseInt(bunga);
@@ -38,9 +68,9 @@ const ListItem = ({ data }) => {
 
   return (
     <div
-      className={`border ${cardBorderColor}  border-solid border-t-4   rounded-md my-[10px] text-neutral-100`}
+      className={`border  ${getCardBorderColor()}  border-solid border-t-4 rounded-md my-[10px] text-neutral-100`}
     >
-      <div className="p-4">
+      <div className="px-4 py-2">
         {" "}
         <Stack direction="row" spacing={2} justifyContent="space-between">
           <p className="font-bold">{data.idtransaksi}</p>
@@ -48,7 +78,8 @@ const ListItem = ({ data }) => {
             {data.lokasi}
           </div>
         </Stack>
-        <p className="text-ellipsis font-bold text-base leading-[18px] overflow-hidden whitespace-nowrap py-[3px]">
+        <Divider className="pt-2"></Divider>
+        <p className="text-ellipsis font-bold text-base leading-[18px] overflow-hidden whitespace-nowrap py-[4px]">
           {data.nama}
         </p>
         <p
@@ -64,7 +95,7 @@ pb-1"
           <Icon
             fontSize={"16px"}
             icon={"heroicons-solid:shopping-bag"}
-            className={`${iconColor} } mr-1`}
+            className={`${getIconColor()} mr-1`}
           ></Icon>
           <p>{data.barang}</p>
         </Stack>
@@ -75,7 +106,7 @@ pb-1"
           <Icon
             fontSize={"16px"}
             icon={"heroicons-solid:cash"}
-            className={`${iconColor} } mr-1`}
+            className={`${getIconColor()} } mr-1`}
           ></Icon>
           <p>
             Rp{pemisahRibuan(data.harga)} ({data.bunga} | Rp
@@ -89,7 +120,7 @@ pb-1"
           <Icon
             fontSize={"16px"}
             icon={"heroicons-outline:clock"}
-            className={`${iconColor} } mr-1`}
+            className={`${getIconColor()} } mr-1`}
           ></Icon>
           <p>{data.periodegadai}</p>
         </Stack>
@@ -109,7 +140,7 @@ pb-1"
         }
         justifyContent="space-between"
         alignItems="center"
-        className={`${dateColor}`}
+        className={getDateColor()}
       >
         <Stack direction="column" className=" pl-4 pt-1 pb-2 text-start">
           <div className="text-sm leading-5 font-normal text-neutral-70">

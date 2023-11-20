@@ -80,8 +80,10 @@ function ListGadai() {
           onClick={handleClick}
         />
         <div className="mx-4">
-          {arrayisi.map((data) => (
-            <ListItem data={data} />
+          {arrayisi.map((data, index) => (
+            <div className={`${index === arrayisi.length - 1 ? "pb-24" : ""}`}>
+              <ListItem data={data} />
+            </div>
           ))}
         </div>
       </div>
