@@ -65,8 +65,8 @@ module.exports = withMT({
         },
       },
       animation: {
-        slideUp: "slideUp 0.5s forwards",
-        slideDown: "slideDown 0.5s forwards",
+        slideUp: "slideUp 0.3s forwards",
+        slideDown: "slideDown 0.3s forwards",
       },
       colors: {
         themeColor: "#1EBF65",

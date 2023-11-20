@@ -24,10 +24,10 @@ const Dashboard = (props) => {
     } else {
       setTimeout(() => {
         setShouldRender(false);
-      }, 500); // match this with the duration of your animation
+      }, 300); // match this with the duration of your animation
       setTimeout(() => {
         setShouldRenderBackground(false);
-      }, 700);
+      }, 300);
     }
   }, [isMenuOpen]);
 
@@ -238,10 +238,10 @@ const Dashboard = (props) => {
             </div>
             {shouldRenderBackground && (
               <div
-                className={`fixed inset-0 bg-neutral-100 z-30 transition-opacity duration-700 ease-in-out ${
+                className={`fixed inset-0 bg-neutral-100 z-30 transition-opacity duration-300 ease-in-out ${
                   isMenuOpen ? "opacity-50" : "opacity-0"
                 }`}
-                onTransitionEnd={() =>
+                onAnimationEnd={() =>
                   !isMenuOpen && setShouldRenderBackground(false)
                 }
               ></div>
