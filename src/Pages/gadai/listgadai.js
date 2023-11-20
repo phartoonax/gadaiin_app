@@ -69,6 +69,10 @@ function ListGadai() {
     console.log(`You clicked on ${item}`);
   }
 
+  const iconKiri = "heroicons-outline:adjustments";
+  const iconKanan = "heroicons-outline:switch-vertical";
+  const iconFab = "heroicons-outline:plus";
+
   return (
     <>
       <div className="font-inter">
@@ -78,6 +82,9 @@ function ListGadai() {
           title={"tempe"}
           items={stringArray}
           onClick={handleClick}
+          iconKiri={iconKiri}
+          iconKanan={iconKanan}
+          iconFab={iconFab}
         />
         <div className="mx-4">
           {arrayisi.map((data, index) => (

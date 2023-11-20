@@ -212,7 +212,7 @@ const CameraProfile = () => {
             </IconButton>
           ) : (
             <Button variant="text" onClick={handleRetake}>
-              Foto Ulang
+              FOTO ULANG
             </Button>
           )}
           {!image && (

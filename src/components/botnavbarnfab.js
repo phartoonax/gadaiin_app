@@ -1,11 +1,16 @@
-import { HomeIcon } from "@heroicons/react/20/solid";
-
+import { Icon } from "@iconify/react";
 import { Fab, IconButton } from "@mui/material";
 import React, { useState } from "react";
-import { UilQrcodeScan } from "@iconscout/react-unicons";
 import BotDrawerFilter from "./botdrawerfilter";
 
-function BotNavBarNFab({ title, items, onClick }) {
+function BotNavBarNFab({
+  title,
+  items,
+  onClick,
+  iconKiri,
+  iconKanan,
+  iconFab,
+}) {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   return (
@@ -28,12 +33,14 @@ function BotNavBarNFab({ title, items, onClick }) {
               />
             </svg>
             <div className="absolute bottom-3 right-[45%] transform translate-x-1/2">
-              <IconButton
-                onClick={() => setDrawerOpen(true)}
-                children={
-                  <HomeIcon height={"24px"} width={"24px"} color="black" />
-                }
-              ></IconButton>{" "}
+              <IconButton onClick={() => setDrawerOpen(true)}>
+                {" "}
+                <Icon
+                  className="text-neutral-100"
+                  icon={iconKiri}
+                  style={{ fontSize: "24px" }}
+                />
+              </IconButton>{" "}
             </div>
           </div>
           <div className="z-[60]">
@@ -57,16 +64,16 @@ function BotNavBarNFab({ title, items, onClick }) {
                   position: "absolute",
                   border: 1,
                 }}
+                children={
+                  <Icon
+                    className="text-neutral-10"
+                    icon={iconFab}
+                    style={{ fontSize: "36px" }}
+                  />
+                }
                 onClick={null}
                 className="w-[76px] h-[76px] bottom-5 border-4 border-neutral-10 left-1/2 transform -translate-x-1/2 bg-success-Main hover:bg-success-Main shadow-[0_12px_17px_0px_rgba(0,0,0,0.16)] "
-              >
-                {" "}
-                <img
-                  className="w-9 auto justify-center items-center inline"
-                  src={null}
-                  alt="logo"
-                ></img>
-              </Fab>
+              ></Fab>
             </div>
           </div>
           <div className="relative w-full z-50 -ml-1">
@@ -83,12 +90,13 @@ function BotNavBarNFab({ title, items, onClick }) {
               />
             </svg>
             <div className="absolute bottom-3 right-[55%] transform translate-x-1/2 z-50">
-              <IconButton
-                children={
-                  <UilQrcodeScan height={"24px"} width={"24px"} color="black" />
-                }
-                onClick={() => (window.location.href = "/main/qrscanner")}
-              ></IconButton>
+              <IconButton onClick={() => null}>
+                <Icon
+                  className="text-neutral-100"
+                  icon={iconKanan}
+                  style={{ fontSize: "24px" }}
+                />
+              </IconButton>
             </div>
           </div>
         </div>
