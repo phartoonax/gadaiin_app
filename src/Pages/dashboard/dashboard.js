@@ -6,13 +6,30 @@ import { HomeIcon } from "@heroicons/react/20/solid";
 import { Button, Divider, Fab, IconButton } from "@mui/material";
 import Rangkuman from "./rangkuman";
 import Grafik from "./grafik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 
 const Dashboard = (props) => {
   const [activeTab, setActiveTab] = useState("Rangkuman");
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const [shouldRender, setShouldRender] = useState(false);
+  const [shouldRenderBackground, setShouldRenderBackground] = useState(false);
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      setShouldRender(true);
+      setShouldRenderBackground(true);
+    } else {
+      setTimeout(() => {
+        setShouldRender(false);
+      }, 500); // match this with the duration of your animation
+      setTimeout(() => {
+        setShouldRenderBackground(false);
+      }, 700);
+    }
+  }, [isMenuOpen]);
 
   const datatemp = [
     {
@@ -219,13 +236,22 @@ const Dashboard = (props) => {
                 ></IconButton>
               </div>
             </div>
-            {isMenuOpen && (
-              <div className="fixed inset-0 bg-neutral-100 opacity-50 z-30 transition-opacity duration-500 ease-in-out"></div>
-            )}
-            {isMenuOpen && (
+            {shouldRenderBackground && (
               <div
-                className="fixed inset-0 flex flex-col items-center justify-end z-50 mb-28 "
-                onClick={() => setIsMenuOpen(false)}
+                className={`fixed inset-0 bg-neutral-100 z-30 transition-opacity duration-700 ease-in-out ${
+                  isMenuOpen ? "opacity-50" : "opacity-0"
+                }`}
+                onTransitionEnd={() =>
+                  !isMenuOpen && setShouldRenderBackground(false)
+                }
+              ></div>
+            )}
+            {shouldRender && (
+              <div
+                className={`fixed inset-0 flex flex-col items-center justify-end z-50 mb-28 ${
+                  isMenuOpen ? "animate-slideUp" : "animate-slideDown"
+                }`}
+                onAnimationEnd={() => !isMenuOpen && setShouldRender(false)}
               >
                 <div className="flex flex-col items-start transform translate-x-1/2 -ml-8">
                   <Button

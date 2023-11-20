@@ -12,8 +12,6 @@ const BotDrawerFilter = ({ open, setOpen }) => {
     bottom: 0,
     zIndex: 999,
     boxShadow: "0px -4px 10px rgba(0, 0, 0, 0.1)",
-    transition: "transform 0.3s ease-in-out",
-    transform: open ? "translateY(0)" : "translateY(100%)",
   };
   return (
     <Drawer
