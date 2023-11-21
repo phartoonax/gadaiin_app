@@ -37,7 +37,8 @@ const BotDrawerFilter = ({
     boxShadow: "0px -4px 10px rgba(0, 0, 0, 0.1)",
   };
 
-  const [checkboxValues, setCheckboxValues] = useState([]);
+  const [periodeGadaiValues, setPeriodeGadaiValues] = useState([]);
+  const [checkboxStatusValues, setCheckboxStatusValues] = useState([]);
 
   const [openDatePicker1, setOpenDatePicker1] = useState(false);
   const [valueDatePicker1, setValueDatePicker1] = useState(null);
@@ -84,7 +85,7 @@ const BotDrawerFilter = ({
   };
 
   const handleCheckboxChange = (event) => {
-    const newArray = [...checkboxValues];
+    const newArray = [...checkboxStatusValues];
     if (event.target.checked) {
       newArray.push(event.target.name);
     } else {
@@ -93,16 +94,29 @@ const BotDrawerFilter = ({
         newArray.splice(index, 1);
       }
     }
-    setCheckboxValues(newArray);
+    setCheckboxStatusValues(newArray);
     onArrayChange(newArray);
   };
 
+  const handleChipClick = (value) => {
+    setPeriodeGadaiValues((prevValues) => {
+      if (prevValues.includes(value)) {
+        return prevValues.filter((v) => v !== value);
+      } else {
+        return [...prevValues, value];
+      }
+    });
+  };
+
+  const chipValues = ["1 Bulan", "1 Tahun", "2 Tahun", "7 Hari", "6 Bulan"];
+
   const resetFields = () => {
-    setValueSlider([100000, 1000000]);
-    setValueDisplaySlider([pemisahRibuan(100000), pemisahRibuan(1000000)]);
+    setValueSlider([0, 0]);
+    setValueDisplaySlider([pemisahRibuan(0), pemisahRibuan(0)]);
     setValueDatePicker1(null);
     setValueDatePicker2(null);
-    setCheckboxValues([]);
+    setCheckboxStatusValues([]);
+    setPeriodeGadaiValues([]);
   };
 
   return (
@@ -332,10 +346,10 @@ const BotDrawerFilter = ({
               {" "}
               <Stack direction="row" gap={"6px"}>
                 <div className="text-sm text-[15px] font-bold">
-                  {"Nilai Gadai"}
+                  {"Periode Gadai"}
                 </div>
                 <div className="rounded-full bg-themeColor px-2  text-neutral-10">
-                  0
+                  {periodeGadaiValues.length}
                 </div>
               </Stack>
               <Button
@@ -344,50 +358,23 @@ const BotDrawerFilter = ({
                 onClick={null}
                 sx={{ paddingRight: "0px", justifyContent: "flex-end" }}
               >
-                Selengkapnya
+                Tambah
               </Button>
             </Stack>
             <Grid container direction="row" wrap="wrap" spacing={1}>
-              <Grid item>
-                <Chip
-                  label="1 Bulan"
-                  variant="outlined"
-                  color="success"
-                  className="font-normal text-sm px-0.5 py-[7px]"
-                />
-              </Grid>
-              <Grid item>
-                <Chip
-                  label="1 Tahun"
-                  variant="outlined"
-                  color="success"
-                  className="font-normal text-sm px-0.5 py-[7px]"
-                />
-              </Grid>
-              <Grid item>
-                <Chip
-                  label="2 Tahun"
-                  variant="outlined"
-                  color="success"
-                  className="font-normal text-sm px-0.5 py-[7px]"
-                />
-              </Grid>
-              <Grid item>
-                <Chip
-                  label="7 Hari"
-                  variant="outlined"
-                  color="success"
-                  className="font-normal text-sm px-0.5 py-[7px]"
-                />
-              </Grid>
-              <Grid item>
-                <Chip
-                  label="6 Bulan"
-                  variant="outlined"
-                  color="success"
-                  className="font-normal text-sm px-0.5 py-[7px]"
-                />
-              </Grid>
+              {chipValues.map((value) => (
+                <Grid item key={value}>
+                  <Chip
+                    label={value}
+                    variant={
+                      periodeGadaiValues.includes(value) ? "solid" : "outlined"
+                    }
+                    color={"success"}
+                    className="font-normal text-sm px-0.5 py-[7px]"
+                    onClick={() => handleChipClick(value)}
+                  />
+                </Grid>
+              ))}
             </Grid>
           </Stack>
           <Stack gap={"10px"}>
@@ -407,7 +394,7 @@ const BotDrawerFilter = ({
                   control={
                     <Checkbox
                       name={name}
-                      checked={checkboxValues.includes(name)}
+                      checked={checkboxStatusValues.includes(name)}
                       onChange={handleCheckboxChange}
                       sx={{
                         "&.Mui-checked": {
