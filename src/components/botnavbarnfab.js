@@ -13,6 +13,10 @@ function BotNavBarNFab({
 }) {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
+  const handleArrayChange = (newArray) => {
+    console.log(newArray);
+  };
+
   return (
     <>
       <div>
@@ -100,7 +104,11 @@ function BotNavBarNFab({
             </div>
           </div>
         </div>
-        <BotDrawerFilter open={isDrawerOpen} setOpen={setDrawerOpen} />
+        <BotDrawerFilter
+          open={isDrawerOpen}
+          setOpen={setDrawerOpen}
+          onArrayChange={handleArrayChange}
+        />
       </div>
     </>
   );

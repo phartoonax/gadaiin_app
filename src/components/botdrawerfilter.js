@@ -1,21 +1,33 @@
 import React, { useState } from "react";
 import {
   Button,
+  Checkbox,
+  Chip,
   Divider,
+  FormControlLabel,
+  FormGroup,
+  Grid,
   IconButton,
+  InputAdornment,
+  Slider,
   Stack,
   SwipeableDrawer,
+  alpha,
 } from "@mui/material";
-import dayjs from "dayjs";
+
 import { MobileDatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Icon } from "@iconify/react";
 
-const BotDrawerFilter = ({ open, setOpen }) => {
+const BotDrawerFilter = ({
+  open: openDrawer,
+  setOpen: setOpenDrawer,
+  onArrayChange,
+}) => {
   const drawerStyle = {
     width: "100%",
-    height: "300px",
+    maxHeight: "80%",
     backgroundColor: "white",
     borderTopLeftRadius: "20px",
     borderTopRightRadius: "20px",
@@ -25,19 +37,80 @@ const BotDrawerFilter = ({ open, setOpen }) => {
     boxShadow: "0px -4px 10px rgba(0, 0, 0, 0.1)",
   };
 
-  const [open2, setOpen2] = useState(false);
-  const [value, setValue] = useState(new dayjs("2022-04-17"));
+  const [checkboxValues, setCheckboxValues] = useState([]);
 
-  const handleOpen = () => {
-    setOpen2(true);
+  const [openDatePicker1, setOpenDatePicker1] = useState(false);
+  const [valueDatePicker1, setValueDatePicker1] = useState(null);
+
+  const [openDatePicker2, setOpenDatePicker2] = useState(false);
+  const [valueDatePicker2, setValueDatePicker2] = useState(null);
+
+  const [valueSlider, setValueSlider] = useState([100000, 1000000]);
+
+  const handleOpenDatePicker1 = () => {
+    setOpenDatePicker1(true);
+  };
+  const handleOpenDatePicker2 = () => {
+    setOpenDatePicker2(true);
+  };
+
+  const pemisahRibuan = (harga) => {
+    return harga.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  };
+
+  const handleChangeSlider = (event, newValue) => {
+    const formattedValue = newValue.map((value) => pemisahRibuan(value));
+    setValueSlider(newValue);
+    setValueDisplaySlider(formattedValue);
+  };
+
+  const [valueDisplaySlider, setValueDisplaySlider] = useState([
+    pemisahRibuan(100000),
+    pemisahRibuan(1000000),
+  ]);
+  const handleChangeDisplaySlider = (index, newValue) => {
+    // Remove thousand separators and convert to number
+    const numberValue = Number(newValue.replace(/\./g, ""));
+    const displayValue = pemisahRibuan(numberValue);
+    // Update valueSlider
+    const newValueSlider = [...valueSlider];
+    newValueSlider[index] = numberValue;
+    setValueSlider(newValueSlider);
+
+    // Update valueDisplaySlider
+    const newValueDisplaySlider = [...valueDisplaySlider];
+    newValueDisplaySlider[index] = displayValue;
+    setValueDisplaySlider(newValueDisplaySlider);
+  };
+
+  const handleCheckboxChange = (event) => {
+    const newArray = [...checkboxValues];
+    if (event.target.checked) {
+      newArray.push(event.target.name);
+    } else {
+      const index = newArray.indexOf(event.target.name);
+      if (index > -1) {
+        newArray.splice(index, 1);
+      }
+    }
+    setCheckboxValues(newArray);
+    onArrayChange(newArray);
+  };
+
+  const resetFields = () => {
+    setValueSlider([100000, 1000000]);
+    setValueDisplaySlider([pemisahRibuan(100000), pemisahRibuan(1000000)]);
+    setValueDatePicker1(null);
+    setValueDatePicker2(null);
+    setCheckboxValues([]);
   };
 
   return (
     <>
       <SwipeableDrawer
         anchor="bottom"
-        open={open}
-        onClose={() => setOpen(false)}
+        open={openDrawer}
+        onClose={() => setOpenDrawer(false)}
         PaperProps={{ style: drawerStyle }}
         swipeAreaWidth={"38px"}
         disableSwipeToOpen={true}
@@ -47,8 +120,12 @@ const BotDrawerFilter = ({ open, setOpen }) => {
         </div>
         <Stack className="px-4" direction="row" justifyContent="space-between">
           <IconButton
-            onClick={() => setOpen(false)}
-            style={{ width: "62px", justifyContent: "flex-start" }}
+            onClick={() => setOpenDrawer(false)}
+            style={{
+              width: "62px",
+              justifyContent: "flex-start",
+              paddingLeft: "0px",
+            }}
           >
             <Icon
               icon={"feather:x"}
@@ -62,7 +139,8 @@ const BotDrawerFilter = ({ open, setOpen }) => {
           <Button
             variant="text"
             className="text-success-Main font-semibold text-sm leading-[14px]"
-            onClick={null}
+            onClick={resetFields}
+            sx={{ paddingRight: "0px", justifyContent: "flex-end" }}
           >
             Reset
           </Button>
@@ -72,31 +150,299 @@ const BotDrawerFilter = ({ open, setOpen }) => {
           divider={
             <Divider variant="fullWidth" sx={{ marginY: "10px" }}></Divider>
           }
-          sx={{ px: "16px" }}
+          sx={{ px: "16px", mb: "72px" }}
         >
           <Stack gap={"10px"}>
-            <div>{"Tanggal Transaksi"}</div>
-            <Stack direction="row" justifyContent="space-between" width="100%">
-              <div onClick={handleOpen}>TEST</div>
-              <div>{"S/D"}</div>
-              <div>TES</div>
-            </Stack>
+            <div className="text-sm text-[15px] font-bold">
+              {"Tanggal Transaksi"}
+            </div>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                width="100%"
+              >
+                {" "}
+                <MobileDatePicker
+                  open={openDatePicker1}
+                  value={valueDatePicker1}
+                  onChange={(newValue) => {
+                    setValueDatePicker1(newValue);
+                  }}
+                  onClose={() => setOpenDatePicker1(false)}
+                  format="DD MMM YYYY"
+                  slotProps={{
+                    textField: {
+                      size: "medium",
+                      InputProps: {
+                        placeholder: "Awal",
+                        sx: {
+                          paddingLeft: "0px",
+                          borderRadius: "8px",
+                          border: "1px solid",
+                          borderColor: valueDatePicker1
+                            ? "neutral.100"
+                            : "neutral.40",
+                        },
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <IconButton onClick={handleOpenDatePicker1}>
+                              <Icon
+                                icon={"uil:calendar-alt"}
+                                className="text-[#50555B]"
+                                style={{ fontSize: "24px" }}
+                              ></Icon>
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      },
+                    },
+                  }}
+                />
+                <div className="px-1.5 font-bold text-xs tracking-wider flex items-center justify-center">
+                  {"S/D"}
+                </div>
+                <MobileDatePicker
+                  open={openDatePicker2}
+                  value={valueDatePicker2}
+                  onChange={(newValue) => {
+                    setValueDatePicker2(newValue);
+                  }}
+                  onClose={() => setOpenDatePicker2(false)}
+                  format="DD MMM YYYY"
+                  slotProps={{
+                    textField: {
+                      size: "medium",
+                      InputProps: {
+                        placeholder: "Akhir",
+                        sx: {
+                          paddingLeft: "0px",
+                          borderRadius: "8px",
+                          border: "1px solid",
+                          borderColor: valueDatePicker2
+                            ? "neutral.100"
+                            : "neutral.40",
+                        },
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <IconButton onClick={handleOpenDatePicker2}>
+                              <Icon
+                                icon={"uil:calendar-alt"}
+                                className="text-[#50555B]"
+                                style={{ fontSize: "24px" }}
+                              ></Icon>
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      },
+                    },
+                  }}
+                />
+              </Stack>
+            </LocalizationProvider>
           </Stack>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            {" "}
-            <MobileDatePicker
-              open={open2}
-              value={value}
-              onChange={(newValue) => {
-                setValue(newValue);
+
+          <Stack gap={"10px"}>
+            <div className="text-sm text-[15px] font-bold">{"Nilai Gadai"}</div>
+
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+              width="100%"
+              className="flex"
+            >
+              <div className="flex-1 flex  rounded-lg border border-neutral-100 w-full ">
+                <input
+                  type="text"
+                  value={valueDisplaySlider[0]}
+                  onChange={(event) =>
+                    handleChangeDisplaySlider(0, event.target.value)
+                  }
+                  className="w-full mx-2.5 my-[15px] focus:outline-none"
+                  onkeydown={(event) => {
+                    if (!/[0-9]/.test(event.key)) {
+                      event.preventDefault();
+                    }
+                  }}
+                />
+              </div>
+              <Divider
+                variant="fullWidth"
+                color="neutral.100"
+                className="flex-1 w-full max-w-[32px] flex"
+              ></Divider>
+              <div className="flex-1 flex  rounded-lg border border-neutral-100 w-full">
+                <input
+                  type="text"
+                  value={valueDisplaySlider[1]}
+                  onChange={(event) =>
+                    handleChangeDisplaySlider(1, event.target.value)
+                  }
+                  className="w-full text-right mx-2.5 my-[15px] focus:border-none focus:outline-none"
+                  onkeydown={(event) => {
+                    if (!/[0-9]/.test(event.key)) {
+                      event.preventDefault();
+                    }
+                  }}
+                />
+              </div>
+            </Stack>
+            <Slider
+              value={valueSlider}
+              onChange={handleChangeSlider}
+              disableSwap
+              max={5000000}
+              min={0}
+              sx={{
+                color: "#AAAAAA",
+                "& .MuiSlider-thumb": {
+                  backgroundColor: "#FFFFFF",
+                  border: "1px solid #BDBDBD",
+                },
+                "& .MuiSlider-track": {
+                  backgroundColor: "success.main",
+                },
+                "& .MuiSlider-rail": {
+                  opacity: 0.5,
+                  backgroundColor: "#AAAAAA",
+                },
+                "& .MuiSlider-valueLabel": {
+                  color: "black",
+                  "& *": {
+                    background: "transparent",
+                    color: "inherit",
+                  },
+                },
+                "&:hover, &.Mui-focusVisible": {
+                  "& .MuiSlider-thumb": {
+                    backgroundColor: "#FFFFFF",
+                    boxShadow: `0px 0px 0px 8px ${alpha("#AAAAAA", 0.16)}`,
+                  },
+                },
               }}
-              onClose={() => setOpen2(false)}
-              slotProps={{ textField: { size: "small",  } }}
-            />
-          </LocalizationProvider>
-          <div>again</div>
+            ></Slider>
+          </Stack>
+          <Stack gap={"10px"}>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              {" "}
+              <Stack direction="row" gap={"6px"}>
+                <div className="text-sm text-[15px] font-bold">
+                  {"Nilai Gadai"}
+                </div>
+                <div className="rounded-full bg-themeColor px-2  text-neutral-10">
+                  0
+                </div>
+              </Stack>
+              <Button
+                variant="text"
+                className="text-success-Main font-bold text-sm leading-[14px] capitalize"
+                onClick={null}
+                sx={{ paddingRight: "0px", justifyContent: "flex-end" }}
+              >
+                Selengkapnya
+              </Button>
+            </Stack>
+            <Grid container direction="row" wrap="wrap" spacing={1}>
+              <Grid item>
+                <Chip
+                  label="1 Bulan"
+                  variant="outlined"
+                  color="success"
+                  className="font-normal text-sm px-0.5 py-[7px]"
+                />
+              </Grid>
+              <Grid item>
+                <Chip
+                  label="1 Tahun"
+                  variant="outlined"
+                  color="success"
+                  className="font-normal text-sm px-0.5 py-[7px]"
+                />
+              </Grid>
+              <Grid item>
+                <Chip
+                  label="2 Tahun"
+                  variant="outlined"
+                  color="success"
+                  className="font-normal text-sm px-0.5 py-[7px]"
+                />
+              </Grid>
+              <Grid item>
+                <Chip
+                  label="7 Hari"
+                  variant="outlined"
+                  color="success"
+                  className="font-normal text-sm px-0.5 py-[7px]"
+                />
+              </Grid>
+              <Grid item>
+                <Chip
+                  label="6 Bulan"
+                  variant="outlined"
+                  color="success"
+                  className="font-normal text-sm px-0.5 py-[7px]"
+                />
+              </Grid>
+            </Grid>
+          </Stack>
+          <Stack gap={"10px"}>
+            <div className="text-sm text-[15px] font-bold">{"Status"}</div>
+            <FormGroup>
+              {["Aktif", "Tebus", "Lelang", "batal"].map((name) => (
+                <FormControlLabel
+                  key={name}
+                  label={name}
+                  labelPlacement="start"
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginLeft: "0px",
+                  }}
+                  control={
+                    <Checkbox
+                      name={name}
+                      checked={checkboxValues.includes(name)}
+                      onChange={handleCheckboxChange}
+                      sx={{
+                        "&.Mui-checked": {
+                          color: "transparent",
+                        },
+                        "&.MuiCheckbox-root": {
+                          color: "green",
+                        },
+                      }}
+                    />
+                  }
+
+                  // other props
+                />
+              ))}
+            </FormGroup>
+          </Stack>
         </Stack>
       </SwipeableDrawer>
+      {openDrawer && (
+        <div className="fixed bottom-0 w-full flex justify-between px-4 py-2 mt-4 space-x-2.5 bg-white  shadow-customForFilter z-[2000]">
+          <button
+            className="bg-neutral-10 text-success-Main w-full px-3.5 py-2 rounded-xl shadow h-[52px] border border-success-Main text-lg font-bold"
+            onClick={() => {
+              resetFields();
+              setOpenDrawer(false);
+            }}
+          >
+            Batal
+          </button>
+          <button className="bg-success-Main text-white w-full  px-3.5   py-2 rounded-xl shadow h-[52px] text-lg font-bold">
+            Terapkan
+          </button>
+        </div>
+      )}
     </>
   );
 };
