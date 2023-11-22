@@ -2,6 +2,7 @@ import { Icon } from "@iconify/react";
 import { Fab, IconButton } from "@mui/material";
 import React, { useState } from "react";
 import BotDrawerFilter from "./botdrawerfilter";
+import BotDrawerSort from "./botdrawersort";
 
 function BotNavBarNFab({
   title,
@@ -11,15 +12,24 @@ function BotNavBarNFab({
   iconKanan,
   iconFab,
   onFilterChange,
+  onSortChange,
 }) {
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const [isDrawerFilterOpen, setDrawerFilterOpen] = useState(false);
+  const [isDrawerSortOpen, setDrawerSortrOpen] = useState(false);
 
   const [isFilterApplied, setFilterApplied] = useState(false);
+  const [isSortApplied, setSortApplied] = useState(false);
 
-  const handleArrayChange = (newArray) => {
+  const handleFilterChange = (newArray) => {
     console.log(newArray);
     setFilterApplied(Object.keys(newArray).length > 0);
     onFilterChange(newArray);
+  };
+
+  const handleSortChange = (newArray) => {
+    console.log(newArray);
+    setSortApplied(Object.keys(newArray).length > 0);
+    onSortChange(newArray);
   };
 
   return (
@@ -42,7 +52,7 @@ function BotNavBarNFab({
               />
             </svg>
             <div className="absolute bottom-3 right-[45%] transform translate-x-1/2">
-              <IconButton onClick={() => setDrawerOpen(true)}>
+              <IconButton onClick={() => setDrawerFilterOpen(true)}>
                 {" "}
                 <Icon
                   className={
@@ -101,9 +111,11 @@ function BotNavBarNFab({
               />
             </svg>
             <div className="absolute bottom-3 right-[55%] transform translate-x-1/2 z-50">
-              <IconButton onClick={() => null}>
+              <IconButton onClick={() => setDrawerSortrOpen(true)}>
                 <Icon
-                  className="text-neutral-100"
+                  className={
+                    isSortApplied ? "text-success-Main" : "text-neutral-100"
+                  }
                   icon={iconKanan}
                   style={{ fontSize: "24px" }}
                 />
@@ -112,9 +124,14 @@ function BotNavBarNFab({
           </div>
         </div>
         <BotDrawerFilter
-          open={isDrawerOpen}
-          setOpen={setDrawerOpen}
-          onFilterSubmit={handleArrayChange}
+          open={isDrawerFilterOpen}
+          setOpen={setDrawerFilterOpen}
+          onFilterSubmit={handleFilterChange}
+        />
+        <BotDrawerSort
+          open={isDrawerSortOpen}
+          setOpen={setDrawerSortrOpen}
+          onSortSubmit={handleSortChange}
         />
       </div>
     </>

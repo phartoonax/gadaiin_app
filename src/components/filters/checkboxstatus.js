@@ -3,6 +3,7 @@ import React from "react";
 
 const CheckboxStatus = ({ title,arrayCheckBox, checkBoxValues, checkBoxHandler }) => {
   return (
+    <>
     <Stack gap={"10px"}>
       <div className="text-sm text-[15px] font-bold">{title}</div>
 
@@ -39,7 +40,9 @@ const CheckboxStatus = ({ title,arrayCheckBox, checkBoxValues, checkBoxHandler }
         ))}
       </FormGroup>
     </Stack>
+    </>
   );
+  
 };
 
 export default CheckboxStatus;

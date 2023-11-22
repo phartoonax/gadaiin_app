@@ -137,7 +137,6 @@ function ListGadai() {
         <AppBarWithSearch />
 
         <BotNavbarNfab
-          title={"tempe"}
           iconKiri={iconKiri}
           iconKanan={iconKanan}
           iconFab={iconFab}
