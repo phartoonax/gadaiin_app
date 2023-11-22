@@ -6,6 +6,7 @@ import QRScanner from "./Pages/dashboard/qrscanner";
 import Profile from "./Pages/profile/profile";
 import CameraProfile from "./Pages/profile/cameraprofile";
 import ListGadai from "./Pages/gadai/listgadai";
+import PagePeriodeGadai from "./components/filters/pageperiodegadai";
 
 /**
  * Description placeholder
@@ -25,6 +26,7 @@ const Rute = (props) => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/camera" element={<CameraProfile />} />
         <Route path="/list/gadai" element={<ListGadai />} />
+        <Route path="/filters/periodegadai" element={<PagePeriodeGadai />} />
       </Routes>
     </>
   );

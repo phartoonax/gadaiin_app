@@ -1,33 +1,26 @@
 import React, { useState } from "react";
 import {
   Button,
-  Checkbox,
-  Chip,
   Divider,
-  FormControlLabel,
-  FormGroup,
-  Grid,
   IconButton,
-  InputAdornment,
-  Slider,
   Stack,
   SwipeableDrawer,
-  alpha,
 } from "@mui/material";
 
-import { MobileDatePicker } from "@mui/x-date-pickers";
-import { LocalizationProvider } from "@mui/x-date-pickers/";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Icon } from "@iconify/react";
+import CheckboxStatus from "./filters/checkboxstatus";
+import ChipSelectPeriode from "./filters/chipselectperiode";
+import SliderWithTextboxNilaiGadai from "./filters/sliderwtextboxnilaigadai";
+import TextboxDateSelectorTglTrans from "./filters/textboxdateselectortgltrans";
 
 const BotDrawerFilter = ({
   open: openDrawer,
   setOpen: setOpenDrawer,
-  onArrayChange,
+  onFilterSubmit,
 }) => {
   const drawerStyle = {
     width: "100%",
-    maxHeight: "80%",
+    maxHeight: "85%",
     backgroundColor: "white",
     borderTopLeftRadius: "20px",
     borderTopRightRadius: "20px",
@@ -40,20 +33,11 @@ const BotDrawerFilter = ({
   const [periodeGadaiValues, setPeriodeGadaiValues] = useState([]);
   const [checkboxStatusValues, setCheckboxStatusValues] = useState([]);
 
-  const [openDatePicker1, setOpenDatePicker1] = useState(false);
   const [valueDatePicker1, setValueDatePicker1] = useState(null);
 
-  const [openDatePicker2, setOpenDatePicker2] = useState(false);
   const [valueDatePicker2, setValueDatePicker2] = useState(null);
 
-  const [valueSlider, setValueSlider] = useState([100000, 1000000]);
-
-  const handleOpenDatePicker1 = () => {
-    setOpenDatePicker1(true);
-  };
-  const handleOpenDatePicker2 = () => {
-    setOpenDatePicker2(true);
-  };
+  const [valueSlider, setValueSlider] = useState([0, 5000000]);
 
   const pemisahRibuan = (harga) => {
     return harga.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -66,8 +50,8 @@ const BotDrawerFilter = ({
   };
 
   const [valueDisplaySlider, setValueDisplaySlider] = useState([
-    pemisahRibuan(100000),
-    pemisahRibuan(1000000),
+    pemisahRibuan(0),
+    pemisahRibuan(5000000),
   ]);
   const handleChangeDisplaySlider = (index, newValue) => {
     // Remove thousand separators and convert to number
@@ -94,8 +78,8 @@ const BotDrawerFilter = ({
         newArray.splice(index, 1);
       }
     }
+
     setCheckboxStatusValues(newArray);
-    onArrayChange(newArray);
   };
 
   const handleChipClick = (value) => {
@@ -109,6 +93,7 @@ const BotDrawerFilter = ({
   };
 
   const chipValues = ["1 Bulan", "1 Tahun", "2 Tahun", "7 Hari", "6 Bulan"];
+  const checkBoxStatusvalues = ["Aktif", "Tebus", "Lelang", "Batal", "Jual"];
 
   const resetFields = () => {
     setValueSlider([0, 0]);
@@ -117,6 +102,24 @@ const BotDrawerFilter = ({
     setValueDatePicker2(null);
     setCheckboxStatusValues([]);
     setPeriodeGadaiValues([]);
+  };
+
+  const handleApply = () => {
+    const filters = {
+      TglTransaksiAwal: valueDatePicker1,
+      TglTransaksiAkhir: valueDatePicker2,
+      NilaiGadaiAwal: valueSlider[0],
+      NilaiGadaiAkhir: valueSlider[1],
+      PeriodeGadai: periodeGadaiValues,
+      Status: checkboxStatusValues,
+    };
+
+    const isEmpty = Object.values(filters).every(
+      (val) => !val || val === 0 || val === "" || val.length === 0
+    );
+
+    onFilterSubmit(isEmpty ? {} : filters);
+    setOpenDrawer(false);
   };
 
   return (
@@ -166,252 +169,34 @@ const BotDrawerFilter = ({
           }
           sx={{ px: "16px", mb: "72px" }}
         >
-          <Stack gap={"10px"}>
-            <div className="text-sm text-[15px] font-bold">
-              {"Tanggal Transaksi"}
-            </div>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                width="100%"
-              >
-                {" "}
-                <MobileDatePicker
-                  open={openDatePicker1}
-                  value={valueDatePicker1}
-                  onChange={(newValue) => {
-                    setValueDatePicker1(newValue);
-                  }}
-                  onClose={() => setOpenDatePicker1(false)}
-                  format="DD MMM YYYY"
-                  slotProps={{
-                    textField: {
-                      size: "medium",
-                      InputProps: {
-                        placeholder: "Awal",
-                        sx: {
-                          paddingLeft: "0px",
-                          borderRadius: "8px",
-                          border: "1px solid",
-                          borderColor: valueDatePicker1
-                            ? "neutral.100"
-                            : "neutral.40",
-                        },
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <IconButton onClick={handleOpenDatePicker1}>
-                              <Icon
-                                icon={"uil:calendar-alt"}
-                                className="text-[#50555B]"
-                                style={{ fontSize: "24px" }}
-                              ></Icon>
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      },
-                    },
-                  }}
-                />
-                <div className="px-1.5 font-bold text-xs tracking-wider flex items-center justify-center">
-                  {"S/D"}
-                </div>
-                <MobileDatePicker
-                  open={openDatePicker2}
-                  value={valueDatePicker2}
-                  onChange={(newValue) => {
-                    setValueDatePicker2(newValue);
-                  }}
-                  onClose={() => setOpenDatePicker2(false)}
-                  format="DD MMM YYYY"
-                  slotProps={{
-                    textField: {
-                      size: "medium",
-                      InputProps: {
-                        placeholder: "Akhir",
-                        sx: {
-                          paddingLeft: "0px",
-                          borderRadius: "8px",
-                          border: "1px solid",
-                          borderColor: valueDatePicker2
-                            ? "neutral.100"
-                            : "neutral.40",
-                        },
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <IconButton onClick={handleOpenDatePicker2}>
-                              <Icon
-                                icon={"uil:calendar-alt"}
-                                className="text-[#50555B]"
-                                style={{ fontSize: "24px" }}
-                              ></Icon>
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      },
-                    },
-                  }}
-                />
-              </Stack>
-            </LocalizationProvider>
-          </Stack>
+          <TextboxDateSelectorTglTrans
+            title={"Tanggal Transaksi"}
+            setValueDatePicker1={setValueDatePicker1}
+            valueDatePicker1={valueDatePicker1}
+            valueDatePicker2={valueDatePicker2}
+            setValueDatePicker2={setValueDatePicker2}
+          ></TextboxDateSelectorTglTrans>
 
-          <Stack gap={"10px"}>
-            <div className="text-sm text-[15px] font-bold">{"Nilai Gadai"}</div>
+          <SliderWithTextboxNilaiGadai
+            title={"Nilai Gadai"}
+            valueDisplaySlider={valueDisplaySlider}
+            handleChangeDisplaySlider={handleChangeDisplaySlider}
+            valueSlider={valueSlider}
+            handleChangeSlider={handleChangeSlider}
+          />
 
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-              width="100%"
-              className="flex"
-            >
-              <div className="flex-1 flex  rounded-lg border border-neutral-100 w-full ">
-                <input
-                  type="text"
-                  value={valueDisplaySlider[0]}
-                  onChange={(event) =>
-                    handleChangeDisplaySlider(0, event.target.value)
-                  }
-                  className="w-full mx-2.5 my-[15px] focus:outline-none"
-                  onkeydown={(event) => {
-                    if (!/[0-9]/.test(event.key)) {
-                      event.preventDefault();
-                    }
-                  }}
-                />
-              </div>
-              <Divider
-                variant="fullWidth"
-                color="neutral.100"
-                className="flex-1 w-full max-w-[32px] flex"
-              ></Divider>
-              <div className="flex-1 flex  rounded-lg border border-neutral-100 w-full">
-                <input
-                  type="text"
-                  value={valueDisplaySlider[1]}
-                  onChange={(event) =>
-                    handleChangeDisplaySlider(1, event.target.value)
-                  }
-                  className="w-full text-right mx-2.5 my-[15px] focus:border-none focus:outline-none"
-                  onkeydown={(event) => {
-                    if (!/[0-9]/.test(event.key)) {
-                      event.preventDefault();
-                    }
-                  }}
-                />
-              </div>
-            </Stack>
-            <Slider
-              value={valueSlider}
-              onChange={handleChangeSlider}
-              disableSwap
-              max={5000000}
-              min={0}
-              sx={{
-                color: "#AAAAAA",
-                "& .MuiSlider-thumb": {
-                  backgroundColor: "#FFFFFF",
-                  border: "1px solid #BDBDBD",
-                },
-                "& .MuiSlider-track": {
-                  backgroundColor: "success.main",
-                },
-                "& .MuiSlider-rail": {
-                  opacity: 0.5,
-                  backgroundColor: "#AAAAAA",
-                },
-                "& .MuiSlider-valueLabel": {
-                  color: "black",
-                  "& *": {
-                    background: "transparent",
-                    color: "inherit",
-                  },
-                },
-                "&:hover, &.Mui-focusVisible": {
-                  "& .MuiSlider-thumb": {
-                    backgroundColor: "#FFFFFF",
-                    boxShadow: `0px 0px 0px 8px ${alpha("#AAAAAA", 0.16)}`,
-                  },
-                },
-              }}
-            ></Slider>
-          </Stack>
-          <Stack gap={"10px"}>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              {" "}
-              <Stack direction="row" gap={"6px"}>
-                <div className="text-sm text-[15px] font-bold">
-                  {"Periode Gadai"}
-                </div>
-                <div className="rounded-full bg-themeColor px-2  text-neutral-10">
-                  {periodeGadaiValues.length}
-                </div>
-              </Stack>
-              <Button
-                variant="text"
-                className="text-success-Main font-bold text-sm leading-[14px] capitalize"
-                onClick={null}
-                sx={{ paddingRight: "0px", justifyContent: "flex-end" }}
-              >
-                Tambah
-              </Button>
-            </Stack>
-            <Grid container direction="row" wrap="wrap" spacing={1}>
-              {chipValues.map((value) => (
-                <Grid item key={value}>
-                  <Chip
-                    label={value}
-                    variant={
-                      periodeGadaiValues.includes(value) ? "solid" : "outlined"
-                    }
-                    color={"success"}
-                    className="font-normal text-sm px-0.5 py-[7px]"
-                    onClick={() => handleChipClick(value)}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </Stack>
-          <Stack gap={"10px"}>
-            <div className="text-sm text-[15px] font-bold">{"Status"}</div>
-            <FormGroup>
-              {["Aktif", "Tebus", "Lelang", "batal"].map((name) => (
-                <FormControlLabel
-                  key={name}
-                  label={name}
-                  labelPlacement="start"
-                  sx={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginLeft: "0px",
-                  }}
-                  control={
-                    <Checkbox
-                      name={name}
-                      checked={checkboxStatusValues.includes(name)}
-                      onChange={handleCheckboxChange}
-                      sx={{
-                        "&.Mui-checked": {
-                          color: "transparent",
-                        },
-                        "&.MuiCheckbox-root": {
-                          color: "green",
-                        },
-                      }}
-                    />
-                  }
-
-                  // other props
-                />
-              ))}
-            </FormGroup>
-          </Stack>
+          <ChipSelectPeriode
+            chipValues={chipValues}
+            handleChipClick={handleChipClick}
+            periodeGadaiValues={periodeGadaiValues}
+            title={"Periode Gadai"}
+          />
+          <CheckboxStatus
+            title={"Status"}
+            arrayCheckBox={checkBoxStatusvalues}
+            checkBoxHandler={handleCheckboxChange}
+            checkBoxValues={checkboxStatusValues}
+          ></CheckboxStatus>
         </Stack>
       </SwipeableDrawer>
       {openDrawer && (
@@ -425,7 +210,10 @@ const BotDrawerFilter = ({
           >
             Batal
           </button>
-          <button className="bg-success-Main text-white w-full  px-3.5   py-2 rounded-xl shadow h-[52px] text-lg font-bold">
+          <button
+            className="bg-success-Main text-white w-full  px-3.5   py-2 rounded-xl shadow h-[52px] text-lg font-bold"
+            onClick={handleApply}
+          >
             Terapkan
           </button>
         </div>

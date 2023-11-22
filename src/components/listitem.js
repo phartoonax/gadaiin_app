@@ -6,15 +6,15 @@ const ListItem = ({ data }) => {
   const colorStatus = data.status;
   const getCardBorderColor = () => {
     switch (colorStatus) {
-      case "gadai":
+      case "Aktif":
         return "border-t-success-Main";
-      case "batal":
+      case "Batal":
         return "border-t-danger-Main";
-      case "lunas":
+      case "Tebus":
         return "border-t-warning-Main";
-      case "proses":
+      case "Lelang":
         return "border-t-lelang-Main";
-      case "terlambat":
+      case "Jual":
         return "border-t-primary-Main";
       default:
         return "border-none";
@@ -23,15 +23,15 @@ const ListItem = ({ data }) => {
 
   const getIconColor = () => {
     switch (colorStatus) {
-      case "gadai":
+      case "Aktif":
         return "text-success-Main";
-      case "batal":
+      case "Batal":
         return "text-danger-Main";
-      case "lunas":
+      case "Tebus":
         return "text-warning-Main";
-      case "proses":
+      case "Lelang":
         return "text-lelang-Main";
-      case "terlambat":
+      case "Jual":
         return "text-primary-Main";
       default:
         return "text-neutral-500";
@@ -40,15 +40,15 @@ const ListItem = ({ data }) => {
 
   const getDateColor = () => {
     switch (colorStatus) {
-      case "gadai":
+      case "Aktif":
         return "bg-success-Surface";
-      case "batal":
+      case "Batal":
         return "bg-danger-Surface";
-      case "lunas":
+      case "Tebus":
         return "bg-warning-Surface";
-      case "proses":
+      case "Lelang":
         return "bg-lelang-Surface";
-      case "terlambat":
+      case "Jual":
         return "bg-primary-Surface";
       default:
         return "bg-neutral-100";
@@ -58,7 +58,7 @@ const ListItem = ({ data }) => {
   const hitungBunga = (harga, bunga) => {
     const bunga1 = parseInt(bunga);
     const harga1 = parseInt(harga);
-    const hitung = harga1 * (bunga1 / 100);
+    const hitung = Math.round(harga1 * (bunga1 / 100));
     return hitung;
   };
 

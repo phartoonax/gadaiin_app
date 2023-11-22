@@ -10,11 +10,16 @@ function BotNavBarNFab({
   iconKiri,
   iconKanan,
   iconFab,
+  onFilterChange,
 }) {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
+  const [isFilterApplied, setFilterApplied] = useState(false);
+
   const handleArrayChange = (newArray) => {
     console.log(newArray);
+    setFilterApplied(Object.keys(newArray).length > 0);
+    onFilterChange(newArray);
   };
 
   return (
@@ -40,7 +45,9 @@ function BotNavBarNFab({
               <IconButton onClick={() => setDrawerOpen(true)}>
                 {" "}
                 <Icon
-                  className="text-neutral-100"
+                  className={
+                    isFilterApplied ? "text-success-Main" : "text-neutral-100"
+                  }
                   icon={iconKiri}
                   style={{ fontSize: "24px" }}
                 />
@@ -107,7 +114,7 @@ function BotNavBarNFab({
         <BotDrawerFilter
           open={isDrawerOpen}
           setOpen={setDrawerOpen}
-          onArrayChange={handleArrayChange}
+          onFilterSubmit={handleArrayChange}
         />
       </div>
     </>
