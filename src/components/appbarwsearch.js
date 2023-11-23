@@ -2,7 +2,8 @@ import { Icon } from "@iconify/react";
 import { IconButton } from "@mui/material";
 import React, { useState } from "react";
 
-function AppBarWithSearch() {
+//TODO: TAMBAH DATA RETURN UNTUK API BACKEND
+function AppBarWithSearch({ placeholder, onSearchChange, onClearSearch }) {
   const [isSearchFilled, setIsSearchFilled] = useState(false);
   const [searchInput, setSearchInput] = useState("");
 
@@ -30,7 +31,7 @@ function AppBarWithSearch() {
       <input
         className="bg-transparent text-neutral-100 outline-none w-full focus:w-full transition-width duration-200 ease-in-out"
         type="text"
-        placeholder="Search"
+        placeholder={placeholder}
         value={searchInput}
         onChange={handleSearchInputChange}
       />

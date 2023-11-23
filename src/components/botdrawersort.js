@@ -6,7 +6,8 @@ import {
   SwipeableDrawer,
 } from "@mui/material";
 import { Icon } from "@iconify/react";
-import React from "react";
+import React, { useState } from "react";
+import SwitcherSortItem from "./sort/switchersortitem";
 
 const BotDrawerSort = ({
   open: openDrawer,
@@ -23,6 +24,33 @@ const BotDrawerSort = ({
     bottom: 0,
     zIndex: 999,
     boxShadow: "0px -4px 10px rgba(0, 0, 0, 0.1)",
+  };
+  const [valueStatusSort, setValueStatusSort] = useState({});
+
+  const isiSortItem = ["Nilai Gadai", "Nomer Gadai", "Tanggal Transaksi"];
+
+  const resetFields = () => {
+    //TODO: GANTI DENGAN VALUE SORT
+    setValueStatusSort({});
+  };
+
+  const handleApply = () => {
+    const filters = {
+      StatusSort: valueStatusSort,
+    };
+
+    const isEmpty = Object.values(filters).every(
+      (val) => !val || val === 0 || val === "" || val.length === 0
+    );
+
+    // onFilterSubmit(isEmpty ? {} : filters);
+    const senttest = isEmpty ? {} : filters;
+    console.log(senttest);
+    setOpenDrawer(false);
+  };
+
+  const handleSortStatusChange = (newSortStatus) => {
+    setValueStatusSort(newSortStatus);
   };
 
   return (
@@ -59,7 +87,7 @@ const BotDrawerSort = ({
           <Button
             variant="text"
             className="text-success-Main font-semibold text-sm leading-[14px]"
-            onClick={null}
+            onClick={resetFields}
             sx={{ paddingRight: "0px", justifyContent: "flex-end" }}
           >
             Reset
@@ -71,7 +99,34 @@ const BotDrawerSort = ({
             <Divider variant="fullWidth" sx={{ marginY: "10px" }}></Divider>
           }
           sx={{ px: "16px", mb: "72px" }}
-        ></Stack>
+        >
+          {" "}
+          <SwitcherSortItem
+            isiSortItem={isiSortItem}
+            handleSortStatusChange={handleSortStatusChange}
+            valueStatusSort={valueStatusSort}
+          />
+        </Stack>
+
+        {openDrawer && (
+          <div className="fixed bottom-0 w-full flex justify-between px-4 py-2 mt-4 space-x-2.5 bg-white  shadow-customForFilter z-[2000]">
+            <button
+              className="bg-neutral-10 text-success-Main w-full px-3.5 py-2 rounded-xl shadow h-[52px] border border-success-Main text-lg font-bold"
+              onClick={() => {
+                resetFields();
+                setOpenDrawer(false);
+              }}
+            >
+              Batal
+            </button>
+            <button
+              className="bg-success-Main text-white w-full  px-3.5   py-2 rounded-xl shadow h-[52px] text-lg font-bold"
+              onClick={handleApply}
+            >
+              Terapkan
+            </button>
+          </div>
+        )}
       </SwipeableDrawer>
     </>
   );

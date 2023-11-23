@@ -1,11 +1,13 @@
 import { Icon } from "@iconify/react";
-import { Divider, Stack } from "@mui/material";
+import { Divider, IconButton, Stack } from "@mui/material";
 import React from "react";
+import { useState } from "react";
+import BotDrawerOpsi from "./botdraweropsi";
 
 const ListItem = ({ data }) => {
-  const colorStatus = data.status;
+  const status = data.status;
   const getCardBorderColor = () => {
-    switch (colorStatus) {
+    switch (status) {
       case "Aktif":
         return "border-t-success-Main";
       case "Batal":
@@ -22,7 +24,7 @@ const ListItem = ({ data }) => {
   };
 
   const getIconColor = () => {
-    switch (colorStatus) {
+    switch (status) {
       case "Aktif":
         return "text-success-Main";
       case "Batal":
@@ -39,7 +41,7 @@ const ListItem = ({ data }) => {
   };
 
   const getDateColor = () => {
-    switch (colorStatus) {
+    switch (status) {
       case "Aktif":
         return "bg-success-Surface";
       case "Batal":
@@ -66,17 +68,31 @@ const ListItem = ({ data }) => {
     return harga.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   };
 
+  const [isDrawerOpsiOpen, setDrawerOpsirOpen] = useState(false);
+
   return (
     <div
-      className={`border  ${getCardBorderColor()}  border-solid border-t-4 rounded-md my-[10px] text-neutral-100`}
+      className={`border  ${getCardBorderColor()}  border-solid border-t-4 rounded-md my-[10px] text-neutral-100 `}
     >
       <div className="px-4 py-2">
         {" "}
         <Stack direction="row" spacing={2} justifyContent="space-between">
           <p className="font-bold">{data.idtransaksi}</p>
-          <div className="rounded-lg bg-neutral-100 text-neutral-10 px-2.5 ">
-            {data.lokasi}
-          </div>
+          <Stack direction="row">
+            <div className="rounded-lg bg-neutral-100 text-neutral-10 px-2.5 ">
+              {data.lokasi}{" "}
+            </div>
+            <IconButton
+              sx={{ padding: 0, marginRight: "-8px" }}
+              onClick={() => setDrawerOpsirOpen(true)}
+            >
+              <Icon
+                fontSize={"20px"}
+                className="text-neutral-100"
+                icon={"heroicons-outline:dots-vertical"}
+              ></Icon>
+            </IconButton>
+          </Stack>
         </Stack>
         <Divider className="pt-2"></Divider>
         <p className="text-ellipsis font-bold text-base leading-[18px] overflow-hidden whitespace-nowrap py-[4px]">
@@ -159,6 +175,12 @@ pb-1"
           </div>
         </Stack>
       </Stack>
+      <BotDrawerOpsi
+        nogadai={data.idtransaksi}
+        open={isDrawerOpsiOpen}
+        setOpen={setDrawerOpsirOpen}
+        status={data.status}
+      ></BotDrawerOpsi>
     </div>
   );
 };

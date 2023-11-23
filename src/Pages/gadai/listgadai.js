@@ -134,7 +134,7 @@ function ListGadai() {
   return (
     <>
       <div className="font-inter">
-        <AppBarWithSearch />
+        <AppBarWithSearch placeholder={"Cari Data Gadai"}/>
 
         <BotNavbarNfab
           iconKiri={iconKiri}
