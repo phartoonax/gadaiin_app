@@ -2,6 +2,7 @@ import { Icon } from "@iconify/react";
 import { Divider, IconButton, Stack, SwipeableDrawer } from "@mui/material";
 import React from "react";
 import ButtonOpsiItem from "./opsi/buttonopsiitem";
+import { useNavigate } from "react-router-dom";
 
 const BotDrawerOpsi = ({
   open: openDrawer,
@@ -9,6 +10,7 @@ const BotDrawerOpsi = ({
   nogadai,
   status,
 }) => {
+  const Navigate = useNavigate();
   const drawerStyle = {
     width: "100%",
     maxHeight: "85%",
@@ -19,6 +21,41 @@ const BotDrawerOpsi = ({
     bottom: 0,
     zIndex: 999,
     boxShadow: "0px -4px 10px rgba(0, 0, 0, 0.1)",
+  };
+
+  // Unique functions to console.log for each option
+  const handleDetailClick = () => {
+    console.log("Clicked option: Detail");
+  };
+
+  const handleTebusGadaiClick = () => {
+    console.log("Clicked option: Tebus Gadai");
+  };
+
+  const handlePerpanjangGadaiClick = () => {
+    console.log("Clicked option: Perpanjang Gadai");
+  };
+
+  const handleCetakUlangClick = () => {
+    console.log("Clicked option: Cetak Ulang");
+  };
+
+  const handleBatalClick = () => {
+    console.log("Clicked option: Batal");
+  };
+
+  const handleHistoryClick = () => {
+
+    Navigate("/history", { state: { nogadai: nogadai, status: status } });
+  };
+
+  const optionHandlers = {
+    Detail: handleDetailClick,
+    "Tebus Gadai": handleTebusGadaiClick,
+    "Perpanjang Gadai": handlePerpanjangGadaiClick,
+    "Cetak Ulang": handleCetakUlangClick,
+    Batal: handleBatalClick,
+    History: handleHistoryClick,
   };
 
   const options =
@@ -75,12 +112,16 @@ const BotDrawerOpsi = ({
         <Stack
           direction="column"
           divider={
-            <Divider variant="fullWidth" sx={{ marginY: "10px" }}></Divider>
+            <Divider
+              variant="fullWidth"
+              sx={{ marginY: "4px" }}
+              color="#EEEEEE"
+            ></Divider>
           }
-          sx={{ px: "16px" }}
+          sx={{ px: "16px", mb: "8px" }}
         >
           {options.map((name) => (
-            <ButtonOpsiItem title={name} />
+            <ButtonOpsiItem title={name} onClickFunctions={optionHandlers} />
           ))}
         </Stack>
       </SwipeableDrawer>

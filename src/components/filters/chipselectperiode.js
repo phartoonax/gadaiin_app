@@ -1,5 +1,6 @@
 import { Button, Chip, Grid, Stack } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const ChipSelectPeriode = ({
   title,
@@ -7,6 +8,7 @@ const ChipSelectPeriode = ({
   periodeGadaiValues: chipSelectedValues,
   handleChipClick,
 }) => {
+  const navigate = useNavigate();
   return (
     <>
       <Stack gap={"10px"}>
@@ -25,7 +27,7 @@ const ChipSelectPeriode = ({
           <Button
             variant="text"
             className="text-success-Main font-bold text-sm leading-[14px] capitalize"
-            onClick={() => (window.location.href = "/filters/periodegadai")}
+            onClick={() => navigate("/filters/periodegadai")}
             sx={{ paddingRight: "0px", justifyContent: "flex-end" }}
           >
             Tambah

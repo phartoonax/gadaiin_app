@@ -7,6 +7,7 @@ import Profile from "./Pages/profile/profile";
 import CameraProfile from "./Pages/profile/cameraprofile";
 import ListGadai from "./Pages/gadai/listgadai";
 import PagePeriodeGadai from "./components/filters/pageperiodegadai";
+import PageHistoryGadai from "./components/opsi/pagehistorygadai";
 
 /**
  * Description placeholder
@@ -27,6 +28,7 @@ const Rute = (props) => {
         <Route path="/profile/camera" element={<CameraProfile />} />
         <Route path="/list/gadai" element={<ListGadai />} />
         <Route path="/filters/periodegadai" element={<PagePeriodeGadai />} />
+        <Route path="/history" element={<PageHistoryGadai />} />
       </Routes>
     </>
   );

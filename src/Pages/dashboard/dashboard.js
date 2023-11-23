@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 
 const Dashboard = (props) => {
+  
   const [activeTab, setActiveTab] = useState("Rangkuman");
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
