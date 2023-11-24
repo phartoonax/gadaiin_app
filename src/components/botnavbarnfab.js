@@ -3,6 +3,7 @@ import { Fab, IconButton } from "@mui/material";
 import React, { useState } from "react";
 import BotDrawerFilter from "./botdrawerfilter";
 import BotDrawerSort from "./botdrawersort";
+import PagePeriodeGadai from "./filters/pageperiodegadai";
 
 function BotNavBarNFab({
   title,
@@ -31,6 +32,10 @@ function BotNavBarNFab({
     setSortApplied(Object.keys(newArray).length > 0);
     onSortChange(newArray);
   };
+
+  const [showFullPageModal, setShowFullPageModal] = useState(false);
+
+  const [periodeGadaiValues, setPeriodeGadaiValues] = useState([]);
 
   return (
     <>
@@ -127,12 +132,20 @@ function BotNavBarNFab({
           open={isDrawerFilterOpen}
           setOpen={setDrawerFilterOpen}
           onFilterSubmit={handleFilterChange}
+          setShowFullPageModal={setShowFullPageModal}
+          ChangedPeriodeGadaiValues={periodeGadaiValues}
         />
         <BotDrawerSort
           open={isDrawerSortOpen}
           setOpen={setDrawerSortrOpen}
           onSortSubmit={handleSortChange}
         />
+        {showFullPageModal && (
+          <PagePeriodeGadai
+            setShowFullPageModal={setShowFullPageModal}
+            setPeriodeGadaiValues={setPeriodeGadaiValues}
+          />
+        )}
       </div>
     </>
   );

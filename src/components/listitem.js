@@ -123,7 +123,7 @@ pb-1"
             fontSize={"16px"}
             icon={"heroicons-solid:cash"}
             className={`${getIconColor()} } mr-1`}
-          ></Icon>
+          />
           <p>
             Rp{pemisahRibuan(data.harga)} ({data.bunga} | Rp
             {pemisahRibuan(hitungBunga(data.harga, data.bunga))})
@@ -176,10 +176,9 @@ pb-1"
         </Stack>
       </Stack>
       <BotDrawerOpsi
-        nogadai={data.idtransaksi}
         open={isDrawerOpsiOpen}
         setOpen={setDrawerOpsirOpen}
-        status={data.status}
+        data={data}
       ></BotDrawerOpsi>
     </div>
   );

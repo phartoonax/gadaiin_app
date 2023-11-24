@@ -1,14 +1,14 @@
 import { Button, Chip, Grid, Stack } from "@mui/material";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 const ChipSelectPeriode = ({
   title,
   chipValues,
   periodeGadaiValues: chipSelectedValues,
   handleChipClick,
+  setShowFullPageModal,
 }) => {
-  const navigate = useNavigate();
+ 
   return (
     <>
       <Stack gap={"10px"}>
@@ -27,7 +27,7 @@ const ChipSelectPeriode = ({
           <Button
             variant="text"
             className="text-success-Main font-bold text-sm leading-[14px] capitalize"
-            onClick={() => navigate("/filters/periodegadai")}
+            onClick={() => setShowFullPageModal(true)}
             sx={{ paddingRight: "0px", justifyContent: "flex-end" }}
           >
             Tambah

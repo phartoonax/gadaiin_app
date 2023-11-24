@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Divider,
@@ -17,6 +17,8 @@ const BotDrawerFilter = ({
   open: openDrawer,
   setOpen: setOpenDrawer,
   onFilterSubmit,
+  setShowFullPageModal,
+  ChangedPeriodeGadaiValues,
 }) => {
   const drawerStyle = {
     width: "100%",
@@ -31,6 +33,13 @@ const BotDrawerFilter = ({
   };
 
   const [periodeGadaiValues, setPeriodeGadaiValues] = useState([]);
+
+  useEffect(() => {
+    if (ChangedPeriodeGadaiValues && ChangedPeriodeGadaiValues.length > 0) {
+      setPeriodeGadaiValues(ChangedPeriodeGadaiValues);
+    }
+  }, [ChangedPeriodeGadaiValues]);
+
   const [checkboxStatusValues, setCheckboxStatusValues] = useState([]);
 
   const [valueDatePicker1, setValueDatePicker1] = useState(null);
@@ -92,7 +101,21 @@ const BotDrawerFilter = ({
     });
   };
 
-  const chipValues = ["1 Bulan", "1 Tahun", "2 Tahun", "7 Hari", "6 Bulan"];
+  const defaultChipValues = [
+    "7 Hari",
+    "1 Bulan",
+    "6 Bulan",
+    "1 Tahun",
+    "2 Tahun",
+  ];
+
+  let chips = ChangedPeriodeGadaiValues;
+
+  const chipValues =
+    ChangedPeriodeGadaiValues && ChangedPeriodeGadaiValues.length > 0
+      ? chips
+      : defaultChipValues;
+
   const checkBoxStatusvalues = ["Aktif", "Tebus", "Lelang", "Batal", "Jual"];
 
   const resetFields = () => {
@@ -190,12 +213,13 @@ const BotDrawerFilter = ({
             handleChipClick={handleChipClick}
             periodeGadaiValues={periodeGadaiValues}
             title={"Periode Gadai"}
+            setShowFullPageModal={setShowFullPageModal}
           />
           <CheckboxStatus
             title={"Status"}
             arrayCheckBox={checkBoxStatusvalues}
-            checkBoxHandler={handleCheckboxChange}
             checkBoxValues={checkboxStatusValues}
+            checkBoxHandler={handleCheckboxChange}
           ></CheckboxStatus>
         </Stack>
       </SwipeableDrawer>

@@ -4,12 +4,7 @@ import React from "react";
 import ButtonOpsiItem from "./opsi/buttonopsiitem";
 import { useNavigate } from "react-router-dom";
 
-const BotDrawerOpsi = ({
-  open: openDrawer,
-  setOpen: setOpenDrawer,
-  nogadai,
-  status,
-}) => {
+const BotDrawerOpsi = ({ open: openDrawer, setOpen: setOpenDrawer, data }) => {
   const Navigate = useNavigate();
   const drawerStyle = {
     width: "100%",
@@ -45,8 +40,7 @@ const BotDrawerOpsi = ({
   };
 
   const handleHistoryClick = () => {
-
-    Navigate("/history", { state: { nogadai: nogadai, status: status } });
+    Navigate("/history", { state: { data: data } });
   };
 
   const optionHandlers = {
@@ -59,7 +53,7 @@ const BotDrawerOpsi = ({
   };
 
   const options =
-    status === "Aktif"
+    data.status === "Aktif"
       ? [
           "Detail",
           "Tebus Gadai",
