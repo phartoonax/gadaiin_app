@@ -3,59 +3,14 @@ import { Divider, IconButton, Stack } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 import BotDrawerOpsi from "./botdraweropsi";
+import {
+  getIconColor,
+  getDateColor,
+  getCardBorderColor,
+} from "../Pages/functionGlobal";
 
 const ListItem = ({ data }) => {
   const status = data.status;
-  const getCardBorderColor = () => {
-    switch (status) {
-      case "Aktif":
-        return "border-t-success-Main";
-      case "Batal":
-        return "border-t-danger-Main";
-      case "Tebus":
-        return "border-t-warning-Main";
-      case "Lelang":
-        return "border-t-lelang-Main";
-      case "Jual":
-        return "border-t-primary-Main";
-      default:
-        return "border-none";
-    }
-  };
-
-  const getIconColor = () => {
-    switch (status) {
-      case "Aktif":
-        return "text-success-Main";
-      case "Batal":
-        return "text-danger-Main";
-      case "Tebus":
-        return "text-warning-Main";
-      case "Lelang":
-        return "text-lelang-Main";
-      case "Jual":
-        return "text-primary-Main";
-      default:
-        return "text-neutral-500";
-    }
-  };
-
-  const getDateColor = () => {
-    switch (status) {
-      case "Aktif":
-        return "bg-success-Surface";
-      case "Batal":
-        return "bg-danger-Surface";
-      case "Tebus":
-        return "bg-warning-Surface";
-      case "Lelang":
-        return "bg-lelang-Surface";
-      case "Jual":
-        return "bg-primary-Surface";
-      default:
-        return "bg-neutral-100";
-    }
-  };
 
   const hitungBunga = (harga, bunga) => {
     const bunga1 = parseInt(bunga);
@@ -72,7 +27,9 @@ const ListItem = ({ data }) => {
 
   return (
     <div
-      className={`border  ${getCardBorderColor()}  border-solid border-t-4 rounded-md my-[10px] text-neutral-100 `}
+      className={`border  ${getCardBorderColor(
+        status
+      )}  border-solid border-t-4 rounded-md my-[10px] text-neutral-100 `}
     >
       <div className="px-4 py-2">
         {" "}
@@ -111,7 +68,7 @@ pb-1"
           <Icon
             fontSize={"16px"}
             icon={"heroicons-solid:shopping-bag"}
-            className={`${getIconColor()} mr-1`}
+            className={`${getIconColor(status)} mr-1`}
           ></Icon>
           <p>{data.barang}</p>
         </Stack>
@@ -122,7 +79,7 @@ pb-1"
           <Icon
             fontSize={"16px"}
             icon={"heroicons-solid:cash"}
-            className={`${getIconColor()} } mr-1`}
+            className={`${getIconColor(status)} } mr-1`}
           />
           <p>
             Rp{pemisahRibuan(data.harga)} ({data.bunga} | Rp
@@ -136,7 +93,7 @@ pb-1"
           <Icon
             fontSize={"16px"}
             icon={"heroicons-outline:clock"}
-            className={`${getIconColor()} } mr-1`}
+            className={`${getIconColor(status)} } mr-1`}
           ></Icon>
           <p>{data.periodegadai}</p>
         </Stack>
@@ -156,7 +113,7 @@ pb-1"
         }
         justifyContent="space-between"
         alignItems="center"
-        className={getDateColor()}
+        className={getDateColor(status)}
       >
         <Stack direction="column" className=" pl-4 pt-1 pb-2 text-start">
           <div className="text-sm leading-5 font-normal text-neutral-70">

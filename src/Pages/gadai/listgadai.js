@@ -134,12 +134,13 @@ function ListGadai() {
   return (
     <>
       <div className="font-inter">
-        <AppBarWithSearch placeholder={"Cari Data Gadai"}/>
+        <AppBarWithSearch placeholder={"Cari Data Gadai"} />
 
         <BotNavbarNfab
           iconKiri={iconKiri}
           iconKanan={iconKanan}
           iconFab={iconFab}
+          onFabClick={null}
           onFilterChange={handleFilterChange}
         />
         <div className="mx-4">

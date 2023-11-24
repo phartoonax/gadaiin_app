@@ -8,9 +8,11 @@ import Rangkuman from "./rangkuman";
 import Grafik from "./grafik";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = (props) => {
-  
+  const navigate = useNavigate();
+
   const [activeTab, setActiveTab] = useState("Rangkuman");
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -233,7 +235,7 @@ const Dashboard = (props) => {
                       color="black"
                     />
                   }
-                  onClick={() => (window.location.href = "/main/qrscanner")}
+                  onClick={() => navigate("/main/qrscanner")}
                 ></IconButton>
               </div>
             </div>
@@ -274,6 +276,7 @@ const Dashboard = (props) => {
                       ></Icon>
                     }
                     className="bg-transparent text-neutral-10"
+                    onClick={() => navigate("/list/perpanjangan")}
                   >
                     {"Perpanjang"}
                   </Button>
@@ -285,7 +288,7 @@ const Dashboard = (props) => {
                       ></Icon>
                     }
                     className="bg-transparent text-neutral-10"
-                    onClick={() => (window.location.href = "/list/gadai")}
+                    onClick={() => navigate("/list/gadai")}
                   >
                     {"Gadai"}
                   </Button>
