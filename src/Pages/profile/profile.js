@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { AppBar, Box, Button, IconButton, Paper, Stack } from "@mui/material";
+import { Box, Button, IconButton, Paper, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import AppBarPlain from "../../components/appBarPlain";
 
 function Profile() {
   const navigate = useNavigate();
@@ -81,23 +82,7 @@ function Profile() {
   return (
     <>
       <div className="w-screen h-screen flex flex-col justify-start items-start  font-inter">
-        <AppBar position="static" className="bg-neutral-10 p-4" elevation={1}>
-          <toolbar className="flex justify-start items-center">
-            <IconButton
-              sx={{ paddingY: "0px", paddingX: "6px" }}
-              onClick={() => navigate(-1)}
-            >
-              <Icon
-                className="text-neutral-70"
-                icon="feather:arrow-left"
-                style={{ fontSize: "24px" }}
-              />
-            </IconButton>
-            <p className="h-full text-base font-bold text-neutral-100 ml-3 grow">
-              Scan QR
-            </p>
-          </toolbar>
-        </AppBar>
+        <AppBarPlain placeholder={"Profile"} />
         {isDialogOpenChangePass && (
           <div
             className="fixed z-10 inset-0 overflow-y-auto"
@@ -281,7 +266,7 @@ function Profile() {
             <Stack gap={"20px"}>
               <Stack gap={"8px"}>
                 <div className="text-base font-bold">
-                  <span className="text-neutral-100">Email</span>{" "}
+                  <span className="text-neutral-100">Email</span>
                   <span className="text-danger-Main">*</span>
                 </div>
                 <input
@@ -439,7 +424,7 @@ function Profile() {
               fontSize: "15px",
             }}
             className={`${
-              isFormPasswordChangeFilled
+              isFormProfileChangeFilled
                 ? "bg-themeColor text-neutral-10"
                 : "bg-neutral-30 text-neutral-70"
             }`}

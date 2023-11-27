@@ -2,6 +2,7 @@ import { Icon } from "@iconify/react";
 import { AppBar, Button, IconButton } from "@mui/material";
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import AppBarPlain from "../../components/appBarPlain";
 
 const CameraProfile = () => {
   const navigate = useNavigate();
@@ -108,23 +109,7 @@ const CameraProfile = () => {
   return (
     <>
       <div className="relative z-0 w-screen h-screen flex flex-col font-inter">
-        <AppBar position="static" className="bg-neutral-10 p-4" elevation={1}>
-          <toolbar className="flex justify-start items-center">
-            <IconButton
-              sx={{ paddingY: "0px", paddingX: "6px" }}
-              onClick={() => navigate(-1)}
-            >
-              <Icon
-                className="text-neutral-70"
-                icon="feather:arrow-left"
-                style={{ fontSize: "24px" }}
-              />
-            </IconButton>
-            <p className="h-full text-base font-bold text-neutral-100 ml-3 grow">
-              Kamera
-            </p>
-          </toolbar>
-        </AppBar>
+        <AppBarPlain placeholder={"Kamera"} />
         <div className="relative justify-center text-center flex flex-col">
           <div
             className={`video-wrapper inline-block relative overflow-hidden w-[100vw] h-[80vh] ${

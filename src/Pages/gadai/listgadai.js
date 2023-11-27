@@ -3,6 +3,7 @@ import BotNavbarNfab from "../../components/botNavBarnFAB";
 import AppBarWithSearch from "../../components/appBarWithSearch";
 import ListItem from "../../components/listItem";
 import { generateRandomDataGadai } from "../../functionGlobal";
+import { useNavigate } from "react-router-dom";
 
 const arrayisi = generateRandomDataGadai(null, 6);
 
@@ -14,6 +15,7 @@ const arrayisi = generateRandomDataGadai(null, 6);
  */
 function ListGadai() {
   const [filteredArray, setFilteredArray] = useState(arrayisi);
+  const navigate = useNavigate();
 
   const handleFilterChangeFAB = (newArray) => {
     const filtered = arrayisi.filter((item) => {
@@ -83,6 +85,9 @@ function ListGadai() {
   const iconKiri = "heroicons-outline:adjustments";
   const iconKanan = "heroicons-outline:switch-vertical";
   const iconFab = "heroicons-outline:plus";
+  function handleFabClick() {
+    navigate("/form/gadai");
+  }
 
   return (
     <>
@@ -93,7 +98,7 @@ function ListGadai() {
           iconKiri={iconKiri}
           iconKanan={iconKanan}
           iconFab={iconFab}
-          onFabClick={null}
+          onFabClick={handleFabClick}
           onFilterChange={handleFilterChangeFAB}
           status={null}
         />

@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
 import { Icon } from "@iconify/react";
 import { AppBar, IconButton, TextField } from "@mui/material";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { QrScanner } from "@yudiel/react-qr-scanner";
+import AppBarPlain from "../../components/appBarPlain";
 
 const QRScanner = () => {
   const [borderSizes, setSBorderSizes] = useState("");
@@ -44,11 +46,12 @@ const QRScanner = () => {
     console.error(error);
   };
 
-  const toggleCamera = () => {
-    setFacingMode((prevFacingMode) =>
-      prevFacingMode === "environment" ? "face" : "environment"
-    );
-  };
+  // const toggleCamera = () => {
+  //   setFacingMode((prevFacingMode) =>
+  //     prevFacingMode === "environment" ? "face" : "environment"
+  //   );
+  // };
+
   const calculateBorderSizes = (horizontalBorderSize, verticalBorderSize) => {
     return {
       horizontal: `${horizontalBorderSize}px solid #1F2933C7`,
@@ -59,30 +62,7 @@ const QRScanner = () => {
   return (
     <>
       <div className="w-screen h-screen flex flex-col justify-start items-start  font-inter">
-        <AppBar position="static" className="bg-neutral-10 p-4" elevation={1}>
-          <toolbar className="flex justify-start items-center">
-            <IconButton
-              sx={{ paddingY: "0px", paddingX: "6px" }}
-              onClick={() => navigate(-1)}
-            >
-              <Icon
-                className="text-neutral-70"
-                icon="feather:arrow-left"
-                style={{ fontSize: "24px" }}
-              />
-            </IconButton>
-            <p className="h-full text-base font-bold text-neutral-100 ml-3 grow">
-              Scan QR
-            </p>
-            <IconButton sx={{ padding: "0px" }}>
-              <Icon
-                className="text-neutral-100"
-                icon="feather:zap-off"
-                style={{ fontSize: "24px" }}
-              />
-            </IconButton>
-          </toolbar>
-        </AppBar>
+        <AppBarPlain iconButton={"feather:zap-off"} placeholder={"Scan QR"} />
         <QrScanner
           onDecode={handleScan}
           containerStyle={{ width: "100vw", height: "80vh" }}
