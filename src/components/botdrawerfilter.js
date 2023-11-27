@@ -12,6 +12,7 @@ import CheckboxStatus from "./filters/checkboxstatus";
 import ChipSelectPeriode from "./filters/chipselectperiode";
 import SliderWithTextboxNilaiGadai from "./filters/sliderwtextboxnilaigadai";
 import TextboxDateSelectorTglTrans from "./filters/textboxdateselectortgltrans";
+import { pemisahRibuan, drawerStyle } from "../functionGlobal";
 
 const BotDrawerFilter = ({
   open: openDrawer,
@@ -20,18 +21,6 @@ const BotDrawerFilter = ({
   setShowFullPageModal,
   ChangedPeriodeGadaiValues,
 }) => {
-  const drawerStyle = {
-    width: "100%",
-    maxHeight: "85%",
-    backgroundColor: "white",
-    borderTopLeftRadius: "20px",
-    borderTopRightRadius: "20px",
-    position: "fixed",
-    bottom: 0,
-    zIndex: 999,
-    boxShadow: "0px -4px 10px rgba(0, 0, 0, 0.1)",
-  };
-
   const [periodeGadaiValues, setPeriodeGadaiValues] = useState([]);
 
   useEffect(() => {
@@ -47,10 +36,6 @@ const BotDrawerFilter = ({
   const [valueDatePicker2, setValueDatePicker2] = useState(null);
 
   const [valueSlider, setValueSlider] = useState([0, 5000000]);
-
-  const pemisahRibuan = (harga) => {
-    return harga.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  };
 
   const handleChangeSlider = (event, newValue) => {
     const formattedValue = newValue.map((value) => pemisahRibuan(value));

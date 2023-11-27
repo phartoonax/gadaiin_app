@@ -87,10 +87,28 @@ const getChipsBorderColor = (status) => {
   }
 };
 
+const drawerStyle = {
+  width: "100%",
+  maxHeight: "85%",
+  backgroundColor: "white",
+  borderTopLeftRadius: "20px",
+  borderTopRightRadius: "20px",
+  position: "fixed",
+  bottom: 0,
+  zIndex: 999,
+  boxShadow: "0px -4px 10px rgba(0, 0, 0, 0.1)",
+};
+
+const pemisahRibuan = (harga) => {
+  return harga.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+};
+
 export {
   getDateColor,
   getIconColor,
   getCardBorderColor,
   getCardGradientColor,
   getChipsBorderColor,
+  pemisahRibuan,
+  drawerStyle,
 };
