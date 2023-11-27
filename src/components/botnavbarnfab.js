@@ -13,6 +13,7 @@ import PagePeriodeGadai from "./filters/pageperiodegadai";
  * @param {function} onFabClick Fungsi yang dipanggil saat Action Button (FAB) diklik
  * @param {function} onFilterChange Fungsi yang dipanggil saat terjadi perubahan filter
  * @param {function} onSortChange Fungsi yang dipanggil saat terjadi perubahan pengurutan
+ * @param {string} status Status dari halaman yang memanggil komponen ini
  * @returns {*} Bottom Navigation dan Action Button (FAB) dengan ikon dan fungsi yang ditentukan, serta laci filter dan sort
  * @author Henry
  * @date 27/11/2023 - 11:30:00 PM
@@ -24,6 +25,7 @@ function BotNavBarNFab({
   onFabClick,
   onFilterChange,
   onSortChange,
+  status,
 }) {
   const [isDrawerFilterOpen, setDrawerFilterOpen] = useState(false);
   const [isDrawerSortOpen, setDrawerSortrOpen] = useState(false);
@@ -144,6 +146,7 @@ function BotNavBarNFab({
           onFilterSubmit={handleFilterChange}
           setShowFullPageModal={setShowFullPageModal}
           ChangedPeriodeGadaiValues={periodeGadaiValues}
+          status={status}
         />
         <BotDrawerSort
           openDrawer={isDrawerSortOpen}

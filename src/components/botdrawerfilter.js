@@ -21,6 +21,7 @@ import { drawerStyle } from "../variableGlobal";
  * @param {function} onFilterSubmit Fungsi yang dipanggil saat filter diterapkan
  * @param {function} setShowFullPageModal Fungsi untuk mengubah tampilan modal halaman penuh
  * @param {array} ChangedPeriodeGadaiValues Array berisi nilai periode gadai yang telah diubah
+ * @param {string} status Status dari halaman yang memanggil komponen ini, untuk menentukan nilai checkbox yang ditampilkans
  * @returns {*} Drawer bawah yang berisi filter
  * @author Henry
  * @date 27/11/2023 - 11:30:00 PM
@@ -31,6 +32,7 @@ const BotDrawerFilter = ({
   onFilterSubmit,
   setShowFullPageModal,
   ChangedPeriodeGadaiValues,
+  status,
 }) => {
   const [periodeGadaiValues, setPeriodeGadaiValues] = useState([]);
 
@@ -131,7 +133,24 @@ const BotDrawerFilter = ({
       ? chips
       : defaultChipValues;
 
-  const checkBoxStatusvalues = ["Aktif", "Tebus", "Lelang", "Batal", "Jual"];
+  const filteredValues = ["Aktif", "Tebus", "Lelang", "Batal", "Jual"];
+  let checkBoxStatusvalues;
+
+  switch (status) {
+    case "Tebus":
+      checkBoxStatusvalues = filteredValues.filter(
+        (value) => value === "Tebus" || value === "Batal"
+      );
+      break;
+    case "Perpanjangan":
+      checkBoxStatusvalues = filteredValues.filter(
+        (value) => value === "Aktif" || value === "Batal"
+      );
+      break;
+    default:
+      checkBoxStatusvalues = filteredValues;
+      break;
+  }
 
   /**
    * @description Fungsi untuk mereset semua field.

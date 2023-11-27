@@ -134,11 +134,11 @@ const CameraProfile = () => {
             {image ? (
               <div>
                 <img
-                  className="block ml-auto mr-auto relative"
+                  className="block ml-auto mr-auto absolute"
                   style={{
                     top: "50%",
-                    left: "40%",
-                    transform: "translate(-50%, 60%)",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
                   }}
                   src={image}
                   alt="captured"

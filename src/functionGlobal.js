@@ -155,89 +155,105 @@ const hitungBunga = (harga, bunga) => {
 };
 
 /**
- * @description Fungsi untuk menghasilkan data gadai acak.
+ * @description Fungsi untuk menghasilkan data gadai acak dan memasukan data tersebut dalam Array.
  * @author Henry
  * @date 27/11/2023 - 9:22:08 AM
- * @returns {Object} Objek yang berisi data gadai acak.
+ * @returns {Object} Objek yang berisi data gadai acak dan memasukan data tersebut dalam Array.
  */
-function generateRandomDataGadai() {
+function generateRandomDataGadai(designatedFor, jumlah) {
   /**
-   * @description Fungsi untuk menghasilkan bilangan bulat acak antara min dan max.
-   * @param {number} min - Nilai minimum.
-   * @param {number} max - Nilai maksimum.
-   * @returns {number} Bilangan bulat acak antara min dan max.
+   * @description  Fungsi yang meng-Generate data random yang akan di masukan kedalam Array.
+   * @returns {Object} Objek yang di-Generate data random yang akan di masukan kedalam Array.
    */
-  function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  function getDataRandom() {
+    /**
+     * @description Fungsi untuk menghasilkan bilangan bulat acak antara min dan max.
+     * @param {number} min - Nilai minimum.
+     * @param {number} max - Nilai maksimum.
+     * @returns {number} Bilangan bulat acak antara min dan max.
+     */
+    function getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    /**
+     * @description Fungsi untuk menghasilkan bilangan bulat acak yang dibulatkan ke ribuan terdekat antara min dan max.
+     * @param {number} min - Nilai minimum.
+     * @param {number} max - Nilai maksimum.
+     * @returns {number} Bilangan bulat acak yang dibulatkan ke ribuan terdekat antara min dan max.
+     */
+    function getRandomIntRounded(min, max) {
+      min = Math.ceil(min / 100000);
+      max = Math.floor(max / 100000);
+      return Math.floor(Math.random() * (max - min + 1) + min) * 100000;
+    }
+
+    /**
+     * @description Fungsi untuk menambahkan jumlah hari ke tanggal yang diberikan.
+     * @param {Date} date - Tanggal awal.
+     * @param {number} days - Jumlah hari yang akan ditambahkan.
+     * @returns {Date} Tanggal setelah ditambahkan dengan jumlah hari.
+     */
+    function addDays(date, days) {
+      date.setDate(date.getDate() + days);
+      return date;
+    }
+
+    /**
+     * @description Fungsi untuk memformat tanggal menjadi format "dd/mm/yyyy".
+     * @param {Date} date - Tanggal yang akan diformat.
+     * @returns {string} Tanggal dalam format "dd/mm/yyyy".
+     */
+    function formatDate(date) {
+      const day = String(date.getDate()).padStart(2, "0");
+      const month = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
+      const year = date.getFullYear();
+
+      return day + "/" + month + "/" + year;
+    }
+
+    const getStatuses = () => {
+      if (designatedFor === null || designatedFor === undefined) {
+        return ["Aktif", "Batal", "Tebus", "Lelang", "Jual"];
+      } else if (designatedFor === "Perpanjangan") {
+        return ["Batal", "Aktif"];
+      } else if (designatedFor === "Tebus") {
+        return ["Batal", "Tebus"];
+      }
+    };
+    const statuses = getStatuses();
+    const periodes = ["7 Hari", "1 Bulan", "6 Bulan", "1 Tahun", "2 Tahun"];
+    const tglkredit = new Date(2023, 6, 24); // 24/07/2023
+    const periodegadai = periodes[getRandomInt(0, periodes.length - 1)];
+    let periodeInDays;
+
+    if (periodegadai.includes("Hari")) {
+      periodeInDays = parseInt(periodegadai.split(" ")[0]);
+    } else if (periodegadai.includes("Bulan")) {
+      periodeInDays = parseInt(periodegadai.split(" ")[0]) * 30;
+    } else if (periodegadai.includes("Tahun")) {
+      periodeInDays = parseInt(periodegadai.split(" ")[0]) * 365;
+    }
+
+    const tgljatuhtempo = addDays(new Date(tglkredit), periodeInDays);
+
+    return {
+      idtransaksi: "CGX" + getRandomInt(100000, 999999),
+      lokasi: "KDC",
+      nama: "Mas Bagas Purnomo Ajeng Kartini Salendra Muh",
+      notelp: 6283856236436,
+      status: statuses[getRandomInt(0, statuses.length - 1)],
+      barang: "Sepeda Motor Honda Astrea 800",
+      harga: getRandomIntRounded(1000000, 5000000),
+      bunga: getRandomInt(5, 35) + "%",
+      periodegadai: periodegadai,
+      tglkredit: formatDate(tglkredit),
+      tgljatuhtempo: formatDate(tgljatuhtempo),
+    };
   }
-
-  /**
-   * @description Fungsi untuk menghasilkan bilangan bulat acak yang dibulatkan ke ribuan terdekat antara min dan max.
-   * @param {number} min - Nilai minimum.
-   * @param {number} max - Nilai maksimum.
-   * @returns {number} Bilangan bulat acak yang dibulatkan ke ribuan terdekat antara min dan max.
-   */
-  function getRandomIntRounded(min, max) {
-    min = Math.ceil(min / 100000);
-    max = Math.floor(max / 100000);
-    return Math.floor(Math.random() * (max - min + 1) + min) * 100000;
-  }
-
-  /**
-   * @description Fungsi untuk menambahkan jumlah hari ke tanggal yang diberikan.
-   * @param {Date} date - Tanggal awal.
-   * @param {number} days - Jumlah hari yang akan ditambahkan.
-   * @returns {Date} Tanggal setelah ditambahkan dengan jumlah hari.
-   */
-  function addDays(date, days) {
-    date.setDate(date.getDate() + days);
-    return date;
-  }
-
-  /**
-   * @description Fungsi untuk memformat tanggal menjadi format "dd/mm/yyyy".
-   * @param {Date} date - Tanggal yang akan diformat.
-   * @returns {string} Tanggal dalam format "dd/mm/yyyy".
-   */
-  function formatDate(date) {
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
-    const year = date.getFullYear();
-
-    return day + "/" + month + "/" + year;
-  }
-
-  const statuses = ["Aktif", "Batal", "Tebus", "Lelang", "Jual"];
-  const periodes = ["7 Hari", "1 Bulan", "6 Bulan", "1 Tahun", "2 Tahun"];
-  const tglkredit = new Date(2023, 6, 24); // 24/07/2023
-  const periodegadai = periodes[getRandomInt(0, periodes.length - 1)];
-  let periodeInDays;
-
-  if (periodegadai.includes("Hari")) {
-    periodeInDays = parseInt(periodegadai.split(" ")[0]);
-  } else if (periodegadai.includes("Bulan")) {
-    periodeInDays = parseInt(periodegadai.split(" ")[0]) * 30;
-  } else if (periodegadai.includes("Tahun")) {
-    periodeInDays = parseInt(periodegadai.split(" ")[0]) * 365;
-  }
-
-  const tgljatuhtempo = addDays(new Date(tglkredit), periodeInDays);
-
-  return {
-    idtransaksi: "CGX" + getRandomInt(100000, 999999),
-    lokasi: "KDC",
-    nama: "Mas Bagas Purnomo Ajeng Kartini Salendra Muh",
-    notelp: 6283856236436,
-    status: statuses[getRandomInt(0, statuses.length - 1)],
-    barang: "Sepeda Motor Honda Astrea 800",
-    harga: getRandomIntRounded(1000000, 5000000),
-    bunga: getRandomInt(5, 35) + "%",
-    periodegadai: periodegadai,
-    tglkredit: formatDate(tglkredit),
-    tgljatuhtempo: formatDate(tgljatuhtempo),
-  };
+  return Array.from({ length: jumlah }, getDataRandom);
 }
 
 export {

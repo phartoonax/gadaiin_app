@@ -4,8 +4,14 @@ import AppBarWithSearch from "../../components/appbarwsearch";
 import ListItem from "../../components/listitem";
 import { generateRandomDataGadai } from "../../functionGlobal";
 
-const arrayisi = Array.from({ length: 6 }, generateRandomDataGadai);
+const arrayisi = generateRandomDataGadai(null, 6);
 
+/**
+ * @description Komponen untuk menampilkan daftar gadai. Komponen ini mengelola filter dan pengurutan data, serta navigasi ke halaman lain menggunakan Action Button (FAB).
+ * @returns {*} Daftar gadai dengan fungsi filter dan pengurutan, serta Action Button (FAB) untuk navigasi
+ * @author Henry
+ * @date 27/11/2023 - 11:30:00 PM
+ */
 function ListGadai() {
   const [filteredArray, setFilteredArray] = useState(arrayisi);
 
@@ -89,6 +95,7 @@ function ListGadai() {
           iconFab={iconFab}
           onFabClick={null}
           onFilterChange={handleFilterChangeFAB}
+          status={null}
         />
         <div className="mx-4">
           {filteredArray.map((data, index) => (
