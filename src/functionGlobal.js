@@ -1,3 +1,16 @@
+/**
+ * @date 24/11/2023 - 3:13:08 PM
+ * @author Henry
+ * @description Global function untuk menyimpan semua fungsi yang digunakan di banyak komponen.
+ * **/
+
+/**
+ * @description Mengembalikan nama kelas CSS untuk warna ikon & teks berdasarkan status.
+ * @param {string} status - Nama Status item.
+ * @returns {string} - Nama kelas Tailwind CSS untuk warna ikon & teks.
+ * @date 24/11/2023 - 3:13:08 PM
+ * @author Henry
+ */
 const getTextIconColor = (status) => {
   switch (status) {
     case "Aktif":
@@ -16,6 +29,13 @@ const getTextIconColor = (status) => {
   }
 };
 
+/**
+ * @description Mengembalikan nama kelas CSS untuk warna latar belakang berdasarkan status.
+ * @param {string} status - Nama Status item.
+ * @returns {string} - Nama kelas Tailwind CSS untuk warna latar belakang.
+ * @date 24/11/2023 - 3:13:08 PM
+ * @author Henry
+ */
 const getDateColor = (status) => {
   switch (status) {
     case "Aktif":
@@ -34,6 +54,13 @@ const getDateColor = (status) => {
   }
 };
 
+/**
+ * @description Mengembalikan nama kelas CSS untuk warna border atas berdasarkan status.
+ * @param {string} status - Nama Status item.
+ * @returns {string} - Nama kelas Tailwind CSS untuk warna border atas.
+ * @date 24/11/2023 - 3:13:08 PM
+ * @author Henry
+ */
 const getCardBorderColor = (status) => {
   switch (status) {
     case "Aktif":
@@ -51,6 +78,13 @@ const getCardBorderColor = (status) => {
   }
 };
 
+/**
+ * @description Mengembalikan nilai CSS untuk gradient warna latar belakang kartu berdasarkan status.
+ * @param {string} status - Nama Status item.
+ * @returns {string} - Nilai CSS untuk gradient warna latar belakang kartu.
+ * @date 24/11/2023 - 3:13:08 PM
+ * @author Henry
+ */
 const getCardGradientColor = (status) => {
   switch (status) {
     case "Aktif":
@@ -69,6 +103,13 @@ const getCardGradientColor = (status) => {
   }
 };
 
+/**
+ * @description Mengembalikan nama kelas CSS untuk warna border pada chips berdasarkan status.
+ * @param {string} status - Nama Status item.
+ * @returns {string} - Nama kelas Tailwind CSS untuk warna border.
+ * @date 24/11/2023 - 3:13:08 PM
+ * @author Henry
+ */
 const getChipsBorderColor = (status) => {
   switch (status) {
     case "Aktif":
@@ -87,22 +128,25 @@ const getChipsBorderColor = (status) => {
   }
 };
 
-const drawerStyle = {
-  width: "100%",
-  maxHeight: "85%",
-  backgroundColor: "white",
-  borderTopLeftRadius: "20px",
-  borderTopRightRadius: "20px",
-  position: "fixed",
-  bottom: 0,
-  zIndex: 999,
-  boxShadow: "0px -4px 10px rgba(0, 0, 0, 0.1)",
-};
-
+/**
+ * @description Memisahkan ribuan pada harga dengan tanda titik sebagai pemisah.
+ * @param {number} harga - Harga yang akan dipisahkan ribuannya.
+ * @returns {string} - Harga dengan ribuan dipisahkan oleh tanda titik.
+ * @date 24/11/2023 - 3:13:08 PM
+ * @author Henry
+ */
 const pemisahRibuan = (harga) => {
   return harga.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
 
+/**
+ * @description Menghitung jumlah bunga berdasarkan harga dan persentase bunga.
+ * @param {number} harga - Harga barang yang digadaikan.
+ * @param {number} bunga - Persentase bunga yang dikenakan.
+ * @returns {number} - Jumlah bunga hasil gadai.
+ * @date 24/11/2023 - 3:13:08 PM
+ * @author Henry
+ */
 const hitungBunga = (harga, bunga) => {
   const bunga1 = parseInt(bunga);
   const harga1 = parseInt(harga);
@@ -110,29 +154,61 @@ const hitungBunga = (harga, bunga) => {
   return hitung;
 };
 
+/**
+ * @description Fungsi untuk menghasilkan data gadai acak.
+ * @author Henry
+ * @date 27/11/2023 - 9:22:08 AM
+ * @returns {Object} Objek yang berisi data gadai acak.
+ */
 function generateRandomDataGadai() {
+  /**
+   * @description Fungsi untuk menghasilkan bilangan bulat acak antara min dan max.
+   * @param {number} min - Nilai minimum.
+   * @param {number} max - Nilai maksimum.
+   * @returns {number} Bilangan bulat acak antara min dan max.
+   */
   function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+
+  /**
+   * @description Fungsi untuk menghasilkan bilangan bulat acak yang dibulatkan ke ribuan terdekat antara min dan max.
+   * @param {number} min - Nilai minimum.
+   * @param {number} max - Nilai maksimum.
+   * @returns {number} Bilangan bulat acak yang dibulatkan ke ribuan terdekat antara min dan max.
+   */
   function getRandomIntRounded(min, max) {
     min = Math.ceil(min / 100000);
     max = Math.floor(max / 100000);
     return Math.floor(Math.random() * (max - min + 1) + min) * 100000;
   }
+
+  /**
+   * @description Fungsi untuk menambahkan jumlah hari ke tanggal yang diberikan.
+   * @param {Date} date - Tanggal awal.
+   * @param {number} days - Jumlah hari yang akan ditambahkan.
+   * @returns {Date} Tanggal setelah ditambahkan dengan jumlah hari.
+   */
   function addDays(date, days) {
     date.setDate(date.getDate() + days);
     return date;
   }
-  
+
+  /**
+   * @description Fungsi untuk memformat tanggal menjadi format "dd/mm/yyyy".
+   * @param {Date} date - Tanggal yang akan diformat.
+   * @returns {string} Tanggal dalam format "dd/mm/yyyy".
+   */
   function formatDate(date) {
     const day = String(date.getDate()).padStart(2, "0");
     const month = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
     const year = date.getFullYear();
-  
+
     return day + "/" + month + "/" + year;
   }
+
   const statuses = ["Aktif", "Batal", "Tebus", "Lelang", "Jual"];
   const periodes = ["7 Hari", "1 Bulan", "6 Bulan", "1 Tahun", "2 Tahun"];
   const tglkredit = new Date(2023, 6, 24); // 24/07/2023
@@ -164,8 +240,6 @@ function generateRandomDataGadai() {
   };
 }
 
-
-
 export {
   getDateColor,
   getTextIconColor,
@@ -175,5 +249,4 @@ export {
   pemisahRibuan,
   hitungBunga,
   generateRandomDataGadai,
-  drawerStyle,
 };

@@ -5,6 +5,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ItemMiniHeaderHistory from "./itemminiheaderhistory";
 import ItemListHistory from "./itemlisthistory";
 
+/**
+ * @description Komponen untuk menampilkan halaman History gadai Sesuai dengan data yang telah di ambil dari data state.
+ * @returns {*} Halaman History gadai dengan header mini dan daftar item History Sesuai dengan data yang telah di ambil dari data state
+ * @author Henry
+ * @date 27/11/2023 - 1:30:00 PM
+ */
 function PageHistoryGadai() {
   const navigate = useNavigate();
   const location = useLocation();

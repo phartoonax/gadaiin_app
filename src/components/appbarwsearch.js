@@ -2,6 +2,15 @@ import { Icon } from "@iconify/react";
 import { IconButton } from "@mui/material";
 import React, { useState } from "react";
 
+/**
+ * @description Komponen untuk menampilkan AppBar dengan fitur pencarian.
+ * @param {string} placeholder Placeholder untuk input pencarian
+ * @param {function} onSearchChange Fungsi untuk menangani perubahan input pencarian
+ * @param {function} onClearSearch Fungsi untuk menangani penghapusan input pencarian
+ * @returns {*} AppBar dengan fitur pencarian
+ * @author Henry
+ * @date 27/11/2023 - 11:30:00 PM
+ */
 //TODO: TAMBAH DATA RETURN UNTUK API BACKEND
 function AppBarWithSearch({ placeholder, onSearchChange, onClearSearch }) {
   const [isSearchFilled, setIsSearchFilled] = useState(false);

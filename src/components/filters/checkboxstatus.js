@@ -7,6 +7,17 @@ import {
 } from "@mui/material";
 import React from "react";
 
+/**
+ * @description  Komponen untuk menampilkan checkbox dengan status tertentu.
+ * @param {string} title Text Judul komponen
+ * @param {array} arrayCheckBox Array berisi nama checkbox
+ * @param {array} checkBoxValues Array berisi nilai checkbox yang dipilih
+ * @param {function} checkBoxHandler Fungsi untuk menangani perubahan checkbox
+ * @param {boolean} needDivider Menentukan apakah perlu menampilkan divider di antara checkbox
+ * @returns {*} Komponen checkbox dengan status
+ * @author Henry
+ * @date 27/11/2023 - 9:49:37 AM
+ */
 const CheckboxStatus = ({
   title,
   arrayCheckBox,

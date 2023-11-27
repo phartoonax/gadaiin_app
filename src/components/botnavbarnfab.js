@@ -5,6 +5,18 @@ import BotDrawerFilter from "./botdrawerfilter";
 import BotDrawerSort from "./botdrawersort";
 import PagePeriodeGadai from "./filters/pageperiodegadai";
 
+/**
+ * @description Komponen untuk menampilkan Bottom Navigation dan Action Button (FAB) dengan ikon dan fungsi yang ditentukan. Komponen ini juga mengelola status dan fungsi dari laci filter dan sort.
+ * @param {object} iconKiri Ikon untuk tombol navigasi kiri
+ * @param {object} iconKanan Ikon untuk tombol navigasi kanan
+ * @param {object} iconFab Ikon untuk Action Button (FAB)
+ * @param {function} onFabClick Fungsi yang dipanggil saat Action Button (FAB) diklik
+ * @param {function} onFilterChange Fungsi yang dipanggil saat terjadi perubahan filter
+ * @param {function} onSortChange Fungsi yang dipanggil saat terjadi perubahan pengurutan
+ * @returns {*} Bottom Navigation dan Action Button (FAB) dengan ikon dan fungsi yang ditentukan, serta laci filter dan sort
+ * @author Henry
+ * @date 27/11/2023 - 11:30:00 PM
+ */
 function BotNavBarNFab({
   iconKiri,
   iconKanan,
@@ -127,15 +139,15 @@ function BotNavBarNFab({
           </div>
         </div>
         <BotDrawerFilter
-          open={isDrawerFilterOpen}
-          setOpen={setDrawerFilterOpen}
+          openDrawer={isDrawerFilterOpen}
+          setOpenDrawer={setDrawerFilterOpen}
           onFilterSubmit={handleFilterChange}
           setShowFullPageModal={setShowFullPageModal}
           ChangedPeriodeGadaiValues={periodeGadaiValues}
         />
         <BotDrawerSort
-          open={isDrawerSortOpen}
-          setOpen={setDrawerSortrOpen}
+          openDrawer={isDrawerSortOpen}
+          setOpenDrawer={setDrawerSortrOpen}
           onSortSubmit={handleSortChange}
         />
         {showFullPageModal && (

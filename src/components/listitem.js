@@ -11,6 +11,14 @@ import {
   hitungBunga,
 } from "../functionGlobal";
 
+/**
+ * @description Komponen untuk menampilkan item dalam daftar. Setiap item berisi informasi seperti ID transaksi, nama, nomor telepon, detail barang, harga, periode gadai, dan tanggal kredit dan jatuh tempo.
+ * Komponen ini juga mengelola status dan fungsi dari Drawer Options.
+ * @param {object} data Objek yang berisi data yang akan ditampilkan
+ * @returns {*} Item dalam daftar dengan informasi yang ditentukan dan Drawer Options
+ * @author Henry
+ * @date 27/11/2023 - 11:30:00 PM
+ */
 const ListItem = ({ data }) => {
   const status = data.status;
 
@@ -124,8 +132,8 @@ pb-1"
         </Stack>
       </Stack>
       <BotDrawerOpsi
-        open={isDrawerOpsiOpen}
-        setOpen={setDrawerOpsirOpen}
+        openDrawer={isDrawerOpsiOpen}
+        setOpenDrawer={setDrawerOpsirOpen}
         data={data}
       ></BotDrawerOpsi>
     </div>

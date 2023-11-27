@@ -5,6 +5,17 @@ import { LocalizationProvider } from "@mui/x-date-pickers/";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Icon } from "@iconify/react";
 
+/**
+ * @description Komponen untuk menampilkan dua date picker untuk memilih rentang tanggal transaksi.
+ * @param {string} title Judul komponen
+ * @param {function} setValueDatePicker1 Fungsi untuk mengatur nilai date picker pertama
+ * @param {date} valueDatePicker1 Nilai date picker pertama
+ * @param {function} setValueDatePicker2 Fungsi untuk mengatur nilai date picker kedua
+ * @param {date} valueDatePicker2 Nilai date picker kedua
+ * @returns {*} Dua date picker untuk memilih rentang tanggal transaksi
+ * @author Henry
+ * @date 27/11/2023 - 11:00:00 AM
+ */
 const TextboxDateSelectorTglTrans = ({
   title,
   setValueDatePicker1,

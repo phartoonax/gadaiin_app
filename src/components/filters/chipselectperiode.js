@@ -1,6 +1,17 @@
 import { Button, Chip, Grid, Stack } from "@mui/material";
 import React from "react";
 
+/**
+ * @description Komponen untuk menampilkan chip berdasarkan periode yang dipilih.
+ * @param {string} title Judul grup chip
+ * @param {array} chipValues Array item chip
+ * @param {array} periodeGadaiValues Array nilai chip yang dipilih saat ini
+ * @param {function} handleChipClick Fungsi handler untuk perubahan chip
+ * @param {function} setShowFullPageModal Fungsi untuk mengatur tampilan modal
+ * @returns {*} Sebuah grup chip dengan judul dan nilai yang ditentukan
+ * @author Henry
+ * @date 27/11/2023 - 9:49:37 AM
+ */
 const ChipSelectPeriode = ({
   title,
   chipValues,
@@ -8,7 +19,6 @@ const ChipSelectPeriode = ({
   handleChipClick,
   setShowFullPageModal,
 }) => {
- 
   return (
     <>
       <Stack gap={"10px"}>

@@ -1,6 +1,17 @@
 import { Divider, Slider, Stack, alpha } from "@mui/material";
 import React from "react";
 
+/**
+ * @description Komponen untuk menampilkan 2 Slider dalam 1 rel dengan textbox masing-masing untuk nilai gadai.
+ * @param {string} title Judul komponen
+ * @param {array} valueDisplaySlider Array berisi nilai yang ditampilkan pada textbox
+ * @param {function} handleChangeDisplaySlider Fungsi untuk menangani perubahan nilai pada textbox
+ * @param {array} valueSlider Array berisi nilai slider
+ * @param {function} handleChangeSlider Fungsi untuk menangani perubahan nilai slider
+ * @returns {*} Tampilan Slider dengan textbox untuk nilai gadai
+ * @author Henry
+ * @date 27/11/2023 - 10:30:00 AM
+ */
 const SliderWithTextboxNilaiGadai = ({
   title,
   valueDisplaySlider,

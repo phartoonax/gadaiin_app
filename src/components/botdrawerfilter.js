@@ -6,17 +6,28 @@ import {
   Stack,
   SwipeableDrawer,
 } from "@mui/material";
-
 import { Icon } from "@iconify/react";
 import CheckboxStatus from "./filters/checkboxstatus";
 import ChipSelectPeriode from "./filters/chipselectperiode";
 import SliderWithTextboxNilaiGadai from "./filters/sliderwtextboxnilaigadai";
 import TextboxDateSelectorTglTrans from "./filters/textboxdateselectortgltrans";
-import { pemisahRibuan, drawerStyle } from "../functionGlobal";
+import { pemisahRibuan } from "../functionGlobal";
+import { drawerStyle } from "../variableGlobal";
 
+/**
+ * @description Komponen untuk menampilkan Drawer bawah yang berisi filter seperti tanggal transaksi, nilai gadai, periode gadai, dan status.
+ * @param {boolean} openDrawer Status tampilan Drawer
+ * @param {function} setOpenDrawer Fungsi untuk mengubah status tampilan Drawer
+ * @param {function} onFilterSubmit Fungsi yang dipanggil saat filter diterapkan
+ * @param {function} setShowFullPageModal Fungsi untuk mengubah tampilan modal halaman penuh
+ * @param {array} ChangedPeriodeGadaiValues Array berisi nilai periode gadai yang telah diubah
+ * @returns {*} Drawer bawah yang berisi filter
+ * @author Henry
+ * @date 27/11/2023 - 11:30:00 PM
+ */
 const BotDrawerFilter = ({
-  open: openDrawer,
-  setOpen: setOpenDrawer,
+  openDrawer,
+  setOpenDrawer,
   onFilterSubmit,
   setShowFullPageModal,
   ChangedPeriodeGadaiValues,
@@ -37,6 +48,11 @@ const BotDrawerFilter = ({
 
   const [valueSlider, setValueSlider] = useState([0, 5000000]);
 
+  /**
+   * @description Fungsi untuk menangani perubahan nilai slider.
+   * @param {event} event Event yang memicu fungsi ini
+   * @param {number} newValue Nilai baru dari slider
+   */
   const handleChangeSlider = (event, newValue) => {
     const formattedValue = newValue.map((value) => pemisahRibuan(value));
     setValueSlider(newValue);
@@ -47,6 +63,12 @@ const BotDrawerFilter = ({
     pemisahRibuan(0),
     pemisahRibuan(5000000),
   ]);
+
+  /**
+   * @description Fungsi untuk menangani perubahan nilai display slider.
+   * @param {number} index Indeks nilai yang berubah
+   * @param {number} newValue Nilai baru dari display slider
+   */
   const handleChangeDisplaySlider = (index, newValue) => {
     // Remove thousand separators and convert to number
     const numberValue = Number(newValue.replace(/\./g, ""));
@@ -62,6 +84,10 @@ const BotDrawerFilter = ({
     setValueDisplaySlider(newValueDisplaySlider);
   };
 
+  /**
+   * @description Fungsi untuk menangani perubahan status checkbox.
+   * @param {event} event Event yang memicu fungsi ini
+   */
   const handleCheckboxChange = (event) => {
     const newArray = [...checkboxStatusValues];
     if (event.target.checked) {
@@ -76,6 +102,10 @@ const BotDrawerFilter = ({
     setCheckboxStatusValues(newArray);
   };
 
+  /**
+   * @description Fungsi untuk menangani klik pada chip.
+   * @param {string} value Nilai dari chip yang diklik
+   */
   const handleChipClick = (value) => {
     setPeriodeGadaiValues((prevValues) => {
       if (prevValues.includes(value)) {
@@ -103,6 +133,9 @@ const BotDrawerFilter = ({
 
   const checkBoxStatusvalues = ["Aktif", "Tebus", "Lelang", "Batal", "Jual"];
 
+  /**
+   * @description Fungsi untuk mereset semua field.
+   */
   const resetFields = () => {
     setValueSlider([0, 0]);
     setValueDisplaySlider([pemisahRibuan(0), pemisahRibuan(0)]);
@@ -112,6 +145,9 @@ const BotDrawerFilter = ({
     setPeriodeGadaiValues([]);
   };
 
+  /**
+   * @description Fungsi untuk menangani penerapan filter.
+   */
   const handleApply = () => {
     const filters = {
       TglTransaksiAwal: valueDatePicker1,

@@ -2,6 +2,15 @@ import { Icon } from "@iconify/react";
 import { IconButton, Stack } from "@mui/material";
 import React from "react";
 
+/**
+ * @description Komponen untuk menampilkan switcher yang dapat mengubah urutan item berdasarkan status yang telah ditentukan.
+ * @param {function} handleSortStatusChange Fungsi untuk menangani perubahan status sort
+ * @param {array} isiSortItem Array berisi nama item yang akan diurutkan
+ * @param {array} valueStatusSort Array yang berisi status sort untuk setiap item
+ * @returns {*} Switcher yang dapat mengubah urutan item dalam list berdasarkan status yang telah ditentukan
+ * @author Henry
+ * @date 27/11/2023 - 2:00:00 PM
+ */
 const SwitcherSortItem = ({
   handleSortStatusChange,
   isiSortItem,

@@ -7,6 +7,13 @@ import {
   getTextIconColor,
 } from "../../functionGlobal";
 
+/**
+ * @description Komponen untuk menampilkan header mini dalam History secara singkat seperti id transaksi, lokasi, nama, barang, dan harga.
+ * @param {object} data Objek yang berisi data item
+ * @returns {*} Header mini dalam History secara singkat seperti id transaksi, lokasi, nama, barang, dan harga
+ * @author Henry
+ * @date 27/11/2023 - 11:00:00 AM
+ */
 const ItemMiniHeaderHistory = ({ data }) => {
   const status = data.status;
 

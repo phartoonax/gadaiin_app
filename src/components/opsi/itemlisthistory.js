@@ -10,6 +10,13 @@ import {
   hitungBunga,
 } from "../../functionGlobal";
 
+/**
+ * @description Komponen untuk menampilkan item dalam List History dengan singkat seperti status, bunga, periode gadai, dan tanggal.
+ * @param {object} data Objek yang berisi data item
+ * @returns {*} Item dalam List History dengan singkat seperti status, bunga, periode gadai, dan tanggal
+ * @author Henry
+ * @date 27/11/2023 - 11:00:00 PM
+ */
 const ItemListHistory = (data) => {
   const dats = data.data;
   const status = dats.status;

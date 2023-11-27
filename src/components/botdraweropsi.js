@@ -3,9 +3,18 @@ import { Divider, IconButton, Stack, SwipeableDrawer } from "@mui/material";
 import React from "react";
 import ButtonOpsiItem from "./opsi/buttonopsiitem";
 import { useNavigate } from "react-router-dom";
-import { drawerStyle } from "../functionGlobal";
+import { drawerStyle } from "../variableGlobal";
 
-const BotDrawerOpsi = ({ open: openDrawer, setOpen: setOpenDrawer, data }) => {
+/**
+ * @description Komponen untuk menampilkan Bottom Drawer yang berisi berbagai opsi seperti Detail, Tebus Gadai, Perpanjang Gadai, Cetak Ulang, Batal, dan History.
+ * @param {boolean} openDrawer Status tampilan Drawer
+ * @param {function} setOpenDrawer Fungsi untuk mengubah status tampilan Drawer
+ * @param {object} data Objek yang berisi data yang akan ditampilkan
+ * @returns {*} Bottom Drawer yang berisi berbagai opsi
+ * @author Henry
+ * @date 27/11/2023 - 11:30:00 PM
+ */
+const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data }) => {
   const Navigate = useNavigate();
 
   // Unique functions to console.log for each option

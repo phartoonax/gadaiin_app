@@ -3,6 +3,14 @@ import AppBarWithSearch from "../appbarwsearch";
 import { Chip, Divider, Grid, Stack } from "@mui/material";
 import CheckboxStatus from "./checkboxstatus";
 
+/**
+ * @description Komponen untuk menampilkan halaman dengan pilihan periode gadai.
+ * @param {function} setShowFullPageModal Fungsi untuk mengatur modal atau tidak
+ * @param {function} setPeriodeGadaiValues Fungsi untuk mengatur nilai periode gadai yang dipilih
+ * @returns {*} Halaman dengan pilihan periode gadai
+ * @author Henry
+ * @date 27/11/2023 - 9:49:37 AM
+ */
 function PagePeriodeGadai({ setShowFullPageModal, setPeriodeGadaiValues }) {
   const templatePeriodeArray = [
     "1 Tahun",

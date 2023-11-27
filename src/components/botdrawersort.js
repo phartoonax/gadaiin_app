@@ -8,13 +8,18 @@ import {
 import { Icon } from "@iconify/react";
 import React, { useState } from "react";
 import SwitcherSortItem from "./sort/switchersortitem";
-import { drawerStyle } from "../functionGlobal";
+import { drawerStyle } from "../variableGlobal";
 
-const BotDrawerSort = ({
-  open: openDrawer,
-  setOpen: setOpenDrawer,
-  onSortSubmit,
-}) => {
+/**
+ * @description Komponen untuk menampilkan laci bawah yang berisi opsi pengurutan seperti Nilai Gadai, Nomer Gadai, dan Tanggal Transaksi.
+ * @param {boolean} openDrawer Status tampilan laci
+ * @param {function} setOpenDrawer Fungsi untuk mengubah status tampilan laci
+ * @param {function} onSortSubmit Fungsi yang dipanggil saat pengurutan diterapkan
+ * @returns {*} Laci bawah yang berisi opsi pengurutan
+ * @author Henry
+ * @date 27/11/2023 - 11:30:00 PM
+ */
+const BotDrawerSort = ({ openDrawer, setOpenDrawer, onSortSubmit }) => {
   const [valueStatusSort, setValueStatusSort] = useState({});
 
   const isiSortItem = ["Nilai Gadai", "Nomer Gadai", "Tanggal Transaksi"];
