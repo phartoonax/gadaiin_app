@@ -1,9 +1,9 @@
 import { Icon } from "@iconify/react";
 import { Fab, IconButton } from "@mui/material";
 import React, { useState } from "react";
-import BotDrawerFilter from "./botdrawerfilter";
-import BotDrawerSort from "./botdrawersort";
-import PagePeriodeGadai from "./filters/pageperiodegadai";
+import BotDrawerFilter from "./botDrawerFilter";
+import BotDrawerSort from "./botDrawerSort";
+import PagePeriodeGadai from "./filters/pagePeriodeGadai";
 
 /**
  * @description Komponen untuk menampilkan Bottom Navigation dan Action Button (FAB) dengan ikon dan fungsi yang ditentukan. Komponen ini juga mengelola status dan fungsi dari laci filter dan sort.

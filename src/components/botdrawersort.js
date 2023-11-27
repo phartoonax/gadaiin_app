@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import React, { useState } from "react";
-import SwitcherSortItem from "./sort/switchersortitem";
+import SwitcherSortItem from "./sort/switcherSortItem";
 import { drawerStyle } from "../variableGlobal";
 
 /**

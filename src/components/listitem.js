@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 import { Divider, IconButton, Stack } from "@mui/material";
 import React from "react";
 import { useState } from "react";
-import BotDrawerOpsi from "./botdraweropsi";
+import BotDrawerOpsi from "./botDrawerOpsi";
 import {
   getTextIconColor,
   getDateColor,

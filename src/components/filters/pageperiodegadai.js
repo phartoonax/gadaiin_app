@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import AppBarWithSearch from "../appbarwsearch";
+import AppBarWithSearch from "../appBarWithSearch";
 import { Chip, Divider, Grid, Stack } from "@mui/material";
-import CheckboxStatus from "./checkboxstatus";
+import CheckboxStatus from "./checkBoxStatus";
 
 /**
  * @description Komponen untuk menampilkan halaman dengan pilihan periode gadai.

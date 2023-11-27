@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import BotNavbarNfab from "../../components/botnavbarnfab";
-import AppBarWithSearch from "../../components/appbarwsearch";
-import ListItem from "../../components/listitem";
+import BotNavbarNfab from "../../components/botNavBarnFAB";
+import AppBarWithSearch from "../../components/appBarWithSearch";
+import ListItem from "../../components/listItem";
 import { generateRandomDataGadai } from "../../functionGlobal";
 
 const arrayisi = generateRandomDataGadai(null, 6);

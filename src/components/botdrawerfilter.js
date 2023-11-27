@@ -7,10 +7,10 @@ import {
   SwipeableDrawer,
 } from "@mui/material";
 import { Icon } from "@iconify/react";
-import CheckboxStatus from "./filters/checkboxstatus";
-import ChipSelectPeriode from "./filters/chipselectperiode";
-import SliderWithTextboxNilaiGadai from "./filters/sliderwtextboxnilaigadai";
-import TextboxDateSelectorTglTrans from "./filters/textboxdateselectortgltrans";
+import CheckboxStatus from "./filters/checkBoxStatus";
+import ChipSelectPeriode from "./filters/chipSelectPeriode";
+import SliderWithTextboxNilaiGadai from "./filters/sliderWithTextBoxNilaiGadai";
+import TextboxDateSelectorTglTrans from "./filters/textBoxDateSelectorTglTrans";
 import { pemisahRibuan } from "../functionGlobal";
 import { drawerStyle } from "../variableGlobal";
 

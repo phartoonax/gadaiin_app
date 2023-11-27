@@ -2,8 +2,8 @@ import { Icon } from "@iconify/react";
 import { AppBar, Divider, IconButton, Stack } from "@mui/material";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import ItemMiniHeaderHistory from "./itemminiheaderhistory";
-import ItemListHistory from "./itemlisthistory";
+import ItemMiniHeaderHistory from "./itemMiniHeaderHistory";
+import ItemListHistory from "./itemListHistory";
 
 /**
  * @description Komponen untuk menampilkan halaman History gadai Sesuai dengan data yang telah di ambil dari data state.

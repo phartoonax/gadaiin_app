@@ -1,9 +1,9 @@
-import BotNavbarNfab from "../../components/botnavbarnfab";
-import AppBarWithSearch from "../../components/appbarwsearch";
+import BotNavbarNfab from "../../components/botNavBarnFAB";
+import AppBarWithSearch from "../../components/appBarWithSearch";
 import { useNavigate } from "react-router-dom";
 import { generateRandomDataGadai } from "../../functionGlobal";
 import React, { useState } from "react";
-import ListItem from "../../components/listitem";
+import ListItem from "../../components/listItem";
 
 const arrayisi = generateRandomDataGadai("Perpanjangan", 6);
 

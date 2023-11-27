@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { generateRandomDataGadai } from "../../functionGlobal";
 import React, { useState } from "react";
-import AppBarWithSearch from "../../components/appbarwsearch";
-import BotNavBarNFab from "../../components/botnavbarnfab";
-import ListItem from "../../components/listitem";
+import AppBarWithSearch from "../../components/appBarWithSearch";
+import BotNavBarNFab from "../../components/botNavBarnFAB";
+import ListItem from "../../components/listItem";
 
 const arrayisi = generateRandomDataGadai("Tebus", 6);
 
