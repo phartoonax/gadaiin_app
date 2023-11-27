@@ -1,50 +1,20 @@
 import { Icon } from "@iconify/react";
 import { Divider, Stack } from "@mui/material";
 import React from "react";
+import {
+  pemisahRibuan,
+  getCardBorderColor,
+  getTextIconColor,
+} from "../../functionGlobal";
 
 const ItemMiniHeaderHistory = ({ data }) => {
   const status = data.status;
-  const getCardBorderColor = () => {
-    switch (status) {
-      case "Aktif":
-        return "border-t-success-Main";
-      case "Batal":
-        return "border-t-danger-Main";
-      case "Tebus":
-        return "border-t-warning-Main";
-      case "Lelang":
-        return "border-t-lelang-Main";
-      case "Jual":
-        return "border-t-primary-Main";
-      default:
-        return "border-none";
-    }
-  };
-
-  const getIconColor = () => {
-    switch (status) {
-      case "Aktif":
-        return "text-success-Main";
-      case "Batal":
-        return "text-danger-Main";
-      case "Tebus":
-        return "text-warning-Main";
-      case "Lelang":
-        return "text-lelang-Main";
-      case "Jual":
-        return "text-primary-Main";
-      default:
-        return "text-neutral-500";
-    }
-  };
-
-  const pemisahRibuan = (harga) => {
-    return harga.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  };
 
   return (
     <div
-      className={`border  ${getCardBorderColor()}  border-solid border-t-4 rounded-md my-[10px] text-neutral-100 `}
+      className={`border  ${getCardBorderColor(
+        status
+      )}  border-solid border-t-4 rounded-md my-[10px] text-neutral-100 `}
     >
       <div className="px-4 py-2">
         {" "}
@@ -67,7 +37,7 @@ const ItemMiniHeaderHistory = ({ data }) => {
           <Icon
             fontSize={"16px"}
             icon={"heroicons-solid:shopping-bag"}
-            className={`${getIconColor()} mr-1`}
+            className={`${getTextIconColor(status)} mr-1`}
           ></Icon>
           <p>{data.barang}</p>
         </Stack>
@@ -78,7 +48,7 @@ const ItemMiniHeaderHistory = ({ data }) => {
           <Icon
             fontSize={"16px"}
             icon={"heroicons-solid:cash"}
-            className={`${getIconColor()} } mr-1`}
+            className={`${getTextIconColor(status)} } mr-1`}
           ></Icon>
           <p>Rp{pemisahRibuan(data.harga)}</p>
         </Stack>

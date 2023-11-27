@@ -1,4 +1,4 @@
-const getIconColor = (status) => {
+const getTextIconColor = (status) => {
   switch (status) {
     case "Aktif":
     case "Perpanjang":
@@ -103,12 +103,77 @@ const pemisahRibuan = (harga) => {
   return harga.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
 
+const hitungBunga = (harga, bunga) => {
+  const bunga1 = parseInt(bunga);
+  const harga1 = parseInt(harga);
+  const hitung = Math.round(harga1 * (bunga1 / 100));
+  return hitung;
+};
+
+function generateRandomDataGadai() {
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  function getRandomIntRounded(min, max) {
+    min = Math.ceil(min / 100000);
+    max = Math.floor(max / 100000);
+    return Math.floor(Math.random() * (max - min + 1) + min) * 100000;
+  }
+  function addDays(date, days) {
+    date.setDate(date.getDate() + days);
+    return date;
+  }
+  
+  function formatDate(date) {
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
+    const year = date.getFullYear();
+  
+    return day + "/" + month + "/" + year;
+  }
+  const statuses = ["Aktif", "Batal", "Tebus", "Lelang", "Jual"];
+  const periodes = ["7 Hari", "1 Bulan", "6 Bulan", "1 Tahun", "2 Tahun"];
+  const tglkredit = new Date(2023, 6, 24); // 24/07/2023
+  const periodegadai = periodes[getRandomInt(0, periodes.length - 1)];
+  let periodeInDays;
+
+  if (periodegadai.includes("Hari")) {
+    periodeInDays = parseInt(periodegadai.split(" ")[0]);
+  } else if (periodegadai.includes("Bulan")) {
+    periodeInDays = parseInt(periodegadai.split(" ")[0]) * 30;
+  } else if (periodegadai.includes("Tahun")) {
+    periodeInDays = parseInt(periodegadai.split(" ")[0]) * 365;
+  }
+
+  const tgljatuhtempo = addDays(new Date(tglkredit), periodeInDays);
+
+  return {
+    idtransaksi: "CGX" + getRandomInt(100000, 999999),
+    lokasi: "KDC",
+    nama: "Mas Bagas Purnomo Ajeng Kartini Salendra Muh",
+    notelp: 6283856236436,
+    status: statuses[getRandomInt(0, statuses.length - 1)],
+    barang: "Sepeda Motor Honda Astrea 800",
+    harga: getRandomIntRounded(1000000, 5000000),
+    bunga: getRandomInt(5, 35) + "%",
+    periodegadai: periodegadai,
+    tglkredit: formatDate(tglkredit),
+    tgljatuhtempo: formatDate(tgljatuhtempo),
+  };
+}
+
+
+
 export {
   getDateColor,
-  getIconColor,
+  getTextIconColor,
   getCardBorderColor,
   getCardGradientColor,
   getChipsBorderColor,
   pemisahRibuan,
+  hitungBunga,
+  generateRandomDataGadai,
   drawerStyle,
 };

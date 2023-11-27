@@ -4,24 +4,15 @@ import React from "react";
 import { useState } from "react";
 import BotDrawerOpsi from "./botdraweropsi";
 import {
-  getIconColor,
+  getTextIconColor,
   getDateColor,
   getCardBorderColor,
-} from "../Pages/functionGlobal";
+  pemisahRibuan,
+  hitungBunga,
+} from "../functionGlobal";
 
 const ListItem = ({ data }) => {
   const status = data.status;
-
-  const hitungBunga = (harga, bunga) => {
-    const bunga1 = parseInt(bunga);
-    const harga1 = parseInt(harga);
-    const hitung = Math.round(harga1 * (bunga1 / 100));
-    return hitung;
-  };
-
-  const pemisahRibuan = (harga) => {
-    return harga.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  };
 
   const [isDrawerOpsiOpen, setDrawerOpsirOpen] = useState(false);
 
@@ -68,7 +59,7 @@ pb-1"
           <Icon
             fontSize={"16px"}
             icon={"heroicons-solid:shopping-bag"}
-            className={`${getIconColor(status)} mr-1`}
+            className={`${getTextIconColor(status)} mr-1`}
           ></Icon>
           <p>{data.barang}</p>
         </Stack>
@@ -79,7 +70,7 @@ pb-1"
           <Icon
             fontSize={"16px"}
             icon={"heroicons-solid:cash"}
-            className={`${getIconColor(status)} } mr-1`}
+            className={`${getTextIconColor(status)} } mr-1`}
           />
           <p>
             Rp{pemisahRibuan(data.harga)} ({data.bunga} | Rp
@@ -93,7 +84,7 @@ pb-1"
           <Icon
             fontSize={"16px"}
             icon={"heroicons-outline:clock"}
-            className={`${getIconColor(status)} } mr-1`}
+            className={`${getTextIconColor(status)} } mr-1`}
           ></Icon>
           <p>{data.periodegadai}</p>
         </Stack>

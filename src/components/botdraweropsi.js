@@ -3,20 +3,10 @@ import { Divider, IconButton, Stack, SwipeableDrawer } from "@mui/material";
 import React from "react";
 import ButtonOpsiItem from "./opsi/buttonopsiitem";
 import { useNavigate } from "react-router-dom";
+import { drawerStyle } from "../functionGlobal";
 
 const BotDrawerOpsi = ({ open: openDrawer, setOpen: setOpenDrawer, data }) => {
   const Navigate = useNavigate();
-  const drawerStyle = {
-    width: "100%",
-    maxHeight: "85%",
-    backgroundColor: "white",
-    borderTopLeftRadius: "20px",
-    borderTopRightRadius: "20px",
-    position: "fixed",
-    bottom: 0,
-    zIndex: 999,
-    boxShadow: "0px -4px 10px rgba(0, 0, 0, 0.1)",
-  };
 
   // Unique functions to console.log for each option
   const handleDetailClick = () => {

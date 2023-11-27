@@ -2,26 +2,17 @@ import { Icon } from "@iconify/react";
 import { Card, CardContent, Chip, Stack } from "@mui/material";
 import React from "react";
 import {
-  getIconColor,
+  getTextIconColor,
   getDateColor,
   getCardGradientColor,
   getChipsBorderColor,
-} from "../../Pages/functionGlobal";
+  pemisahRibuan,
+  hitungBunga,
+} from "../../functionGlobal";
 
 const ItemListHistory = (data) => {
   const dats = data.data;
   const status = dats.status;
-
-  const hitungBunga = (harga, bunga) => {
-    const bunga1 = parseInt(bunga);
-    const harga1 = parseInt(harga);
-    const hitung = Math.round(harga1 * (bunga1 / 100));
-    return hitung;
-  };
-
-  const pemisahRibuan = (harga) => {
-    return harga.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  };
 
   const formatDate = (dateString) => {
     // Convert the date string to an array of day, month, and year
@@ -41,8 +32,9 @@ const ItemListHistory = (data) => {
   return (
     <Card
       sx={{
-        m: "16px",
-
+        mt: "16px",
+        borderWidth: "1px",
+        borderColor: "neutral.30",
         boxShadow: "0px 4px 6px 0px #00000008",
         background: getCardGradientColor(status),
       }}
@@ -71,7 +63,7 @@ const ItemListHistory = (data) => {
               <Icon
                 fontSize={"18px"}
                 icon={"heroicons-solid:cash"}
-                className={`${getIconColor(status)} } mr-1`}
+                className={`${getTextIconColor(status)} } mr-1`}
               />
               <p className="font-normal text-base">
                 {dats.bunga} | Rp
@@ -80,7 +72,7 @@ const ItemListHistory = (data) => {
             </Stack>
             <Chip
               variant="outlined"
-              className={`border h-[25px] px-3.5 ${getIconColor(
+              className={`border h-[25px] px-3.5 ${getTextIconColor(
                 status
               )} ${getChipsBorderColor(status)} ${getDateColor(status)}`}
               label={status}
@@ -99,7 +91,7 @@ const ItemListHistory = (data) => {
               <Icon
                 fontSize={"16px"}
                 icon={"heroicons-outline:clock"}
-                className={`${getIconColor(status)} } mr-1`}
+                className={`${getTextIconColor(status)} } mr-1`}
               ></Icon>
               <p className="font-normal text-base">
                 {dats.periodegadai} ({formatDate(dats.tglkredit)} -{" "}
