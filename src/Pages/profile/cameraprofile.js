@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { AppBar, Button, IconButton } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AppBarPlain from "../../components/appBarPlain";
