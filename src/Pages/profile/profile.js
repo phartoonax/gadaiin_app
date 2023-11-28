@@ -11,6 +11,9 @@ function Profile() {
 
   const [isFormProfileChangeFilled, setIsFormProfileChangeFilled] =
     useState(false);
+  const [savedImage, setSavedImage] = useState(
+    JSON.parse(localStorage.getItem("savedImage")) || null
+  );
 
   const {
     register,
@@ -332,7 +335,9 @@ function Profile() {
               </Stack>
               <div className="px-4 pt-4 pb-[23px] w-full rounded-md bg-neutral-20">
                 <Stack alignItems={"center"}>
-                  <Box className="h-[120px] w-[120px] rounded-[4px] bg-green-500"></Box>
+                  <Box className="h-[120px] w-[120px] rounded-[4px] bg-green-500 overflow-hidden">
+                    <img src={savedImage} alt="captured" />
+                  </Box>
 
                   <Stack
                     direction="row"

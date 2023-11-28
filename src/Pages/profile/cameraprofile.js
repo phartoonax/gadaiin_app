@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { AppBar, Button, IconButton } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AppBarPlain from "../../components/appBarPlain";
@@ -99,6 +99,14 @@ const CameraProfile = () => {
   const handleRetake = () => {
     setIsCameraAccessGranted(true);
     setImage(null);
+  };
+
+  const handleSave = () => {
+    // Save the image
+    // This is a placeholder, replace with your actual save logic.
+    localStorage.setItem("savedImage", JSON.stringify(image));
+    console.log("Image saved:", image);
+    navigate(-1);
   };
 
   const toggleCamera = () => {
@@ -227,7 +235,9 @@ const CameraProfile = () => {
               ></Icon>
             </IconButton>
           ) : (
-            <Button variant="text">Simpan</Button>
+            <Button variant="text" onClick={handleSave}>
+              Simpan
+            </Button>
           )}
         </div>
       </div>

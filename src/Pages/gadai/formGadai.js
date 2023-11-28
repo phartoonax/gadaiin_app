@@ -9,11 +9,11 @@ const FormGadai = () => {
     <div className="w-screen h-screen flex flex-col justify-start items-start  font-inter">
       <AppBarPlain placeholder={"Tambah Gadai"} />
       <ProgressIndicatorForm />
-      <div className="bg-white px-4 pt-5 w-screen shadow">
+      <div className="bg-white px-4 pt-5 w-full">
         <Stack gap={"20px"}>
-          <IsiForm title={"Telpon"}></IsiForm>
-          <IsiForm title={"Alamat Sesuai KTP"}></IsiForm>
-          <IsiForm title={"No. Identitas Sesuai KTP"}></IsiForm>
+          <IsiForm title={"Telpon"} type={"number"} isRequired={true} />
+          <IsiForm title={"Alamat Sesuai KTP"} isRequired={true} />
+          <IsiForm title={"No. Identitas Sesuai KTP"} isRequired={true} />
         </Stack>
       </div>
       <Paper
