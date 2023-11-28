@@ -1,10 +1,22 @@
 import { Icon } from "@iconify/react";
 import { Button, IconButton } from "@mui/material";
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AppBarPlain from "../../components/appBarPlain";
 
+/**
+ * @description Komponen ini menampilkan antarmuka kamera untuk mengambil foto profil. Ini mencakup akses ke kamera perangkat dan memungkinkan pengguna untuk mengambil foto, yang kemudian dapat disimpan dan digunakan sebagai foto profil.
+ * @author Henry
+ * @date UPDATED: 28/11/2023 - 11:10:31 AM
+ * @return {*} Komponen React yang menampilkan antarmuka kamera.
+ */
 const CameraProfile = () => {
+  const location = useLocation();
+  const idPelanggan = location.state.idPelanggan;
+  const idPhoto = idPelanggan
+    ? "savedImage-" + idPelanggan
+    : "savedImage-Profile";
+
   const navigate = useNavigate();
   const [isCameraAccessGranted, setIsCameraAccessGranted] = useState(true);
 
@@ -104,7 +116,7 @@ const CameraProfile = () => {
   const handleSave = () => {
     // Save the image
     // This is a placeholder, replace with your actual save logic.
-    localStorage.setItem("savedImage", JSON.stringify(image));
+    localStorage.setItem(idPhoto, JSON.stringify(image));
     console.log("Image saved:", image);
     navigate(-1);
   };

@@ -2,7 +2,14 @@ import { Icon } from "@iconify/react";
 import { Stack } from "@mui/material";
 import React from "react";
 
-const ProgressIndicatorForm = () => {
+/**
+ * @description Komponen ini menampilkan indikator kemajuan dalam formulir. Ada dua langkah dalam indikator ini: 'Data Pelanggan' dan 'Data Transaksi'.
+ * @author Henry
+ * @date 27/11/2023 - 4:30:20 PM
+ * @param {boolean} isFirstDone Menentukan apakah langkah 'Data Pelanggan' telah selesai
+ * @return {*} Komponen React yang menampilkan indikator kemajuan dalam formulir
+ */
+const ProgressIndicatorForm = (isFirstDone) => {
   return (
     <Stack
       className="px-4 bg-neutral-20 w-screen py-3"

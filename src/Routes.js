@@ -9,6 +9,7 @@ import ListGadai from "./Pages/gadai/listGadai";
 import ListPerpanjangan from "./Pages/perpanjang/listPerpanjangan";
 import ListTebus from "./Pages/tebus/listTebus";
 import FormGadai from "./Pages/gadai/formGadai";
+import FormPilihPelanggan from "./Pages/gadai/formPilihPelanggan";
 import PageHistoryGadai from "./components/opsi/pageHistoryGadai";
 
 /**
@@ -36,6 +37,8 @@ const Rute = (props) => {
         <Route path="/form/gadai" element={<FormGadai />} />
 
         <Route path="/history" element={<PageHistoryGadai />} />
+
+        <Route path="/pilihPelanggan" element={<FormPilihPelanggan />} />
       </Routes>
     </>
   );

@@ -68,7 +68,7 @@ function PagePeriodeGadai({ setShowFullPageModal, setPeriodeGadaiValues }) {
                   marginY: "10px",
                   borderBottomWidth: "3px",
                 }}
-              ></Divider>
+              />
             }
           >
             {selectedPeriodeArray.length > 0 && (
