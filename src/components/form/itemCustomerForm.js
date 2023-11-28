@@ -8,10 +8,10 @@ import React from "react";
  * @date 28/11/2023 - 11:09:04 AM
  * @returns {*} Komponen React.
  */
-const ItemCustomerForm = () => {
+const ItemCustomerForm = ({ onClickHandler }) => {
   return (
-    <Stack gap={"10px"}>
-      <p className="font-normal text-base leading-[18px] text-neutral-100">
+    <Stack gap={"10px"} onClick={onClickHandler}>
+      <p className="font-medium text-base leading-[18px] text-neutral-100">
         Bayu Herlambang Simanjutak
       </p>
       <Stack

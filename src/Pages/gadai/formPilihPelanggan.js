@@ -1,16 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import AppBarWithSearch from "../../components/appBarWithSearch";
-import { Divider, IconButton, Stack } from "@mui/material";
+import {
+  Divider,
+  IconButton,
+  Stack,
+  Dialog,
+  DialogContentText,
+  DialogContent,
+  Button,
+} from "@mui/material";
 import { Icon } from "@iconify/react";
 import ItemCustomerForm from "../../components/form/itemCustomerForm";
+import IsiForm from "../../components/form/isiForm";
 
 /**
  * @description
  * @author Henry
  * @date 28/11/2023 - 12:00:48 PM
- * @return {*} 
+ * @return {*}
  */
 const FormPilihPelanggan = () => {
+  //Untuk buka Customer Baru
+  const [isDialogOpenNewCustomerPass, setIsDialogOpenNewCustomerPass] =
+    useState(false);
+
+  //Untuk buka konfirmasi pemilihan Customer
+  const [isDialogOpenConfirmCustomerPass, setIsDialogOpenConfirmCustomerPass] =
+    useState(false);
+
+  function handleOpenDialogConfirmCustomerPass() {
+    setIsDialogOpenConfirmCustomerPass(true);
+  }
+
   return (
     <div className=" font-inter">
       <AppBarWithSearch placeholder={"Cari Nama Pelanggan"} />
@@ -32,6 +53,7 @@ const FormPilihPelanggan = () => {
           direction={"row"}
           justifyContent="space-between"
           alignItems={"center"}
+          onClick={() => setIsDialogOpenNewCustomerPass(true)}
         >
           <p>Buat Nama Pelanggan Baru</p>
           <IconButton>
@@ -42,10 +64,110 @@ const FormPilihPelanggan = () => {
             ></Icon>
           </IconButton>
         </Stack>
-        <ItemCustomerForm />
-        <ItemCustomerForm />
-        <div /> {/** last div to make the last divider out*/}
+        <ItemCustomerForm
+          onClickHandler={handleOpenDialogConfirmCustomerPass}
+        />
+        <ItemCustomerForm
+          onClickHandler={handleOpenDialogConfirmCustomerPass}
+        />
+        <div />
       </Stack>
+      {isDialogOpenNewCustomerPass && (
+        <div
+          className="fixed z-10 inset-0 overflow-y-auto"
+          aria-labelledby="modal-title"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full px-3 py-4">
+              <IsiForm title="Nama Pelanggan" isRequired={false} />
+              <div className=" pt-4 sm:px-6 flex gap-2.5 justify-between">
+                <button
+                  type="button"
+                  className={` font-bold py-3.5 px-5 w-2/4 rounded-xl ${"bg-neutral-30 text-neutral-70"}`}
+                >
+                  Simpan
+                </button>
+                <button
+                  onClick={() => setIsDialogOpenNewCustomerPass(false)}
+                  type="button"
+                  className="bg-white border-[#28A138] border hover:bg-[#28A138] hover:text-white text-[#28A138] font-bold py-3.5 px-5 w-2/4 rounded-xl"
+                >
+                  Kembali
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <Dialog
+        sx={{ borderRadius: "8px" }}
+        open={isDialogOpenConfirmCustomerPass}
+        onClose={() => setIsDialogOpenConfirmCustomerPass(false)}
+        PaperProps={{
+          sx: { borderRadius: "8px", marginX: "16px", padding: "16px" },
+        }}
+      >
+        <DialogContentText className="text-center text-base font-semibold leading-[18px] text-neutral-100">
+          Apakah anda yakin ingin memilih data untuk pelanggan di bawah ini ?
+        </DialogContentText>
+        <DialogContent className="border border-neutral-100 rounded-lg overflow-hidden p-0 h-[120px]">
+          <Stack direction="row" gap={"10px"}>
+            <div className="h-[120px] w-[120px] bg-red-600 rounded-[4px] flex-shrink-0"></div>
+            <Stack className="font-normal text-sm leading-[14px] text-black items-start py-[7px]">
+              <p className="font-bold text-sm leading-[18px] overflow-hidden overflow-ellipsis">
+                Bayu Herlambang Simanjutak Kadarisman Makarov DealerDealerDealer
+              </p>
+              <Stack
+                className="px-0.5 py-[10px]"
+                direction={"row"}
+                justifyContent="space-between"
+                alignItems={"center"}
+                gap={"4px"}
+              >
+                <Icon icon={"heroicons-outline:phone"} fontSize={"16px"} />
+                <p>+6285489456145</p>
+              </Stack>
+              <Stack
+                gap={"4px"}
+                className="px-0.5"
+                direction={"row"}
+                justifyContent="space-between"
+                alignItems={"center"}
+              >
+                <Icon
+                  icon={"heroicons-outline:identification"}
+                  fontSize={"16px"}
+                />
+                <p>3578263150950099</p>
+              </Stack>
+            </Stack>
+          </Stack>
+        </DialogContent>
+        <Stack
+          direction="row"
+          gap={"10px"}
+          className="w-full justify-between pt-4"
+        >
+          <Button
+            variant="contained"
+            className="text-neutral-10 bg-success-Main rounded-xl px-5 py-3.5 w-full text-base font-bold hover:bg-success-Main"
+          >
+            Pilih
+          </Button>
+          <Button
+            variant="outlined"
+            className="text-success-Main border-success-Main hover:border-success-Main rounded-xl px-5 py-3.5 w-full text-base font-bold"
+            onClick={() => setIsDialogOpenConfirmCustomerPass(false)}
+          >
+            Kembali
+          </Button>
+        </Stack>
+      </Dialog>
     </div>
   );
 };
