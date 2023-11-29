@@ -21,8 +21,10 @@ const PhotoCameraForm = ({ title, savedImage, setSavedImage, idPelanggan }) => {
       <Stack gap="8px">
         {title && (
           <Stack direction="row" gap={"2px"}>
-            <span className="text-neutral-100 text-lg font-bold">{title}</span>
-            {<span className="text-danger-Main text-lg font-bold">*</span>}
+            <span className="text-neutral-100 text-base font-bold">
+              {title}
+            </span>
+            {<span className="text-danger-Main text-base font-bold">*</span>}
           </Stack>
         )}
         <div className="px-4 pt-4 pb-[23px] w-full rounded-md bg-neutral-20">

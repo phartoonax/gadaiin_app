@@ -3,6 +3,22 @@ import { Divider, IconButton, Stack, SwipeableDrawer } from "@mui/material";
 import React, { useState } from "react";
 import { drawerStyle } from "../../variableGlobal";
 
+/**
+ * @description Komponen `IsiTglAwalAkhirDurasiForm` adalah sebuah form yang memungkinkan pengguna untuk memilih durasi pinjaman dan menghitung tanggal jatuh tempo berdasarkan durasi yang dipilih. Komponen ini menggunakan `SwipeableDrawer` untuk menampilkan opsi durasi kepada pengguna.
+ * @author Henry
+ * @date 29/11/2023 - 5:15:42 PM
+ * @returns {*} Sebuah komponen React.
+ *
+ * @state
+ * - `tglKredit`: Sebuah string yang mewakili tanggal saat ini dalam format "dd MMM yyyy".
+ * - `durasiGadai`: Sebuah string yang mewakili durasi pinjaman yang dipilih.
+ * - `tglJatuhTempo`: Sebuah string yang mewakili tanggal jatuh tempo berdasarkan durasi pinjaman yang dipilih.
+ * - `isDrawerDurasiGadaiOpen`: Sebuah boolean yang menunjukkan apakah komponen `SwipeableDrawer` sedang terbuka atau tidak.
+ *
+ * @functions
+ * - `handleDurasiGadaiClick`: Membuka komponen `SwipeableDrawer` dan mencetak state `durasiGadai` saat ini ke konsol.
+ * - `handleDurasiGadaiChange`: Memperbarui state `durasiGadai` dan `tglJatuhTempo` berdasarkan durasi yang dipilih dan menutup komponen `SwipeableDrawer`.
+ */
 const IsiTglAwalAkhirDurasiForm = () => {
   const tglKredit = new Date().toLocaleDateString("id-ID", {
     day: "2-digit",
@@ -20,7 +36,30 @@ const IsiTglAwalAkhirDurasiForm = () => {
   }
 
   function handleDurasiGadaiChange(item) {
+    function addDays(date, days) {
+      date.setDate(date.getDate() + days);
+      return date;
+    }
     setDurasiGadai(item.durasi);
+    let periodeInDays;
+
+    if (item.durasi.includes("Hari")) {
+      periodeInDays = parseInt(item.durasi.split(" ")[0]);
+    } else if (item.durasi.includes("Bulan")) {
+      periodeInDays = parseInt(item.durasi.split(" ")[0]) * 30;
+    } else if (item.durasi.includes("Tahun")) {
+      periodeInDays = parseInt(item.durasi.split(" ")[0]) * 365;
+    }
+
+    const tgljatuhtempo = addDays(new Date(tglKredit), periodeInDays);
+    setTglJatuhTempo(
+      tgljatuhtempo.toLocaleDateString("id-ID", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      })
+    );
+
     setIsDrawerDurasiGadaiOpen(false);
   }
 
