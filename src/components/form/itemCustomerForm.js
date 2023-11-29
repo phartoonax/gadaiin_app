@@ -5,14 +5,24 @@ import React from "react";
 /**
  * @description Menampilkan informasi pelanggan: nama, nomor telepon, dan nomor identifikasi.
  * @author Henry
- * @date 28/11/2023 - 11:09:04 AM
+ * @date 29/11/2023 - 11:39:04 AM
+ * @param {string} name - Nama pelanggan
+ * @param {string} phoneNumber - Nomor telepon pelanggan
+ * @param {string} noCustomer - Nomor identifikasi pelanggan
+ * @param {function} onClickHandler - Fungsi yang dipanggil ketika komponen diklik
  * @returns {*} Komponen React.
  */
-const ItemCustomerForm = ({ onClickHandler }) => {
-  return (
+const ItemCustomerForm = ({
+  name,
+  phoneNumber,
+  noCustomer,
+  onClickHandler,
+}) => {
+  <>
+    return (
     <Stack gap={"10px"} onClick={onClickHandler}>
-      <p className="font-medium text-base leading-[18px] text-neutral-100">
-        Bayu Herlambang Simanjutak
+      <p className="font-medium text-base leading-[18px] text-neutral-100 font-inter">
+        {name}
       </p>
       <Stack
         className="font-normal text-sm leading-[14px] text-neutral-100"
@@ -38,7 +48,7 @@ const ItemCustomerForm = ({ onClickHandler }) => {
           gap={"4px"}
         >
           <Icon icon={"heroicons-outline:phone"} fontSize={"16px"} />
-          <p>+6285489456145</p>
+          <p>+{phoneNumber}</p>
         </Stack>
         <Stack
           gap={"4px"}
@@ -48,11 +58,12 @@ const ItemCustomerForm = ({ onClickHandler }) => {
           alignItems={"center"}
         >
           <Icon icon={"heroicons-outline:identification"} fontSize={"16px"} />
-          <p>3578263150950099</p>
+          <p>{noCustomer}</p>
         </Stack>
       </Stack>
     </Stack>
-  );
+    );
+  </>;
 };
 
 export default ItemCustomerForm;

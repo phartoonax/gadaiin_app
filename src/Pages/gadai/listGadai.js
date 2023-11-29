@@ -86,7 +86,7 @@ function ListGadai() {
   const iconKanan = "heroicons-outline:switch-vertical";
   const iconFab = "heroicons-outline:plus";
   function handleFabClick() {
-    navigate("/form/gadai");
+    navigate("/form/gadai/pelanggan");
   }
 
   return (

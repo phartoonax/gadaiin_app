@@ -228,7 +228,7 @@ const BotDrawerFilter = ({
         <Stack
           direction="column"
           divider={
-            <Divider variant="fullWidth" sx={{ marginY: "10px" }}></Divider>
+            <Divider variant="fullWidth" sx={{ marginY: "10px" }}/>
           }
           sx={{ px: "16px", mb: "72px" }}
         >

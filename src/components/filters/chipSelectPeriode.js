@@ -27,7 +27,6 @@ const ChipSelectPeriode = ({
           justifyContent="space-between"
           alignItems="center"
         >
-          {" "}
           <Stack direction="row" gap={"6px"}>
             <div className="text-sm text-[15px] font-bold">{title}</div>
             <div className="rounded-full bg-themeColor px-2  text-neutral-10">

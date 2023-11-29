@@ -334,6 +334,7 @@ function Profile() {
               <PhotoCameraForm
                 savedImage={savedImage}
                 setSavedImage={setSavedImage}
+                idPelanggan={"Profile"}
               />
               <Button
                 variant="outlined"

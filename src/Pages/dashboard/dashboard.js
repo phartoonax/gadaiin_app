@@ -20,6 +20,10 @@ const Dashboard = (props) => {
   const [shouldRender, setShouldRender] = useState(false);
   const [shouldRenderBackground, setShouldRenderBackground] = useState(false);
 
+  const [savedImage, setSavedImage] = useState(
+    JSON.parse(localStorage.getItem("savedImage-Profile")) || null
+  );
+
   useEffect(() => {
     if (isMenuOpen) {
       setShouldRender(true);
@@ -100,7 +104,7 @@ const Dashboard = (props) => {
           <div className="absolute top-0 left-0 p-4 mt-6 flex items-center">
             <div className=" rounded-full overflow-scroll drop-shadow-xl">
               <img
-                src="https://via.placeholder.com/150" // replace with the actual profile picture URL
+                src={savedImage}
                 alt="Profile"
                 className="h-[50px] w-[50px] rounded-full"
                 onClick={() => (window.location.href = "/profile")}

@@ -8,7 +8,8 @@ import CameraProfile from "./Pages/profile/cameraProfile";
 import ListGadai from "./Pages/gadai/listGadai";
 import ListPerpanjangan from "./Pages/perpanjang/listPerpanjangan";
 import ListTebus from "./Pages/tebus/listTebus";
-import FormGadai from "./Pages/gadai/formGadai";
+import FormDataPelangganGadai from "./Pages/gadai/formDataPelangganGadai";
+import FormDataTransaksiGadai from "./Pages/gadai/formDataTransaksiGadai";
 import FormPilihPelanggan from "./Pages/gadai/formPilihPelanggan";
 import PageHistoryGadai from "./components/opsi/pageHistoryGadai";
 
@@ -34,7 +35,14 @@ const Rute = (props) => {
         <Route path="/list/perpanjangan" element={<ListPerpanjangan />} />
         <Route path="/list/tebus" element={<ListTebus />} />
 
-        <Route path="/form/gadai" element={<FormGadai />} />
+        <Route
+          path="/form/gadai/pelanggan"
+          element={<FormDataPelangganGadai />}
+        />
+        <Route
+          path="/form/gadai/transaksi"
+          element={<FormDataTransaksiGadai />}
+        />
 
         <Route path="/history" element={<PageHistoryGadai />} />
 

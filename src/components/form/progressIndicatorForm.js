@@ -9,37 +9,58 @@ import React from "react";
  * @param {boolean} isFirstDone Menentukan apakah langkah 'Data Pelanggan' telah selesai
  * @return {*} Komponen React yang menampilkan indikator kemajuan dalam formulir
  */
-const ProgressIndicatorForm = (isFirstDone) => {
+const ProgressIndicatorForm = ({ isFirstDone }) => {
   return (
-    <Stack
-      className="px-4 bg-neutral-20 w-screen py-3 h-[50px]"
-      spacing={2}
-      direction="row"
-      justifyContent="space-between"
-      alignItems="center"
-    >
-      <Stack spacing={"12px"} direction="row" alignItems="center">
-        <div className="text-success-Main rounded-full border border-success-Main pl-2 pr-[9px] h-[26px]">
-          1
-        </div>
-        <div className="text-base font-medium text-neutral-100">
-          Data Pelanggan
-        </div>
+    <>
+      {" "}
+      <Stack
+        className="px-4 bg-neutral-20 w-screen py-3 h-[50px]"
+        spacing={2}
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Stack spacing={"12px"} direction="row" alignItems="center">
+          <div
+            className={`flex items-center text-success-Main rounded-full border border-success-Main h-[26px] ${
+              isFirstDone ? "px-1" : "pl-2 pr-[9px]"
+            }`}
+          >
+            {isFirstDone ? (
+              <Icon fontSize={"16px"} icon={"feather:check"}></Icon>
+            ) : (
+              1
+            )}
+          </div>
+          <div className="text-base font-medium text-neutral-100">
+            Data Pelanggan
+          </div>
+        </Stack>
+        <Icon
+          fontSize={"22px"}
+          className="text-neutral-70"
+          icon={"feather:chevron-right"}
+        />
+        <Stack spacing={"12px"} direction="row" alignItems="center">
+          <div
+            className={`${
+              isFirstDone
+                ? "text-success-Main border-success-Main"
+                : "text-neutral-60 border-neutral-60"
+            } rounded-full border  pl-[7px] pr-2 h-[26px]`}
+          >
+            2
+          </div>
+          <div
+            className={`text-base font-normal ${
+              isFirstDone ? "text-neutral-100 " : "text-neutral-60 "
+            }`}
+          >
+            Data Transaksi
+          </div>
+        </Stack>
       </Stack>
-      <Icon
-        fontSize={"22px"}
-        className="text-neutral-70"
-        icon={"feather:chevron-right"}
-      />
-      <Stack spacing={"12px"} direction="row" alignItems="center">
-        <div className="text-neutral-60 rounded-full border border-neutral-60 pl-[7px] pr-2 h-[26px]">
-          2
-        </div>
-        <div className="text-base font-normal text-neutral-60">
-          Data Transaksi
-        </div>
-      </Stack>
-    </Stack>
+    </>
   );
 };
 

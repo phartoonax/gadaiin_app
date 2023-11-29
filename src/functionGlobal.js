@@ -256,6 +256,49 @@ function generateRandomDataGadai(designatedFor, jumlah) {
   return Array.from({ length: jumlah }, getDataRandom);
 }
 
+function generateRandomDataCustomer(jumlah) {
+  function generateData() {
+    function generateName() {
+      const firstNames =
+        "Ika, Ana, Asmuni, Gangsa, Maria, Olivia, Naradi, Prayoga".split(", ");
+      const lastNames =
+        "Rahimah, Novitasari, Gunawan, Wasita, Usada, Namaga, Prasasta, Mandala".split(
+          ", "
+        );
+
+      const randomFirstName =
+        firstNames[Math.floor(Math.random() * firstNames.length)];
+      const randomLastName =
+        lastNames[Math.floor(Math.random() * lastNames.length)];
+
+      return `${randomFirstName} ${randomLastName}`;
+    }
+    function generateRandomPhoneNumber() {
+      const areaCodes = ["081", "082", "083", "085", "087"];
+      const randomNumber = Math.floor(Math.random() * 1000000000)
+        .toString()
+        .padStart(10, "0");
+      const randomAreaCode =
+        areaCodes[Math.floor(Math.random() * areaCodes.length)];
+
+      return `${randomAreaCode}${randomNumber}`;
+    }
+    function generateRandomIDBadgeNumber() {
+      const randomNumber = Math.floor(Math.random() * 10000000000000000)
+        .toString()
+        .padStart(16, "0");
+      return randomNumber;
+    }
+    return {
+      name: generateName(),
+      phoneNumber: generateRandomPhoneNumber(),
+      noCustomer: generateRandomIDBadgeNumber(),
+      address: "Jl. Raya Kediri - Pare No. 1, Kediri",
+    };
+  }
+  return Array.from({ length: jumlah }, generateData);
+}
+
 export {
   getDateColor,
   getTextIconColor,
@@ -265,4 +308,5 @@ export {
   pemisahRibuan,
   hitungBunga,
   generateRandomDataGadai,
+  generateRandomDataCustomer,
 };

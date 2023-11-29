@@ -11,7 +11,9 @@ import {
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import ItemCustomerForm from "../../components/form/itemCustomerForm";
-import IsiForm from "../../components/form/isiForm";
+import IsiFormDefault from "../../components/form/isiDefaultForm";
+import { useNavigate } from "react-router-dom";
+import { generateRandomDataCustomer } from "../../functionGlobal";
 
 /**
  * @description
@@ -19,7 +21,14 @@ import IsiForm from "../../components/form/isiForm";
  * @date 28/11/2023 - 12:00:48 PM
  * @return {*}
  */
+
 const FormPilihPelanggan = () => {
+  const generatedArray = generateRandomDataCustomer(6);
+  const [displayedArray, setDisplayedArray] = useState(generatedArray); //setDisplayed will be used in search
+
+  const [pickedCustomer, setPickedCustomer] = useState(null);
+
+  const navigate = useNavigate();
   //Untuk buka Customer Baru
   const [isDialogOpenNewCustomerPass, setIsDialogOpenNewCustomerPass] =
     useState(false);
@@ -28,8 +37,18 @@ const FormPilihPelanggan = () => {
   const [isDialogOpenConfirmCustomerPass, setIsDialogOpenConfirmCustomerPass] =
     useState(false);
 
-  function handleOpenDialogConfirmCustomerPass() {
+  function handleOpenDialogConfirmCustomerPass(dataCustomer) {
+    setPickedCustomer(dataCustomer);
     setIsDialogOpenConfirmCustomerPass(true);
+  }
+
+  function handlePickCustomer() {
+    setIsDialogOpenConfirmCustomerPass(false);
+
+    navigate("/form/gadai/pelanggan", {
+      state: { dataPelanggan: pickedCustomer },
+      replace: true,
+    });
   }
 
   return (
@@ -64,15 +83,18 @@ const FormPilihPelanggan = () => {
             ></Icon>
           </IconButton>
         </Stack>
-        <ItemCustomerForm
-          onClickHandler={handleOpenDialogConfirmCustomerPass}
-        />
-        <ItemCustomerForm
-          onClickHandler={handleOpenDialogConfirmCustomerPass}
-        />
+        {displayedArray.map((item, index) => (
+          <ItemCustomerForm
+            name={item.name}
+            phoneNumber={item.phoneNumber}
+            noCustomer={item.noCustomer}
+            onClickHandler={() => handleOpenDialogConfirmCustomerPass(item)}
+          />
+        ))}
+
         <div />
       </Stack>
-      {isDialogOpenNewCustomerPass && (
+      {isDialogOpenNewCustomerPass && ( //TODO: CHANGE THIS TO DIALOG
         <div
           className="fixed z-10 inset-0 overflow-y-auto"
           aria-labelledby="modal-title"
@@ -83,7 +105,7 @@ const FormPilihPelanggan = () => {
             <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full px-3 py-4">
-              <IsiForm title="Nama Pelanggan" isRequired={false} />
+              <IsiFormDefault title="Nama Pelanggan" isRequired={false} />
               <div className=" pt-4 sm:px-6 flex gap-2.5 justify-between">
                 <button
                   type="button"
@@ -112,15 +134,15 @@ const FormPilihPelanggan = () => {
           sx: { borderRadius: "8px", marginX: "16px", padding: "16px" },
         }}
       >
-        <DialogContentText className="text-center text-base font-semibold leading-[18px] text-neutral-100">
+        <DialogContentText className="text-center text-base font-semibold leading-[18px] text-neutral-100 pb-4">
           Apakah anda yakin ingin memilih data untuk pelanggan di bawah ini ?
         </DialogContentText>
-        <DialogContent className="border border-neutral-100 rounded-lg overflow-hidden p-0 h-[120px]">
+        <DialogContent className="border border-neutral-100 rounded-lg overflow-hidden p-0 h-[120px] font-sans">
           <Stack direction="row" gap={"10px"}>
             <div className="h-[120px] w-[120px] bg-red-600 rounded-[4px] flex-shrink-0"></div>
-            <Stack className="font-normal text-sm leading-[14px] text-black items-start py-[7px]">
-              <p className="font-bold text-sm leading-[18px] overflow-hidden overflow-ellipsis">
-                Bayu Herlambang Simanjutak Kadarisman Makarov DealerDealerDealer
+            <Stack className="font-normal text-sm leading-[14px] text-black items-start py-[7px] mr-1 w-full overflow-hidden justify-center">
+              <p className="font-bold text-sm leading-[18px] w-full overflow-auto overflow-ellipsis max-h-[52px]">
+                {pickedCustomer?.name}
               </p>
               <Stack
                 className="px-0.5 py-[10px]"
@@ -130,7 +152,7 @@ const FormPilihPelanggan = () => {
                 gap={"4px"}
               >
                 <Icon icon={"heroicons-outline:phone"} fontSize={"16px"} />
-                <p>+6285489456145</p>
+                <p>+{pickedCustomer?.phoneNumber}</p>
               </Stack>
               <Stack
                 gap={"4px"}
@@ -143,7 +165,7 @@ const FormPilihPelanggan = () => {
                   icon={"heroicons-outline:identification"}
                   fontSize={"16px"}
                 />
-                <p>3578263150950099</p>
+                <p>{pickedCustomer?.noCustomer}</p>
               </Stack>
             </Stack>
           </Stack>
@@ -156,6 +178,7 @@ const FormPilihPelanggan = () => {
           <Button
             variant="contained"
             className="text-neutral-10 bg-success-Main rounded-xl px-5 py-3.5 w-full text-base font-bold hover:bg-success-Main"
+            onClick={handlePickCustomer}
           >
             Pilih
           </Button>
