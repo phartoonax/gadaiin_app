@@ -91,25 +91,30 @@ function ListGadai() {
 
   return (
     <>
-      <div className="font-inter">
-        <AppBarWithSearch placeholder={"Cari Data Gadai"} />
-
-        <BotNavbarNfab
-          iconKiri={iconKiri}
-          iconKanan={iconKanan}
-          iconFab={iconFab}
-          onFabClick={handleFabClick}
-          onFilterChange={handleFilterChangeFAB}
-          status={null}
-        />
-        <div className="mx-4">
-          {filteredArray.map((data, index) => (
-            <div
-              className={`${index === filteredArray.length - 1 ? "pb-24" : ""}`}
-            >
-              <ListItem data={data} />
-            </div>
-          ))}
+      <div className="font-inter w-screen h-screen flex flex-col justify-start items-start">
+        <div className="fixed top-0 z-50 w-full">
+          <AppBarWithSearch placeholder={"Cari Data Gadai"} />
+        </div>
+        <div className="bg-white pt-[76px] w-full">
+          <BotNavbarNfab
+            iconKiri={iconKiri}
+            iconKanan={iconKanan}
+            iconFab={iconFab}
+            onFabClick={handleFabClick}
+            onFilterChange={handleFilterChangeFAB}
+            status={null}
+          />
+          <div className="mx-4">
+            {filteredArray.map((data, index) => (
+              <div
+                className={`${
+                  index === filteredArray.length - 1 ? "pb-24" : ""
+                }`}
+              >
+                <ListItem data={data} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>

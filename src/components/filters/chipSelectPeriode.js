@@ -10,12 +10,12 @@ import React from "react";
  * @param {function} setShowFullPageModal Fungsi untuk mengatur tampilan modal
  * @returns {*} Sebuah grup chip dengan judul dan nilai yang ditentukan
  * @author Henry
- * @date 27/11/2023 - 9:49:37 AM
+ * @date 30/11/2023 - 9:30:37 AM
  */
 const ChipSelectPeriode = ({
   title,
   chipValues,
-  periodeGadaiValues: chipSelectedValues,
+  periodeGadaiValues,
   handleChipClick,
   setShowFullPageModal,
 }) => {
@@ -30,7 +30,7 @@ const ChipSelectPeriode = ({
           <Stack direction="row" gap={"6px"}>
             <div className="text-sm text-[15px] font-bold">{title}</div>
             <div className="rounded-full bg-themeColor px-2  text-neutral-10">
-              {chipSelectedValues.length}
+              {periodeGadaiValues.length}
             </div>
           </Stack>
           <Button
@@ -48,7 +48,7 @@ const ChipSelectPeriode = ({
               <Chip
                 label={value}
                 variant={
-                  chipSelectedValues.includes(value) ? "solid" : "outlined"
+                  periodeGadaiValues.includes(value) ? "solid" : "outlined"
                 }
                 color={"success"}
                 className="font-normal text-sm px-0.5 py-[7px]"

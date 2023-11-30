@@ -94,37 +94,46 @@ const FormPilihPelanggan = () => {
 
         <div />
       </Stack>
-      {isDialogOpenNewCustomerPass && ( //TODO: CHANGE THIS TO DIALOG
-        <div
-          className="fixed z-10 inset-0 overflow-y-auto"
-          aria-labelledby="modal-title"
-          role="dialog"
-          aria-modal="true"
-        >
-          <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+      <Dialog
+        sx={{ borderRadius: "8px" }}
+        open={isDialogOpenNewCustomerPass}
+        onClose={() => setIsDialogOpenNewCustomerPass(false)}
+        PaperProps={{
+          sx: {
+            borderRadius: "8px",
+            marginX: "16px",
+            padding: "16px",
+            width: "100%",
+          },
+        }}
+      >
+        <IsiFormDefault
+          title="Nama Pelanggan"
+          isRequired={false}
+          enabled={true}
+        />
 
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full px-3 py-4">
-              <IsiFormDefault title="Nama Pelanggan" isRequired={false} />
-              <div className=" pt-4 sm:px-6 flex gap-2.5 justify-between">
-                <button
-                  type="button"
-                  className={` font-bold py-3.5 px-5 w-2/4 rounded-xl ${"bg-neutral-30 text-neutral-70"}`}
-                >
-                  Simpan
-                </button>
-                <button
-                  onClick={() => setIsDialogOpenNewCustomerPass(false)}
-                  type="button"
-                  className="bg-white border-[#28A138] border hover:bg-[#28A138] hover:text-white text-[#28A138] font-bold py-3.5 px-5 w-2/4 rounded-xl"
-                >
-                  Kembali
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+        <Stack
+          direction="row"
+          gap={"10px"}
+          className="w-full justify-between pt-4"
+        >
+          <Button
+            variant="contained"
+            className="text-neutral-10 bg-success-Main rounded-xl px-5 py-3.5 w-full text-base font-bold hover:bg-success-Main"
+            onClick={handlePickCustomer}
+          >
+            Pilih
+          </Button>
+          <Button
+            variant="outlined"
+            className="text-success-Main border-success-Main hover:border-success-Main rounded-xl px-5 py-3.5 w-full text-base font-bold"
+            onClick={() => setIsDialogOpenNewCustomerPass(false)}
+          >
+            Kembali
+          </Button>
+        </Stack>
+      </Dialog>
 
       <Dialog
         sx={{ borderRadius: "8px" }}

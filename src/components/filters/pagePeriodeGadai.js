@@ -79,7 +79,7 @@ function PagePeriodeGadai({ setShowFullPageModal, setPeriodeGadaiValues }) {
                       label={value}
                       variant={"solid"}
                       color={"success"}
-                      className="font-normal text-sm px-0.5 py-[7px]"
+                      className="font-normal text-sm px-0.5 py-[7px] max-w-[150px] overflow-ellipsis"
                       onClick={() => handleChipClick(value)}
                     />
                   </Grid>

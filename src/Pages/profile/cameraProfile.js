@@ -114,10 +114,9 @@ const CameraProfile = () => {
   };
 
   const handleSave = () => {
-    // Save the image
-    // This is a placeholder, replace with your actual save logic.
+    handleStop();
     localStorage.setItem(idPhoto, JSON.stringify(image));
-    console.log("Image saved:", image);
+
     navigate(-1);
   };
 

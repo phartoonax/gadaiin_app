@@ -19,7 +19,7 @@ import { drawerStyle } from "../../variableGlobal";
  * - `handleDurasiGadaiClick`: Membuka komponen `SwipeableDrawer` dan mencetak state `durasiGadai` saat ini ke konsol.
  * - `handleDurasiGadaiChange`: Memperbarui state `durasiGadai` dan `tglJatuhTempo` berdasarkan durasi yang dipilih dan menutup komponen `SwipeableDrawer`.
  */
-const IsiTglAwalAkhirDurasiForm = () => {
+const IsiTglAwalAkhirDurasiForm = ({setBungaValue}) => {
   const tglKredit = new Date().toLocaleDateString("id-ID", {
     day: "2-digit",
     month: "short",
@@ -32,7 +32,6 @@ const IsiTglAwalAkhirDurasiForm = () => {
 
   function handleDurasiGadaiClick() {
     setIsDrawerDurasiGadaiOpen(true);
-    console.log(durasiGadai);
   }
 
   function handleDurasiGadaiChange(item) {
@@ -59,6 +58,7 @@ const IsiTglAwalAkhirDurasiForm = () => {
         year: "numeric",
       })
     );
+    setBungaValue(item.persentase);
 
     setIsDrawerDurasiGadaiOpen(false);
   }

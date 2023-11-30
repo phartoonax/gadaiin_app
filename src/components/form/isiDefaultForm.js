@@ -14,7 +14,14 @@ import { useNavigate } from "react-router-dom";
  * @param {boolean} enabled - Menentukan apakah input formulir dapat diubah
  * @return {*} Komponen React yang menampilkan bagian isi dari formulir
  */
-const IsiFormDefault = ({ title, type, isRequired, valueForm, enabled }) => {
+const IsiFormDefault = ({
+  title,
+  type,
+  isRequired,
+  valueForm,
+  valueFormChange,
+  enabled,
+}) => {
   const navigate = useNavigate();
 
   const handlePilihCustomer = () => {
@@ -52,13 +59,14 @@ const IsiFormDefault = ({ title, type, isRequired, valueForm, enabled }) => {
             type={type || "text"}
             disabled={enabled ? !enabled : true}
             value={valueForm}
+            onChange={valueFormChange ? valueFormChange : null}
             className={`w-full  rounded-md border p-[11px] ${
               !enabled
                 ? "border-neutral-40 bg-neutral-20 text-neutral-60"
                 : valueForm !== "" && valueForm !== undefined
                 ? "border-neutral-100"
                 : "border-neutral-40"
-            } focus:outline-none`}
+            } focus:outline-black text-neutral-100 text-sm leading-[18px] py-4 font-medium`}
           />
         )}
       </Stack>
