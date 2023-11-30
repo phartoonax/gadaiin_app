@@ -102,12 +102,12 @@ const Dashboard = (props) => {
         </div>
         <div className="z-[3] w-full">
           <div className="absolute top-0 left-0 p-4 mt-6 flex items-center">
-            <div className=" rounded-full overflow-scroll drop-shadow-xl">
+            <div className=" rounded-full overflow-hidden drop-shadow-xl">
               <img
-                src={savedImage}
+                src={savedImage || ""}
                 alt="Profile"
                 className="h-[50px] w-[50px] rounded-full"
-                onClick={() => (window.location.href = "/profile")}
+                onClick={() => navigate("/profile")}
               />
             </div>
             <div className="ml-1 flex flex-col">

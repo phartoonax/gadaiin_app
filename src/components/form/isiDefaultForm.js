@@ -38,15 +38,19 @@ const IsiFormDefault = ({
           )}
         </Stack>
         {type === "button" ? (
-          <div className="relative" onClick={handlePilihCustomer}>
+          <div
+            className="relative"
+            onClick={enabled ? handlePilihCustomer : null}
+          >
             <input
               type={"text"}
               value={valueForm}
+              disabled={enabled ? !enabled : true}
               className={`w-full rounded-md border p-[11px]  focus:outline-none pr-10 ${
-                valueForm !== "" && valueForm !== undefined
+                valueForm !== "" && valueForm !== undefined && enabled
                   ? "border-neutral-100"
                   : "border-neutral-40"
-              }`}
+              } ${enabled ? "" : "bg-neutral-20 text-neutral-60"}`}
             />
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
               {valueForm === "" ||

@@ -10,6 +10,8 @@ import ListPerpanjangan from "./Pages/perpanjang/listPerpanjangan";
 import ListTebus from "./Pages/tebus/listTebus";
 import FormDataPelangganGadai from "./Pages/gadai/formDataPelangganGadai";
 import FormDataTransaksiGadai from "./Pages/gadai/formDataTransaksiGadai";
+import FormDataPelangganPerpanjang from "./Pages/perpanjang/formDataPelangganPerpanjang";
+import FormDataTransaksiPerpanjang from "./Pages/perpanjang/formDataTransaksiPerpanjang";
 import FormPilihPelanggan from "./Pages/gadai/formPilihPelanggan";
 import PageHistoryGadai from "./components/opsi/pageHistoryGadai";
 
@@ -42,6 +44,14 @@ const Rute = (props) => {
         <Route
           path="/form/gadai/transaksi"
           element={<FormDataTransaksiGadai />}
+        />
+        <Route
+          path="/form/perpanjangan/pelanggan"
+          element={<FormDataPelangganPerpanjang />}
+        />
+        <Route
+          path="/form/perpanjangan/transaksi"
+          element={<FormDataTransaksiPerpanjang />}
         />
 
         <Route path="/history" element={<PageHistoryGadai />} />

@@ -17,6 +17,21 @@ import { drawerStyle } from "../variableGlobal";
 const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data }) => {
   const Navigate = useNavigate();
 
+  const tempPerpanjangData = {
+    name: "Michael Kayne",
+    phoneNumber: "08123456789",
+    address: "Jl. Kaliurang Km 5",
+    noCustomer: "1234567890",
+    fotoCustomer: JSON.parse(localStorage.getItem("savedImage-Profile")),
+
+    jaminan: "Emas",
+    kelengkapan: ["Sertifikat", "Ktp"],
+    noSeri: "1234567890",
+    tglKredit: "2023-10-10",
+    lamaGadai: "1 Bulan",
+    harga: 10000000,
+    fotoBarang: JSON.parse(localStorage.getItem("savedImage-Profile")),
+  };
   // Unique functions to console.log for each option
   const handleDetailClick = () => {
     console.log("Clicked option: Detail");
@@ -28,6 +43,9 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data }) => {
 
   const handlePerpanjangGadaiClick = () => {
     console.log("Clicked option: Perpanjang Gadai");
+    Navigate("/form/perpanjangan/pelanggan", {
+      state: { dataPelangganPerpanjang: tempPerpanjangData },
+    });
   };
 
   const handleCetakUlangClick = () => {
