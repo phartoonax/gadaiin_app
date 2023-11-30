@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
  * @param {string} type Tipe data yang diharapkan dari input formulir
  * @param {boolean} isRequired Menentukan apakah input formulir wajib diisi
  * @param {string} valueForm - isi dari input yang sesuai dengan data pelanggan
+ * @param {function} valueFormChange Fungsi yang dipanggil ketika nilai input formulir berubah.
  * @param {boolean} enabled - Menentukan apakah input formulir dapat diubah
  * @return {*} Komponen React yang menampilkan bagian isi dari formulir
  */

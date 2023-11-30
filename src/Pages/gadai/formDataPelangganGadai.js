@@ -1,13 +1,6 @@
 import AppBarPlain from "../../components/appBarPlain";
 import ProgressIndicatorForm from "../../components/form/progressIndicatorForm";
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  Paper,
-  Stack,
-} from "@mui/material";
+import { Button, Dialog, DialogContentText, Paper, Stack } from "@mui/material";
 import IsiFormDefault from "../../components/form/isiDefaultForm";
 import PhotoCameraForm from "../../components/form/photoCameraForm";
 import React, { useState, useEffect } from "react";
@@ -59,7 +52,7 @@ const FormDataPelangganGadai = () => {
           <AppBarPlain placeholder={"Tambah Gadai"} />
           <ProgressIndicatorForm />
         </div>
-        <div className="bg-white px-4 pt-[112px] w-full">
+        <div className="bg-white px-4 pt-[112px] w-full pb-[82px]">
           <Stack gap={"20px"}>
             <IsiFormDefault
               enabled={true}
@@ -89,7 +82,6 @@ const FormDataPelangganGadai = () => {
             />
             <PhotoCameraForm
               title={"Foto Pelanggan"}
-              
               savedImage={savedImage}
               setSavedImage={setSavedImage}
               idPelanggan={dataPelanggan?.noCustomer}

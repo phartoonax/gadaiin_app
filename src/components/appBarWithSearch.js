@@ -1,18 +1,26 @@
 import { Icon } from "@iconify/react";
 import { IconButton } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 /**
- * @description Komponen untuk menampilkan AppBar dengan fitur pencarian.
- * @param {string} placeholder Placeholder untuk input pencarian
- * @param {function} onSearchChange Fungsi untuk menangani perubahan input pencarian
- * @param {function} onClearSearch Fungsi untuk menangani penghapusan input pencarian
- * @returns {*} AppBar dengan fitur pencarian
+ * @description Komponen ini digunakan untuk menampilkan AppBar dengan fitur pencarian. Pengguna dapat memasukkan teks pencarian dan menghapusnya. Komponen ini juga mengelola fungsi navigasi dan klik tombol.
+ * @param {string} placeholder Teks placeholder untuk input pencarian.
+ * @param {function} handlerBackButton Fungsi yang akan dipanggil saat tombol kembali diklik. Jika tidak disediakan, fungsi default akan digunakan untuk navigasi kembali.
+ * @param {function} onSearchChange Fungsi yang akan dipanggil saat teks input pencarian berubah.
+ * @param {function} onClearSearch Fungsi yang akan dipanggil saat teks input pencarian dihapus.
+ * @returns {*} AppBar dengan fitur pencarian.
  * @author Henry
- * @date 27/11/2023 - 11:30:00 PM
+ * @date 30/11/2023 - 4:31:00 PM
  */
 //TODO: TAMBAH DATA RETURN UNTUK API BACKEND
-function AppBarWithSearch({ placeholder, onSearchChange, onClearSearch }) {
+function AppBarWithSearch({
+  placeholder,
+  handlerBackButton,
+  onSearchChange,
+  onClearSearch,
+}) {
+  const navigate = useNavigate();
   const [isSearchFilled, setIsSearchFilled] = useState(false);
   const [searchInput, setSearchInput] = useState("");
 
@@ -60,7 +68,9 @@ function AppBarWithSearch({ placeholder, onSearchChange, onClearSearch }) {
     <>
       <div className="flex items-center justify-between bg-neutral-10 text-white px-4 py-1 border-b-2 border-neutral-30">
         <IconButton
-          onClick={() => window.history.back()}
+          onClick={() => {
+            handlerBackButton ? handlerBackButton() : navigate(-1);
+          }}
           className="text-white"
         >
           <Icon

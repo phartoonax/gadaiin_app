@@ -1,6 +1,14 @@
 import { Stack } from "@mui/material";
 import React from "react";
 
+/**
+ * @description Komponen ini digunakan untuk menampilkan form isi bunga.
+ * @author Henry
+ * @date 30/11/2023 - 4:23:32 PM
+ * @param {string} valueBunga Nilai bunga yang akan ditampilkan.
+ * @param {string} valueNominal Nilai nominal yang akan ditampilkan.
+ * @return {*} Komponen React yang menampilkan form isi bunga.
+ */
 const IsiBungaForm = ({ valueBunga, valueNominal }) => {
   return (
     <>

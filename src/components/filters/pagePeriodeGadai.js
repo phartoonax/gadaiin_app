@@ -57,7 +57,10 @@ function PagePeriodeGadai({ setShowFullPageModal, setPeriodeGadaiValues }) {
   return (
     <>
       <div className="fixed h-screen w-screen top-0 left-0 z-[99999] bg-white">
-        <AppBarWithSearch placeholder={"Cari Periode Gadai"} />
+        <AppBarWithSearch
+          placeholder={"Cari Periode Gadai"}
+          handlerBackButton={handleCloseModal}
+        />
         <div className="bg-white px-4 pt-4 w-full max-w-md rounded-md">
           <Stack
             divider={

@@ -4,22 +4,13 @@ import React, { useState } from "react";
 import { drawerStyle } from "../../variableGlobal";
 
 /**
- * @description Komponen `IsiTglAwalAkhirDurasiForm` adalah sebuah form yang memungkinkan pengguna untuk memilih durasi pinjaman dan menghitung tanggal jatuh tempo berdasarkan durasi yang dipilih. Komponen ini menggunakan `SwipeableDrawer` untuk menampilkan opsi durasi kepada pengguna.
+ * @description Komponen ini digunakan untuk menampilkan dan mengelola form tanggal awal, akhir, dan durasi. Komponen ini menggunakan `SwipeableDrawer` untuk menampilkan opsi durasi kepada pengguna.
  * @author Henry
- * @date 29/11/2023 - 5:15:42 PM
- * @returns {*} Sebuah komponen React.
- *
- * @state
- * - `tglKredit`: Sebuah string yang mewakili tanggal saat ini dalam format "dd MMM yyyy".
- * - `durasiGadai`: Sebuah string yang mewakili durasi pinjaman yang dipilih.
- * - `tglJatuhTempo`: Sebuah string yang mewakili tanggal jatuh tempo berdasarkan durasi pinjaman yang dipilih.
- * - `isDrawerDurasiGadaiOpen`: Sebuah boolean yang menunjukkan apakah komponen `SwipeableDrawer` sedang terbuka atau tidak.
- *
- * @functions
- * - `handleDurasiGadaiClick`: Membuka komponen `SwipeableDrawer` dan mencetak state `durasiGadai` saat ini ke konsol.
- * - `handleDurasiGadaiChange`: Memperbarui state `durasiGadai` dan `tglJatuhTempo` berdasarkan durasi yang dipilih dan menutup komponen `SwipeableDrawer`.
+ * @date 30/11/2023 - 4:27:56 PM
+ * @param {function} setDurasiDanBungaValue Fungsi yang dipanggil untuk mengatur nilai durasi dan bunga.
+ * @return {*} Komponen React yang menampilkan form tanggal awal, akhir, dan durasi.
  */
-const IsiTglAwalAkhirDurasiForm = ({setBungaValue}) => {
+const IsiTglAwalAkhirDurasiForm = ({ setDurasiDanBungaValue }) => {
   const tglKredit = new Date().toLocaleDateString("id-ID", {
     day: "2-digit",
     month: "short",
@@ -58,7 +49,7 @@ const IsiTglAwalAkhirDurasiForm = ({setBungaValue}) => {
         year: "numeric",
       })
     );
-    setBungaValue(item.persentase);
+    setDurasiDanBungaValue([item.durasi, item.persentase]);
 
     setIsDrawerDurasiGadaiOpen(false);
   }

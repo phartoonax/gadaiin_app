@@ -3,6 +3,14 @@ import AppBarWithSearch from "../appBarWithSearch";
 import { Chip, Divider, Grid, Stack } from "@mui/material";
 import CheckboxStatus from "../filters/checkBoxStatus";
 
+/**
+ * @description Komponen ini digunakan untuk menampilkan dan mengelola form kelengkapan. Pengguna dapat memilih item kelengkapan dari daftar yang disediakan dan item yang dipilih akan ditampilkan sebagai chip. Pengguna juga dapat mencari item kelengkapan menggunakan fitur pencarian.
+ * @author Henry
+ * @date 30/11/2023 - 4:28:47 PM
+ * @param {function} setShowFullPageModal Fungsi yang dipanggil untuk menampilkan atau menyembunyikan modal.
+ * @param {function} setKelengkapanValues Fungsi yang dipanggil untuk mengatur nilai kelengkapan.
+ * @return {*} Komponen React yang menampilkan form kelengkapan.
+ */
 function PageKelengkapanForm({ setShowFullPageModal, setKelengkapanValues }) {
   const templateKelengkapanArray = [
     "Surat Keterangan Hak Milik",
@@ -52,12 +60,13 @@ function PageKelengkapanForm({ setShowFullPageModal, setKelengkapanValues }) {
     });
   };
 
-  
-
   return (
     <>
       <div className="fixed h-screen w-screen top-0 left-0 z-[99999] bg-white">
-        <AppBarWithSearch placeholder={"Cari Kelengkapan"} />
+        <AppBarWithSearch
+          placeholder={"Cari Kelengkapan"}
+          handlerBackButton={handleCloseModal}
+        />
         <div className="bg-white px-4 pt-4 w-full max-w-md rounded-md">
           <Stack
             divider={
