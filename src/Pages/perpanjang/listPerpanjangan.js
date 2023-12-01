@@ -113,7 +113,7 @@ const ListPerpanjangan = () => {
                   index === filteredArray.length - 1 ? "pb-24" : ""
                 }`}
               >
-                <ListItem data={data} />
+                <ListItem data={data} usedIn="Perpanjang"/>
               </div>
             ))}
           </div>

@@ -19,7 +19,7 @@ import {
  * @author Henry
  * @date 27/11/2023 - 11:30:00 PM
  */
-const ListItem = ({ data }) => {
+const ListItem = ({ data,usedIn }) => {
   const status = data.status;
 
   const [isDrawerOpsiOpen, setDrawerOpsirOpen] = useState(false);
@@ -135,6 +135,7 @@ pb-1"
         openDrawer={isDrawerOpsiOpen}
         setOpenDrawer={setDrawerOpsirOpen}
         data={data}
+        usedIn={usedIn}
       ></BotDrawerOpsi>
     </div>
   );

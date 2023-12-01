@@ -15,6 +15,12 @@ import FormDataTransaksiPerpanjang from "./Pages/perpanjang/formDataTransaksiPer
 import FormDataPelangganTebus from "./Pages/tebus/formDataPelangganTebus";
 import FormDataTransaksiTebus from "./Pages/tebus/formDataTransaksiTebus";
 import FormPilihPelanggan from "./Pages/gadai/formPilihPelanggan";
+import DetailDataPelangganGadai from "./Pages/gadai/detailDataPelangganGadai";
+import DetailDataTransaksiGadai from "./Pages/gadai/detailDataTransaksiGadai";
+import DetailDataPelangganPerpanjang from "./Pages/perpanjang/detailDataPelangganPerpanjang";
+import DetailDataTransaksiPerpanjang from "./Pages/perpanjang/detailDataTransaksiPerpanjang";
+import DetailDataPelangganTebus from "./Pages/tebus/detailDataPelangganTebus";
+import DetailDataTransaksiTebus from "./Pages/tebus/detailDataTransaksiTebus";
 import PageHistoryGadai from "./components/opsi/pageHistoryGadai";
 
 /**
@@ -36,7 +42,7 @@ const Rute = (props) => {
         <Route path="/profile/camera" element={<CameraProfile />} />
 
         <Route path="/list/gadai" element={<ListGadai />} />
-        <Route path="/list/perpanjangan" element={<ListPerpanjangan />} />
+        <Route path="/list/perpanjang" element={<ListPerpanjangan />} />
         <Route path="/list/tebus" element={<ListTebus />} />
 
         <Route
@@ -48,11 +54,11 @@ const Rute = (props) => {
           element={<FormDataTransaksiGadai />}
         />
         <Route
-          path="/form/perpanjangan/pelanggan"
+          path="/form/perpanjang/pelanggan"
           element={<FormDataPelangganPerpanjang />}
         />
         <Route
-          path="/form/perpanjangan/transaksi"
+          path="/form/perpanjang/transaksi"
           element={<FormDataTransaksiPerpanjang />}
         />
         <Route
@@ -62,6 +68,30 @@ const Rute = (props) => {
         <Route
           path="/form/tebus/transaksi"
           element={<FormDataTransaksiTebus />}
+        />
+        <Route
+          path="/detail/gadai/pelanggan"
+          element={<DetailDataPelangganGadai />}
+        />
+        <Route
+          path="/detail/gadai/transaksi"
+          element={<DetailDataTransaksiGadai />}
+        />
+        <Route
+          path="/detail/perpanjang/pelanggan"
+          element={<DetailDataPelangganPerpanjang />}
+        />
+        <Route
+          path="/detail/perpanjang/transaksi"
+          element={<DetailDataTransaksiPerpanjang />}
+        />
+        <Route
+          path="/detail/tebus/pelanggan"
+          element={<DetailDataPelangganTebus />}
+        />
+        <Route
+          path="/detail/tebus/transaksi"
+          element={<DetailDataTransaksiTebus />}
         />
 
         <Route path="/history" element={<PageHistoryGadai />} />

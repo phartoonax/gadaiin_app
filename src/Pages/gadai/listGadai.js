@@ -111,7 +111,7 @@ function ListGadai() {
                   index === filteredArray.length - 1 ? "pb-24" : ""
                 }`}
               >
-                <ListItem data={data} />
+                <ListItem data={data} usedIn="Gadai" />
               </div>
             ))}
           </div>

@@ -22,7 +22,7 @@ function FormDataPelangganTebus() {
     <>
       <div className="w-screen h-screen flex flex-col justify-start items-start  font-inter">
         <div className="fixed top-0 z-50">
-          <AppBarPlain placeholder={"Detail Gadai"} />
+          <AppBarPlain placeholder={"Tebus Gadai"} />
           <ProgressIndicatorForm />
         </div>
         <div className="bg-white px-4 pt-[112px] w-full pb-[82px]">

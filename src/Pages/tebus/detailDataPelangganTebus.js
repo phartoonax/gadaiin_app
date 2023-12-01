@@ -1,29 +1,29 @@
+import { Button, Paper, Stack } from "@mui/material";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import AppBarPlain from "../../components/appBarPlain";
-import ProgressIndicatorForm from "../../components/form/progressIndicatorForm";
-import { Button, Paper, Stack } from "@mui/material";
-import IsiFormDefault from "../../components/form/isiDefaultForm";
 import PhotoCameraForm from "../../components/form/photoCameraForm";
+import IsiFormDefault from "../../components/form/isiDefaultForm";
+import ProgressIndicatorDetail from "../../components/detail/progressIndicatorDetail";
+import AppBarPlain from "../../components/appBarPlain";
 
-function FormDataPelangganPerpanjang() {
+function DetailDataPelangganTebus() {
   const navigation = useNavigate();
   const location = useLocation();
-  const dataPelanggan = location?.state?.dataPelangganPerpanjang || null;
-  console.log("idPelanggan", dataPelanggan);
+  const dataPelanggan = location?.state?.dataDetailPelangganGadai || null;
   const isFormComplete = true;
 
   const handleSetCustomerData = () => {
-    navigation("/form/perpanjang/transaksi", {
-      state: { dataPelangganPerpanjang: dataPelanggan },
+    navigation("/detail/tebus/transaksi", {
+      state: { dataDetailPelangganGadai: dataPelanggan },
     });
   };
+
   return (
     <>
       <div className="w-screen h-screen flex flex-col justify-start items-start  font-inter">
         <div className="fixed top-0 z-50">
-          <AppBarPlain placeholder={"Tambah Perpanjang Gadai"} />
-          <ProgressIndicatorForm />
+          <AppBarPlain placeholder={"Detail Gadai"} />
+          <ProgressIndicatorDetail />
         </div>
         <div className="bg-white px-4 pt-[112px] w-full pb-[82px]">
           <Stack gap={"20px"}>
@@ -91,7 +91,7 @@ function FormDataPelangganPerpanjang() {
                 ? "bg-themeColor text-neutral-10"
                 : "bg-neutral-30 text-neutral-70"
             }
-          hover:bg-themeColor`}
+      hover:bg-themeColor`}
             onClick={() => handleSetCustomerData()}
           >
             Selanjutnya
@@ -102,4 +102,4 @@ function FormDataPelangganPerpanjang() {
   );
 }
 
-export default FormDataPelangganPerpanjang;
+export default DetailDataPelangganTebus;

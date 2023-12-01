@@ -15,7 +15,7 @@ import { pemisahRibuan } from "../functionGlobal";
  * @author Henry
  * @date 27/11/2023 - 11:30:00 PM
  */
-const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data }) => {
+const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data, usedIn }) => {
   const Navigate = useNavigate();
 
   const tempPerpanjangData = {
@@ -41,9 +41,25 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data }) => {
     harga: pemisahRibuan(data.harga),
     fotoBarang: JSON.parse(localStorage.getItem("savedImage-Profile")),
   };
+  let route;
+
+  switch (usedIn) {
+    case "Perpanjang":
+      route = "/detail/perpanjang/pelanggan";
+      break;
+    case "Tebus":
+      route = "/detail/tebus/pelanggan";
+      break;
+    // Add more cases as needed
+    default:
+      route = "/detail/gadai/pelanggan";
+  }
   // Unique functions to console.log for each option
   const handleDetailClick = () => {
     console.log("Clicked option: Detail");
+    Navigate(route, {
+      state: { dataDetailPelangganGadai: tempPerpanjangData },
+    });
   };
 
   const handleTebusGadaiClick = () => {
@@ -55,7 +71,7 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data }) => {
 
   const handlePerpanjangGadaiClick = () => {
     console.log("Clicked option: Perpanjang Gadai");
-    Navigate("/form/perpanjangan/pelanggan", {
+    Navigate("/form/perpanjang/pelanggan", {
       state: { dataPelangganPerpanjang: tempPerpanjangData },
     });
   };

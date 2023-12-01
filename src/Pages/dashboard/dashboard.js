@@ -281,7 +281,7 @@ const Dashboard = (props) => {
                       ></Icon>
                     }
                     className="bg-transparent text-neutral-10"
-                    onClick={() => navigate("/list/perpanjangan")}
+                    onClick={() => navigate("/list/perpanjang")}
                   >
                     {"Perpanjang"}
                   </Button>

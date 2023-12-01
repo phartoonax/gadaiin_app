@@ -106,7 +106,7 @@ const ListTebus = () => {
                   index === filteredArray.length - 1 ? "pb-24" : ""
                 }`}
               >
-                <ListItem data={data} />
+                <ListItem data={data} usedIn="Tebus" />
               </div>
             ))}
           </div>

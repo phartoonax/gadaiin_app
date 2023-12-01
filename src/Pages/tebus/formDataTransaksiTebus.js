@@ -11,6 +11,7 @@ import IsiTglAwalAkhirDurasiForm from "../../components/form/isiTglAwalAkhirDura
 import IsiBungaForm from "../../components/form/isiBungaForm";
 import { pemisahRibuan } from "../../functionGlobal";
 import PageKelengkapanForm from "../../components/form/pageKelengkapanForm";
+import CheckBoxInputCashback from "../../components/form/checkBoxInputCashback";
 
 function FormDataTransaksiTebus() {
   const Navigate = useNavigate();
@@ -82,7 +83,7 @@ function FormDataTransaksiTebus() {
       <div className="w-screen h-screen flex flex-col justify-start items-start  font-inter">
         <div className="fixed top-0 z-50">
           <AppBarPlain
-            placeholder={"Detail Gadai"}
+            placeholder={"Tebus Gadai"}
             handlerBackButton={handleNavigateToBack}
           />
           <ProgressIndicatorForm isFirstDone={true} />
@@ -135,6 +136,7 @@ function FormDataTransaksiTebus() {
               valueForm={dataPelanggan?.harga || undefined}
             />
             <IsiBungaForm valueBunga={valueBunga} valueNominal={valueNominal} />
+            <CheckBoxInputCashback />
             <PhotoCameraForm
               title={"Bukti Pembayaran Non Tunai"}
               savedImage={valueImageBuktiPembayaran}
