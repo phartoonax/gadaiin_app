@@ -43,7 +43,7 @@ const ChipSelectPeriode = ({
           </Button>
         </Stack>
         <Grid container direction="row" wrap="wrap" spacing={1}>
-          {chipValues.map((value) => (
+          {chipValues.slice(0, 5).map((value) => (
             <Grid item key={value}>
               <Chip
                 label={value}

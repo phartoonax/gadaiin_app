@@ -95,7 +95,7 @@ function ListGadai() {
         <div className="fixed top-0 z-50 w-full">
           <AppBarWithSearch placeholder={"Cari Data Gadai"} />
         </div>
-        <div className="bg-white pt-[76px] w-full">
+        <div className="bg-white pt-[68px] w-full">
           <BotNavbarNfab
             iconKiri={iconKiri}
             iconKanan={iconKanan}

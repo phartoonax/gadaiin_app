@@ -24,7 +24,7 @@ const AppBarPlain = ({
     <AppBar position="static" className="bg-neutral-10 p-4" elevation={1}>
       <toolbar className="flex justify-start items-center">
         <IconButton
-          sx={{ paddingY: "0px", paddingX: "6px" }}
+          sx={{ paddingY: "0px", paddingX: "0px" }}
           onClick={() => {
             handlerBackButton ? handlerBackButton() : navigate(-1);
           }}

@@ -21,6 +21,7 @@ const PhotoCameraForm = ({
   enabled,
 }) => {
   const navigate = useNavigate();
+  const isEnabled = enabled;
   return (
     <>
       {" "}
@@ -41,7 +42,7 @@ const PhotoCameraForm = ({
               </Box>
             )}
 
-            {enabled && (
+            {isEnabled && (
               <Stack
                 direction="row"
                 className="pt-[20px] pb-[9px] w-full"
@@ -90,7 +91,7 @@ const PhotoCameraForm = ({
                 )}
               </Stack>
             )}
-            {enabled && (
+            {isEnabled && (
               <p className="text-xs text-neutral-80 font-normal leading-5">
                 Untuk membuka webcam dan mengambil foto apabila data foto
                 customer belum ada.

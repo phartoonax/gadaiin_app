@@ -6,7 +6,7 @@ import { Button, Paper, Stack } from "@mui/material";
 import IsiFormDefault from "../../components/form/isiDefaultForm";
 import PhotoCameraForm from "../../components/form/photoCameraForm";
 
-function FormDataPelangganPerpanjang() {
+function FormDataPelangganTebus() {
   const navigation = useNavigate();
   const location = useLocation();
   const dataPelanggan = location?.state?.dataPelangganPerpanjang || null;
@@ -14,7 +14,7 @@ function FormDataPelangganPerpanjang() {
   const isFormComplete = true;
 
   const handleSetCustomerData = () => {
-    navigation("/form/perpanjangan/transaksi", {
+    navigation("/form/tebus/transaksi", {
       state: { dataPelangganPerpanjang: dataPelanggan },
     });
   };
@@ -22,7 +22,7 @@ function FormDataPelangganPerpanjang() {
     <>
       <div className="w-screen h-screen flex flex-col justify-start items-start  font-inter">
         <div className="fixed top-0 z-50">
-          <AppBarPlain placeholder={"Tambah Perpanjang Gadai"} />
+          <AppBarPlain placeholder={"Detail Gadai"} />
           <ProgressIndicatorForm />
         </div>
         <div className="bg-white px-4 pt-[112px] w-full pb-[82px]">
@@ -91,7 +91,7 @@ function FormDataPelangganPerpanjang() {
                 ? "bg-themeColor text-neutral-10"
                 : "bg-neutral-30 text-neutral-70"
             }
-          hover:bg-themeColor`}
+            hover:bg-themeColor`}
             onClick={() => handleSetCustomerData()}
           >
             Selanjutnya
@@ -102,4 +102,4 @@ function FormDataPelangganPerpanjang() {
   );
 }
 
-export default FormDataPelangganPerpanjang;
+export default FormDataPelangganTebus;

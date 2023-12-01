@@ -90,7 +90,7 @@ const ListTebus = () => {
         <div className="fixed top-0 z-50 w-full">
           <AppBarWithSearch placeholder={"Cari Data Tebus Gadai"} />
         </div>
-        <div className="bg-white pt-[76px] w-full">
+        <div className="bg-white pt-[68px] w-full">
           <BotNavBarNFab
             iconKiri={iconKiri}
             iconKanan={iconKanan}

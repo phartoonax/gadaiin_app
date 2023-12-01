@@ -2,21 +2,51 @@ import { Icon } from "@iconify/react";
 import { Divider, IconButton, Stack, SwipeableDrawer } from "@mui/material";
 import React, { useState } from "react";
 import { drawerStyle } from "../../variableGlobal";
+import { useEffect } from "react";
+import { useMemo } from "react";
 
 /**
  * @description Komponen ini digunakan untuk menampilkan dan mengelola form tanggal awal, akhir, dan durasi. Komponen ini menggunakan `SwipeableDrawer` untuk menampilkan opsi durasi kepada pengguna.
  * @author Henry
  * @date 30/11/2023 - 4:27:56 PM
  * @param {function} setDurasiDanBungaValue Fungsi yang dipanggil untuk mengatur nilai durasi dan bunga.
+ * @param {string} tglKreditLama Nilai tanggal kredit yang akan ditampilkan pada form jika form adalah bagian dari tebus atau perpanjang dimana sudah ada isi tanggal Kredit sebelumnya.
+ * @param {string} durasiGadaiLama Nilai durasi gadai yang akan ditampilkan pada form jika form adalah bagian dari tebus atau perpanjang dimana sebelumnya sudah data durasi.
+ * @param {boolean} enabled Menentukan apakah isi dari form dapat diubah atau tidak.
  * @return {*} Komponen React yang menampilkan form tanggal awal, akhir, dan durasi.
  */
-const IsiTglAwalAkhirDurasiForm = ({ setDurasiDanBungaValue }) => {
-  const tglKredit = new Date().toLocaleDateString("id-ID", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-  const [durasiGadai, setDurasiGadai] = useState(null);
+const IsiTglAwalAkhirDurasiForm = ({
+  tglKreditLama,
+  durasiGadaiLama,
+  setDurasiDanBungaValue,
+  enabled,
+}) => {
+  const isEnabled = enabled ?? true;
+  const arrayTemplateDurasiGadai = useMemo(
+    () => [
+      { durasi: "6 Hari", persentase: 7 },
+      { durasi: "1 Bulan", persentase: 10 },
+      { durasi: "2 Bulan", persentase: 8 },
+      { durasi: "1 Tahun", persentase: 9 },
+      { durasi: "2 Tahun", persentase: 11 },
+    ],
+    []
+  ); //MUNGKIN BISA DIHAPUS UNTUK DURASI YANG SEBELUM DURASI LAMA
+
+  const tglKredit =
+    tglKreditLama === undefined
+      ? new Date()
+      : new Date(
+          ...tglKreditLama
+            .split("/")
+            .reverse()
+            .map((val, i) => val - (i === 1 ? 1 : 0))
+        );
+  const [durasiGadai, setDurasiGadai] = useState(
+    durasiGadaiLama === undefined
+      ? arrayTemplateDurasiGadai[0].durasi
+      : durasiGadaiLama
+  );
   const [tglJatuhTempo, setTglJatuhTempo] = useState(null);
 
   const [isDrawerDurasiGadaiOpen, setIsDrawerDurasiGadaiOpen] = useState(false);
@@ -49,18 +79,23 @@ const IsiTglAwalAkhirDurasiForm = ({ setDurasiDanBungaValue }) => {
         year: "numeric",
       })
     );
-    setDurasiDanBungaValue([item.durasi, item.persentase]);
-
+    if (setDurasiDanBungaValue) {
+      setDurasiDanBungaValue(item.durasi, item.persentase);
+    }
     setIsDrawerDurasiGadaiOpen(false);
   }
 
-  const arrayTemplateDurasiGadai = [
-    { durasi: "6 Hari", persentase: 7 },
-    { durasi: "1 Bulan", persentase: 10 },
-    { durasi: "2 Bulan", persentase: 8 },
-    { durasi: "1 Tahun", persentase: 9 },
-    { durasi: "2 Tahun", persentase: 11 },
-  ];
+  useEffect(() => {
+    if (durasiGadaiLama) {
+      const correspondingEntry = arrayTemplateDurasiGadai.find(
+        (entry) => entry.durasi === durasiGadaiLama
+      );
+      if (correspondingEntry) {
+        handleDurasiGadaiChange(correspondingEntry);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -74,7 +109,11 @@ const IsiTglAwalAkhirDurasiForm = ({ setDurasiDanBungaValue }) => {
           <input
             type={"text"}
             disabled={true}
-            value={tglKredit}
+            value={tglKredit.toLocaleDateString("id-ID", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+            })}
             className={`w-full  rounded-md border p-[11px] border-neutral-40 bg-neutral-20 text-neutral-60 focus:outline-none`}
           />
         </Stack>
@@ -86,11 +125,11 @@ const IsiTglAwalAkhirDurasiForm = ({ setDurasiDanBungaValue }) => {
 
             <span className="text-danger-Main text-lg font-bold">*</span>
           </Stack>
-          <div className="relative">
-            <div
-              onClick={() => handleDurasiGadaiClick()}
-              className="w-full h-[48px] rounded-md border p-[11px] border-neutral-40 bg-neutral-10 text-neutral-60 focus:outline-none"
-            >
+          <div
+            className="relative"
+            onClick={() => isEnabled && handleDurasiGadaiClick()}
+          >
+            <div className="w-full h-[48px] rounded-md border p-[11px] border-neutral-40 bg-neutral-10 text-neutral-60 focus:outline-none">
               {durasiGadai}
             </div>
             <Icon

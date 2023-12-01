@@ -68,10 +68,11 @@ function AppBarWithSearch({
     <>
       <div className="flex items-center justify-between bg-neutral-10 text-white px-4 py-1 border-b-2 border-neutral-30">
         <IconButton
+          sx={{ padding: "0px" }}
           onClick={() => {
             handlerBackButton ? handlerBackButton() : navigate(-1);
           }}
-          className="text-white"
+          className="text-white pr-1"
         >
           <Icon
             className="text-neutral-90"
@@ -79,7 +80,7 @@ function AppBarWithSearch({
             style={{ fontSize: "24px" }}
           />
         </IconButton>
-        <div className="flex w-full items-center bg-white rounded-full py-2">
+        <div className="flex w-full items-center bg-white rounded-full">
           {renderSearchBar()}
         </div>
       </div>

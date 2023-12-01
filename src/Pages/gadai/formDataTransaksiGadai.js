@@ -6,7 +6,7 @@ import PhotoCameraForm from "../../components/form/photoCameraForm";
 import React, { useState } from "react";
 import IsiTglAwalAkhirDurasiForm from "../../components/form/isiTglAwalAkhirDurasiForm";
 import ChipKelengkapanForm from "../../components/form/chipKelengkapanForm";
-import PangeKelengkapanForm from "../../components/form/pageKelengkapanForm";
+import PageKelengkapanForm from "../../components/form/pageKelengkapanForm";
 import IsiBungaForm from "../../components/form/isiBungaForm";
 import { useEffect } from "react";
 import { pemisahRibuan } from "../../functionGlobal";
@@ -32,11 +32,14 @@ const FormDataTransaksiGadai = () => {
   const [valueNoSeri, setValueNoSeri] = useState(
     localStorage.getItem("valueNoSeri") || ""
   );
+  const [valueDurasi, setValueDurasi] = useState(
+    localStorage.getItem("valueDurasi") || ""
+  );
   const [valueBunga, setValueBunga] = useState(
     localStorage.getItem("valueBunga") || ""
   );
   const [valueNilaiPinjaman, setValueNilaiPinjaman] = useState(
-    localStorage.getItem("valueNilaiPinjaman") || null
+    localStorage.getItem("valueNilaiPinjaman") || undefined
   );
   const [valueNominal, setValueNominal] = useState();
   const [ValueSavedImage, setValueSavedImage] = useState(
@@ -86,20 +89,24 @@ const FormDataTransaksiGadai = () => {
       JSON.stringify(kelengkapanValues)
     );
     localStorage.setItem("valueNoSeri", valueNoSeri);
+    localStorage.setItem("valueDurasi", valueDurasi);
     localStorage.setItem("valueBunga", valueBunga);
     localStorage.setItem("valueNilaiPinjaman", valueNilaiPinjaman);
   }, [
     valueJaminan,
     kelengkapanValues,
     valueNoSeri,
+    valueDurasi,
     valueBunga,
     valueNilaiPinjaman,
     ValueSavedImage,
   ]);
 
+  const [SelectedChipValues, setSelectedChipValues] = useState([]);
+
   const chipValues =
-    kelengkapanValues && kelengkapanValues.length > 0
-      ? kelengkapanValues
+    SelectedChipValues && SelectedChipValues.length > 0
+      ? SelectedChipValues
       : defaultChipValues;
 
   const handleChipClick = (value) => {
@@ -110,6 +117,15 @@ const FormDataTransaksiGadai = () => {
         return [...prevValues, value];
       }
     });
+  };
+  const handleChangeChipValues = (value) => {
+    setSelectedChipValues(value);
+    setKelengkapanValues(value);
+  };
+
+  const setDurasiDanBungaValue = (durasi, bunga) => {
+    setValueDurasi(durasi);
+    setValueBunga(bunga);
   };
 
   const handleNilaiPinjamanChange = (newValue) => {
@@ -123,6 +139,7 @@ const FormDataTransaksiGadai = () => {
     setValueJaminan("");
     setKelengkapanValues([]);
     setValueNoSeri("");
+    setValueDurasi("");
     setValueBunga("");
     setValueNilaiPinjaman("");
     setValueNominal("");
@@ -132,6 +149,7 @@ const FormDataTransaksiGadai = () => {
     localStorage.removeItem("valueJaminan");
     localStorage.removeItem("kelengkapanValues");
     localStorage.removeItem("valueNoSeri");
+    localStorage.removeItem("valueDurasi");
     localStorage.removeItem("valueBunga");
     localStorage.removeItem("valueNilaiPinjaman");
     localStorage.removeItem("savedImage-tempBarang");
@@ -193,7 +211,9 @@ const FormDataTransaksiGadai = () => {
               valueForm={valueNoSeri}
               valueFormChange={(e) => setValueNoSeri(e.target.value)}
             />
-            <IsiTglAwalAkhirDurasiForm setDurasiDanBungaValue={setValueBunga} />
+            <IsiTglAwalAkhirDurasiForm
+              setDurasiDanBungaValue={setDurasiDanBungaValue}
+            />
             <IsiFormDefault
               enabled={true}
               title={"Nilai Pinjaman"}
@@ -207,13 +227,14 @@ const FormDataTransaksiGadai = () => {
               savedImage={ValueSavedImage}
               setSavedImage={setValueSavedImage}
               idPelanggan={"tempBarang"}
+              enabled={true}
             />
           </Stack>
         </div>
         {showFullPageModal && (
-          <PangeKelengkapanForm
+          <PageKelengkapanForm
             setShowFullPageModal={setShowFullPageModal}
-            setKelengkapanValues={setKelengkapanValues}
+            setKelengkapanValues={handleChangeChipValues}
           />
         )}
         <Paper
@@ -265,7 +286,7 @@ const FormDataTransaksiGadai = () => {
     hover:bg-themeColor`}
               onClick={() => setIsDialogOpenConfirmationPass(true)}
             >
-              Selanjutnya
+              Simpan
             </Button>
           </Stack>
         </Paper>

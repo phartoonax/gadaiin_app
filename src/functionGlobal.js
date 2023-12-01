@@ -223,8 +223,20 @@ function generateRandomDataGadai(designatedFor, jumlah) {
         return ["Batal", "Tebus"];
       }
     };
+    const arrayBarang = [
+      "Sepeda Motor Honda Astrea 800",
+      "Emas 5 gram",
+      "Mobil Innova 2015",
+      "Kalung Emas 2 gram",
+      "Laptop Lenovo i5 2019",
+      "Laptop Asus i7 2020",
+      "Handphone Iphone 12 max",
+      "Handphone Samsung S20",
+      "SertifiKat Rumah",
+    ];
+    const barang = arrayBarang[getRandomInt(0, arrayBarang.length - 1)];
     const statuses = getStatuses();
-    const periodes = ["7 Hari", "1 Bulan", "6 Bulan", "1 Tahun", "2 Tahun"];
+    const periodes = ["6 Hari", "1 Bulan", "2 Bulan", "1 Tahun", "2 Tahun"];
     const tglkredit = new Date(2023, 6, 24); // 24/07/2023
     const periodegadai = periodes[getRandomInt(0, periodes.length - 1)];
     let periodeInDays;
@@ -238,14 +250,26 @@ function generateRandomDataGadai(designatedFor, jumlah) {
     }
 
     const tgljatuhtempo = addDays(new Date(tglkredit), periodeInDays);
+    const dataPelanggan = generateRandomDataCustomer(1)[0];
 
     return {
       idtransaksi: "CGX" + getRandomInt(100000, 999999),
       lokasi: "KDC",
-      nama: "Mas Bagas Purnomo Ajeng Kartini Salendra Muh",
-      notelp: 6283856236436,
+      nama: dataPelanggan.name,
+      notelp: dataPelanggan.phoneNumber,
+      noktp: dataPelanggan.noCustomer,
+      alamat: dataPelanggan.address,
+      kelengkapan: [
+        "Sertifikat",
+        "Ktp",
+        "Kartu Keluarga",
+        "Buku Tabungan",
+        "STNK",
+        "BPKB",
+      ],
+      noSeri: "1234567890",
       status: statuses[getRandomInt(0, statuses.length - 1)],
-      barang: "Sepeda Motor Honda Astrea 800",
+      barang: barang,
       harga: getRandomIntRounded(1000000, 5000000),
       bunga: getRandomInt(5, 35) + "%",
       periodegadai: periodegadai,
@@ -256,6 +280,13 @@ function generateRandomDataGadai(designatedFor, jumlah) {
   return Array.from({ length: jumlah }, getDataRandom);
 }
 
+/**
+ * @description
+ * @author Henry
+ * @date 01/12/2023 - 2:38:20 PM
+ * @param {*} jumlah
+ * @return {*}
+ */
 function generateRandomDataCustomer(jumlah) {
   function generateData() {
     function generateName() {
@@ -266,15 +297,14 @@ function generateRandomDataCustomer(jumlah) {
           ", "
         );
 
-      const randomFirstName =
-        firstNames[Math.floor(Math.random() * firstNames.length)];
-      const randomLastName =
-        lastNames[Math.floor(Math.random() * lastNames.length)];
+      const noIndex = Math.floor(Math.random() * firstNames.length);
+      const randomFirstName = firstNames[noIndex];
+      const randomLastName = lastNames[noIndex];
 
       return `${randomFirstName} ${randomLastName}`;
     }
     function generateRandomPhoneNumber() {
-      const areaCodes = ["081", "082", "083", "085", "087"];
+      const areaCodes = ["812", "822", "823", "856", "872"];
       const randomNumber = Math.floor(Math.random() * 1000000000)
         .toString()
         .padStart(10, "0");

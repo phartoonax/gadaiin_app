@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import AppBarWithSearch from "../appBarWithSearch";
-import { Chip, Divider, Grid, Stack } from "@mui/material";
+import { Chip, Divider, Grid, IconButton, Stack } from "@mui/material";
 import CheckboxStatus from "../filters/checkBoxStatus";
+import { Icon } from "@iconify/react";
 
 /**
  * @description Komponen ini digunakan untuk menampilkan dan mengelola form kelengkapan. Pengguna dapat memilih item kelengkapan dari daftar yang disediakan dan item yang dipilih akan ditampilkan sebagai chip. Pengguna juga dapat mencari item kelengkapan menggunakan fitur pencarian.
@@ -9,45 +10,72 @@ import CheckboxStatus from "../filters/checkBoxStatus";
  * @date 30/11/2023 - 4:28:47 PM
  * @param {function} setShowFullPageModal Fungsi yang dipanggil untuk menampilkan atau menyembunyikan modal.
  * @param {function} setKelengkapanValues Fungsi yang dipanggil untuk mengatur nilai kelengkapan.
+ * @param {boolean} enabled Menentukan apakah isi dari kelengkapan dapat diubah atau tidak
+ * @param {array} presetKelengkapanArray Array berisi nilai-nilai kelengkapan yang sudah dipilih sebelumnya. Hanya akan dipakai jika enabled bernilai false.
  * @return {*} Komponen React yang menampilkan form kelengkapan.
  */
-function PageKelengkapanForm({ setShowFullPageModal, setKelengkapanValues }) {
-  const templateKelengkapanArray = [
-    "Surat Keterangan Hak Milik",
-    "Surat Keterangan Hak Guna Bangunan Sementara",
-    "Kardus",
-    "STNK",
-    "BPKB",
-    "Charger",
-    "Ijazah",
-    "Ijazah SNI",
-    "Ijazah SMA",
-    "Ijazah S1",
-    "Ijazah S2",
-  ];
+function PageKelengkapanForm({
+  setShowFullPageModal,
+  setKelengkapanValues,
+  enabled,
+  presetKelengkapanArray,
+}) {
+  const isEnabled =
+    typeof enabled !== "undefined" && enabled !== null ? enabled : true;
 
-  const [selectedKelengkapanArray, setSelectedKelengkapanArray] = useState([]);
+  const [templateKelengkapanArray, setTemplateKelengkapanArray] = useState(
+    isEnabled
+      ? [
+          "Surat Keterangan Hak Milik",
+          "Surat Keterangan Hak Guna Bangunan Sementara",
+          "Kardus",
+          "STNK",
+          "BPKB",
+          "Charger",
+          "Ijazah",
+          "Ijazah SNI",
+          "Ijazah SMA",
+          "Ijazah S1",
+          "Ijazah S2",
+        ]
+      : presetKelengkapanArray
+  );
+
+  const [searchInput, setSearchInput] = useState("");
+  const [isSearchFilled, setIsSearchFilled] = useState(false);
+  const handleSearchInputChange = (event) => {
+    setSearchInput(event.target.value);
+    setIsSearchFilled(event.target.value !== "");
+  };
+
+  const [selectedKelengkapanArray, setSelectedKelengkapanArray] = useState(
+    isEnabled ? [] : presetKelengkapanArray
+  );
   const handleCloseModal = () => {
     setShowFullPageModal(false);
   };
 
   const handleApplyChipsChange = () => {
-    setKelengkapanValues(selectedKelengkapanArray);
+    if (setKelengkapanValues) {
+      setKelengkapanValues(selectedKelengkapanArray);
+    }
     handleCloseModal();
   };
 
   const handleCheckboxChange = (event) => {
-    const newArray = [...selectedKelengkapanArray];
-    if (event.target.checked) {
-      newArray.push(event.target.name);
-    } else {
-      const index = newArray.indexOf(event.target.name);
-      if (index > -1) {
-        newArray.splice(index, 1);
+    if (isEnabled) {
+      const newArray = [...selectedKelengkapanArray];
+      if (event.target.checked) {
+        newArray.push(event.target.name);
+      } else {
+        const index = newArray.indexOf(event.target.name);
+        if (index > -1) {
+          newArray.splice(index, 1);
+        }
       }
-    }
 
-    setSelectedKelengkapanArray(newArray);
+      setSelectedKelengkapanArray(newArray);
+    }
   };
 
   const handleChipClick = (value) => {
@@ -59,13 +87,31 @@ function PageKelengkapanForm({ setShowFullPageModal, setKelengkapanValues }) {
       }
     });
   };
+  const handleAddKelengkapan = () => {
+    setTemplateKelengkapanArray((prevValues) => {
+      if (prevValues.includes(searchInput)) {
+        return prevValues;
+      } else {
+        return [...prevValues, searchInput];
+      }
+    });
+    setSearchInput("");
+    setIsSearchFilled(false);
+    setSelectedKelengkapanArray((prevValues) => {
+      if (prevValues.includes(searchInput)) {
+        return prevValues.filter((v) => v !== searchInput);
+      } else {
+        return [...prevValues, searchInput];
+      }
+    });
+  };
 
   return (
     <>
       <div className="fixed h-screen w-screen top-0 left-0 z-[99999] bg-white">
         <AppBarWithSearch
           placeholder={"Cari Kelengkapan"}
-          handlerBackButton={handleCloseModal}
+          handlerBackButton={handleApplyChipsChange}
         />
         <div className="bg-white px-4 pt-4 w-full max-w-md rounded-md">
           <Stack
@@ -80,7 +126,7 @@ function PageKelengkapanForm({ setShowFullPageModal, setKelengkapanValues }) {
               />
             }
           >
-            {selectedKelengkapanArray.length > 0 && (
+            {isEnabled && selectedKelengkapanArray.length > 0 && (
               <Grid container direction="row" wrap="wrap" spacing={1}>
                 {selectedKelengkapanArray.map((value) => (
                   <Grid item key={value}>
@@ -102,22 +148,41 @@ function PageKelengkapanForm({ setShowFullPageModal, setKelengkapanValues }) {
               checkBoxHandler={handleCheckboxChange}
             />
           </Stack>
-          <div className="fixed bottom-0 w-full flex justify-between px-4 py-2 mt-4 space-x-2.5 bg-white  shadow-customForFilter z-[2000] -right-0">
-            <button
-              className="bg-neutral-10 text-success-Main w-full px-3.5 py-2 rounded-xl shadow h-[52px] border border-success-Main text-lg font-bold"
-              onClick={() => {
-                handleCloseModal();
-              }}
-            >
-              Batal
-            </button>
-            <button
-              className="bg-success-Main text-white w-full  px-3.5   py-2 rounded-xl shadow h-[52px] text-lg font-bold"
-              onClick={handleApplyChipsChange}
-            >
-              Terapkan
-            </button>
-          </div>
+          {isEnabled && (
+            <div className="fixed bottom-0 w-full flex justify-between px-4 py-2.5 mt-4 space-x-2.5 bg-white  shadow-customForFilter z-[2000] -right-0  ">
+              <Stack gap="8px" width={"100%"}>
+                <div
+                  className={`flex items-center bg-white rounded-lg p-4 h-12 w-full flex-grow border ${
+                    isSearchFilled ? "border-neutral-100" : "border-neutral-60"
+                  }`}
+                >
+                  <input
+                    className="bg-transparent text-neutral-100 outline-none w-full focus:w-full transition-width duration-200 ease-in-out"
+                    type="text"
+                    placeholder={"tambah Kelengkapan"}
+                    value={searchInput}
+                    onChange={handleSearchInputChange}
+                  />
+                  <IconButton
+                    className={`rounded-lg   p-1 ${
+                      isSearchFilled
+                        ? "bg-success-Main focus:bg-success-Main"
+                        : "focus:bg-neutral-60 bg-neutral-60"
+                    }`}
+                    onClick={() =>
+                      isSearchFilled ? handleAddKelengkapan() : null
+                    }
+                  >
+                    <Icon
+                      icon={"heroicons-solid:plus"}
+                      fontSize={"22px"}
+                      className="text-neutral-10"
+                    />
+                  </IconButton>
+                </div>
+              </Stack>
+            </div>
+          )}
         </div>
       </div>
     </>

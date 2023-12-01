@@ -9,6 +9,7 @@ import React from "react";
  * @param {function} handleChipClick Fungsi yang menangani klik pada chip
  * @param {function} setShowFullPageModal Fungsi yang mengatur tampilan modal
  * @param {boolean} isRequired Menentukan apakah input pada form wajib diisi atau tidak
+ * @param {boolean} enabled Menentukan apakah isi dari kelengkapan dapat diubah atau tidak
  * @returns {*} Mengembalikan grup chip dengan judul dan nilai yang ditentukan
  * @author Henry
  * @date 30/11/2023 - 9:30:37 AM
@@ -20,7 +21,10 @@ const ChipKelengkapanForm = ({
   handleChipClick,
   setShowFullPageModal,
   isRequired,
+  enabled,
 }) => {
+  const isEnabled =
+    typeof enabled !== "undefined" && enabled !== null ? enabled : true;
   return (
     <>
       <Stack gap={"10px"}>
@@ -48,11 +52,11 @@ const ChipKelengkapanForm = ({
             onClick={() => setShowFullPageModal(true)}
             sx={{ paddingRight: "0px", justifyContent: "flex-end" }}
           >
-            Tambah
+            {isEnabled ? "Tambah " : "Selengkapnya"}
           </Button>
         </Stack>
         <Grid container direction="row" wrap="wrap" spacing={1}>
-          {chipValues.map((value) => (
+          {chipValues.slice(0, 5).map((value) => (
             <Grid item key={value}>
               <Chip
                 label={value}
@@ -61,7 +65,9 @@ const ChipKelengkapanForm = ({
                 }
                 color={"success"}
                 className="font-normal text-sm px-0.5 py-[7px] max-w-[150px] overflow-ellipsis"
-                onClick={() => handleChipClick(value)}
+                onClick={() =>
+                  handleChipClick ? handleChipClick(value) : null
+                }
               />
             </Grid>
           ))}

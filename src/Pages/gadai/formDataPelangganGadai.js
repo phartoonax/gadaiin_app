@@ -85,6 +85,7 @@ const FormDataPelangganGadai = () => {
               savedImage={savedImage}
               setSavedImage={setSavedImage}
               idPelanggan={dataPelanggan?.noCustomer}
+              enabled={true}
             />
             <div className="h-16" />
           </Stack>

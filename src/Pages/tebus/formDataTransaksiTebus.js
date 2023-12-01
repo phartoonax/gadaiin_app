@@ -12,13 +12,7 @@ import IsiBungaForm from "../../components/form/isiBungaForm";
 import { pemisahRibuan } from "../../functionGlobal";
 import PageKelengkapanForm from "../../components/form/pageKelengkapanForm";
 
-/**
- * @description
- * @author Henry
- * @date 01/12/2023 - 9:06:18 AM
- * @return {*}
- */
-const FormDataTransaksiPerpanjang = () => {
+function FormDataTransaksiTebus() {
   const Navigate = useNavigate();
   const location = useLocation();
   const dataPelanggan = location?.state?.dataPelangganPerpanjang || null;
@@ -29,7 +23,6 @@ const FormDataTransaksiPerpanjang = () => {
     ) || null
   );
 
-  const [valueDurasi, setValueDurasi] = useState(); //save for latter use
   const [valueBunga, setValueBunga] = useState();
 
   const [valueNominal, setValueNominal] = useState();
@@ -43,8 +36,7 @@ const FormDataTransaksiPerpanjang = () => {
   const clearFormData = () => {
     // Clear state
 
-    setValueDurasi("");
-    setValueBunga("");
+    setValueImageBuktiPembayaran(null);
 
     // Clear localStorage
     localStorage.removeItem("valueJaminan");
@@ -55,18 +47,18 @@ const FormDataTransaksiPerpanjang = () => {
     localStorage.removeItem("savedImage-tempBarang");
     localStorage.removeItem("savedImage-Bukti-" + dataPelanggan?.noCustomer);
   };
+
+  const setDurasiDanBungaValue = (durasi, bunga) => {
+    setValueBunga(bunga);
+  };
   const handleNavigateToBack = () => {
     clearFormData();
     Navigate(-1);
   };
+
   const handleConfirmSubmitData = () => {
     clearFormData();
     Navigate("/main");
-  };
-
-  const setDurasiDanBungaValue = (durasi, bunga) => {
-    setValueDurasi(durasi);
-    setValueBunga(bunga);
   };
 
   useEffect(() => {
@@ -90,7 +82,7 @@ const FormDataTransaksiPerpanjang = () => {
       <div className="w-screen h-screen flex flex-col justify-start items-start  font-inter">
         <div className="fixed top-0 z-50">
           <AppBarPlain
-            placeholder={"Tambah Perpanjang Gadai"}
+            placeholder={"Detail Gadai"}
             handlerBackButton={handleNavigateToBack}
           />
           <ProgressIndicatorForm isFirstDone={true} />
@@ -134,6 +126,7 @@ const FormDataTransaksiPerpanjang = () => {
               tglKreditLama={dataPelanggan?.tglKredit}
               durasiGadaiLama={dataPelanggan?.lamaGadai}
               setDurasiDanBungaValue={setDurasiDanBungaValue}
+              enabled={false}
             />
             <IsiFormDefault
               enabled={false}
@@ -204,7 +197,7 @@ const FormDataTransaksiPerpanjang = () => {
                   ? "bg-themeColor text-neutral-10"
                   : "bg-neutral-30 text-neutral-70"
               }
-hover:bg-themeColor`}
+  hover:bg-themeColor`}
               onClick={() => setIsDialogOpenConfirmationPass(true)}
             >
               Simpan
@@ -253,6 +246,6 @@ hover:bg-themeColor`}
       </div>
     </>
   );
-};
+}
 
-export default FormDataTransaksiPerpanjang;
+export default FormDataTransaksiTebus;

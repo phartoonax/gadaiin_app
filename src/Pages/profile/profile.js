@@ -335,6 +335,7 @@ function Profile() {
                 savedImage={savedImage}
                 setSavedImage={setSavedImage}
                 idPelanggan={"Profile"}
+                enabled={true}
               />
               <Button
                 variant="outlined"

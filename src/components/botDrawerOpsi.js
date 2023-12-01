@@ -4,6 +4,7 @@ import React from "react";
 import ButtonOpsiItem from "./opsi/buttonOpsiItem";
 import { useNavigate } from "react-router-dom";
 import { drawerStyle } from "../variableGlobal";
+import { pemisahRibuan } from "../functionGlobal";
 
 /**
  * @description Komponen untuk menampilkan Bottom Drawer yang berisi berbagai opsi seperti Detail, Tebus Gadai, Perpanjang Gadai, Cetak Ulang, Batal, dan History.
@@ -18,18 +19,26 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data }) => {
   const Navigate = useNavigate();
 
   const tempPerpanjangData = {
-    name: "Michael Kayne",
-    phoneNumber: "08123456789",
-    address: "Jl. Kaliurang Km 5",
-    noCustomer: "1234567890",
+    name: data.nama,
+    phoneNumber: data.notelp,
+    address: data.alamat,
+    noCustomer: data.noktp,
     fotoCustomer: JSON.parse(localStorage.getItem("savedImage-Profile")),
 
-    jaminan: "Emas",
-    kelengkapan: ["Sertifikat", "Ktp"],
-    noSeri: "1234567890",
-    tglKredit: "2023-10-10",
-    lamaGadai: "1 Bulan",
-    harga: 10000000,
+    noGadai: data.idtransaksi.substring(3),
+    jaminan: data.barang,
+    kelengkapan: [
+      "Sertifikat",
+      "Ktp",
+      "Kartu Keluarga",
+      "Buku Tabungan",
+      "STNK",
+      "BPKB",
+    ],
+    noSeri: data.noSeri,
+    tglKredit: data.tglkredit,
+    lamaGadai: data.periodegadai,
+    harga: pemisahRibuan(data.harga),
     fotoBarang: JSON.parse(localStorage.getItem("savedImage-Profile")),
   };
   // Unique functions to console.log for each option
@@ -39,6 +48,9 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data }) => {
 
   const handleTebusGadaiClick = () => {
     console.log("Clicked option: Tebus Gadai");
+    Navigate("/form/tebus/pelanggan", {
+      state: { dataPelangganPerpanjang: tempPerpanjangData },
+    });
   };
 
   const handlePerpanjangGadaiClick = () => {
