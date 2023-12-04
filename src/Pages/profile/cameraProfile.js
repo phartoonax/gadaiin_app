@@ -3,7 +3,6 @@ import { Button, IconButton } from "@mui/material";
 import React, { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AppBarPlain from "../../components/appBarPlain";
-import { useTorchLight } from "@blackbox-vision/use-torch-light";
 
 /**
  * @description Komponen ini menampilkan antarmuka kamera untuk mengambil foto profil. Ini mencakup akses ke kamera perangkat dan memungkinkan pengguna untuk mengambil foto, yang kemudian dapat disimpan dan digunakan sebagai foto profil.
@@ -23,7 +22,7 @@ const CameraProfile = () => {
 
   const [image, setImage] = useState(null);
   const videoRef = useRef(null);
-  const [on, toggle] = useTorchLight(videoRef.current);
+  const [isFlashOn, setIsFlashOn] = useState(false);
   const [videoBorderHeight, setVideoBorderHeight] = useState(null);
   const [videoBorderWidth, setVideoBorderWidth] = useState(null);
   const [facingMode, setFacingMode] = useState("environment");
@@ -32,7 +31,9 @@ const CameraProfile = () => {
     let stream = null;
     if (isCameraAccessGranted) {
       navigator.mediaDevices
-        .getUserMedia({ video: { facingMode } })
+        .getUserMedia({
+          video: { facingMode, flashMode: isFlashOn ? "torch" : "auto" },
+        })
         .then((mediaStream) => {
           stream = mediaStream;
           if (videoRef.current) {
@@ -61,7 +62,7 @@ const CameraProfile = () => {
         });
       }
     };
-  }, [facingMode, isCameraAccessGranted]);
+  }, [facingMode, isCameraAccessGranted, isFlashOn]);
 
   const handleCapture = () => {
     const canvas = document.createElement("canvas");
@@ -126,6 +127,10 @@ const CameraProfile = () => {
     setFacingMode((prevFacingMode) =>
       prevFacingMode === "environment" ? "face" : "environment"
     );
+  };
+
+  const handleToggleFlash = () => {
+    setIsFlashOn((prevIsFlashOn) => !prevIsFlashOn);
   };
   return (
     <>
@@ -237,12 +242,12 @@ const CameraProfile = () => {
           {!image ? (
             <IconButton
               className="text-neutral-10 hover:text-neutral-10"
-              onClick={toggle}
+              onClick={handleToggleFlash}
             >
               <Icon
                 width={"24px"}
                 height={"24px"}
-                icon={on ? "feather:zap" : "feather:zap-off"}
+                icon={isFlashOn ? "feather:zap" : "feather:zap-off"}
               />
             </IconButton>
           ) : (
