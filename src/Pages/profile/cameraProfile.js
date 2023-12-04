@@ -229,8 +229,12 @@ const CameraProfile = () => {
               ></Icon>
             </IconButton>
           ) : (
-            <Button variant="text" onClick={handleRetake}>
-              FOTO ULANG
+            <Button
+              variant="text"
+              onClick={handleRetake}
+              className="text-sm leading-[18px] text-neutral-10 font-bold"
+            >
+              Foto Ulang
             </Button>
           )}
           {!image && (
@@ -258,7 +262,11 @@ const CameraProfile = () => {
               />
             </IconButton>
           ) : (
-            <Button variant="text" onClick={handleSave}>
+            <Button
+              variant="text"
+              onClick={handleSave}
+              className="text-sm leading-[18px] text-neutral-10 font-bold"
+            >
               Simpan
             </Button>
           )}
