@@ -21,6 +21,7 @@ const CameraProfile = () => {
   const [isCameraAccessGranted, setIsCameraAccessGranted] = useState(true);
 
   const [image, setImage] = useState(null);
+  const [isFlashOn, setIsFlashOn] = useState(false);
   const videoRef = useRef(null);
   const [videoBorderHeight, setVideoBorderHeight] = useState(null);
   const [videoBorderWidth, setVideoBorderWidth] = useState(null);
@@ -224,26 +225,24 @@ const CameraProfile = () => {
               className="Shutter bg-transparent rounded-full w-[72px] h-[72px] p-0"
               onClick={handleCapture}
             >
-              {" "}
               <div
                 className="w-[72px] h-[72px]  rounded-full border-[3px] border-white flex relative justify-center
             items-center"
               >
-                {" "}
                 <div className="w-[58px] h-[58px] bg-neutral-10 rounded-full"></div>
               </div>
             </Button>
           )}
           {!image ? (
             <IconButton
-              className="text-danger-Hover hover:text-danger-Hover"
-              onClick={null}
+              className="text-neutral-10 hover:text-neutral-10"
+              onClick={setIsFlashOn(!isFlashOn)}
             >
               <Icon
                 width={"24px"}
                 height={"24px"}
-                icon={"feather:zap-off"}
-              ></Icon>
+                icon={isFlashOn ? "feather:zap" : "feather:zap-off"}
+              />
             </IconButton>
           ) : (
             <Button variant="text" onClick={handleSave}>

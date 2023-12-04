@@ -16,6 +16,13 @@ const theme = createTheme({
         },
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: "capitalize",
+        },
+      },
+    },
   },
   typography: {
     fontFamily: ["Inter", "Sans-serif"].join(","),

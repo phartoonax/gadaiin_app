@@ -121,7 +121,7 @@ function PageKelengkapanForm({
                 className="border-neutral-100"
                 sx={{
                   marginY: "10px",
-                  borderBottomWidth: "3px",
+                  borderBottomWidth: "2px",
                 }}
               />
             }

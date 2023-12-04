@@ -339,7 +339,9 @@ function Profile() {
               />
               <Button
                 variant="outlined"
+                className="text-sm leading-[18px]"
                 sx={{
+                  textTransform: "capitalize",
                   borderRadius: "6px",
                   borderColor: "neutral.100",
                   color: "neutral.100",

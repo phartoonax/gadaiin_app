@@ -103,12 +103,21 @@ const Dashboard = (props) => {
         <div className="z-[3] w-full">
           <div className="absolute top-0 left-0 p-4 mt-6 flex items-center">
             <div className=" rounded-full overflow-hidden drop-shadow-xl">
-              <img
-                src={savedImage || ""}
-                alt="Profile"
-                className="h-[50px] w-[50px] rounded-full"
-                onClick={() => navigate("/profile")}
-              />
+              {savedImage === !null ? (
+                <img
+                  src={savedImage || null}
+                  alt=""
+                  className={`h-[50px] w-[50px] rounded-full`}
+                  onClick={() => navigate("/profile")}
+                />
+              ) : (
+                <div
+                  className="h-[50px] w-[50px] rounded-full bg-neutral-10 text-center justify-center items-center flex align-middle text-xs"
+                  onClick={() => navigate("/profile")}
+                >
+                  {"No Image"}
+                </div>
+              )}
             </div>
             <div className="ml-1 flex flex-col">
               <span className="font-bold text-lg text-neutral-10">
