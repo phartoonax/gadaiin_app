@@ -1,5 +1,6 @@
 import "../../assets/css/custom.css";
 import iconFAB from "../../assets/images/balance-scale.png";
+import DefaultPerson from "../../assets/images/DefaultPerson.png";
 import { UilQrcodeScan } from "@iconscout/react-unicons";
 import { HomeIcon } from "@heroicons/react/20/solid";
 
@@ -20,7 +21,7 @@ const Dashboard = (props) => {
   const [shouldRender, setShouldRender] = useState(false);
   const [shouldRenderBackground, setShouldRenderBackground] = useState(false);
 
-  const [savedImage, setSavedImage] = useState(
+  const savedImage = useState(
     JSON.parse(localStorage.getItem("savedImage-Profile")) || null
   );
 
@@ -59,22 +60,24 @@ const Dashboard = (props) => {
     },
   ];
   const renderdat = datatemp.map((data) => (
-    <div className="w-full  px-2.5 flex-col justify-start items-start inline-flex font-inter">
-      <div className="w-full py-1 inline-flex flex-row items-center justify-center gap-2">
-        <div className="relative">
+    <div className="w-full px-2.5 flex flex-col justify-start items-start font-inter overflow-ellipsis">
+      <div className="w-full py-1 flex items-center justify-center gap-2">
+        <div className="relative flex-shrink-0">
           <Icon
             className="text-success-Main"
             icon="uil:balance-scale"
             style={{ fontSize: "14px" }}
           />
         </div>
-        <div className="inline-flex flex-col items-start gap-0.5">
+        <div className="flex flex-col items-start gap-0.5 flex-auto overflow-hidden ">
           <div className="text-[10px] leading-3 tracking-wide font-normal">
             {data.id}
           </div>
-          <div className="text-xs tracking-wide font-semibold">{data.name}</div>
+          <div className="text-xs tracking-wide font-semibold max-h-5 overflow-ellipsis overflow-hidden whitespace-nowrap max-w-[108px]">
+            {data.name}
+          </div>
         </div>
-        <div className="inline-flex flex-col items-end gap-0.5 flex-1">
+        <div className="flex flex-col items-end gap-0.5 flex-1 min-w-[96px] flex-shrink-0">
           <div className="text-[10px] leading-3 tracking-wide font-normal">
             {data.transaksi}
           </div>
@@ -105,18 +108,18 @@ const Dashboard = (props) => {
             <div className=" rounded-full overflow-hidden drop-shadow-xl">
               {savedImage === !null ? (
                 <img
-                  src={savedImage || null}
+                  src={savedImage || DefaultPerson}
                   alt=""
                   className={`h-[50px] w-[50px] rounded-full`}
                   onClick={() => navigate("/profile")}
                 />
               ) : (
-                <div
+                <img
+                  src={DefaultPerson}
+                  alt=""
                   className="h-[50px] w-[50px] rounded-full bg-neutral-10 text-center justify-center items-center flex align-middle text-xs"
                   onClick={() => navigate("/profile")}
-                >
-                  {"No Image"}
-                </div>
+                ></img>
               )}
             </div>
             <div className="ml-1 flex flex-col">
@@ -268,12 +271,13 @@ const Dashboard = (props) => {
                   isMenuOpen ? "animate-slideUp" : "animate-slideDown"
                 }`}
                 onAnimationEnd={() => !isMenuOpen && setShouldRender(false)}
+                onClick={changeMenuState}
               >
                 <div className="flex flex-col items-start transform translate-x-1/2 -ml-8">
                   <Button
                     startIcon={
                       <Icon
-                        className="text-success-Main bg-neutral-10 rounded-full w-7 h-7 p-1"
+                        className="text-success-Main bg-neutral-10 rounded-full w-7 h-7 p-1 overflow-visible"
                         icon={"uil:money-withdraw"}
                       ></Icon>
                     }
@@ -285,7 +289,7 @@ const Dashboard = (props) => {
                   <Button
                     startIcon={
                       <Icon
-                        className="text-success-Main bg-neutral-10 rounded-full w-7 h-7 p-1"
+                        className="text-success-Main bg-neutral-10 rounded-full w-7 h-7 p-1 overflow-visible"
                         icon={"uil:hourglass"}
                       ></Icon>
                     }
@@ -297,7 +301,7 @@ const Dashboard = (props) => {
                   <Button
                     startIcon={
                       <Icon
-                        className="text-success-Main bg-neutral-10 rounded-full w-7 h-7 p-1"
+                        className="text-success-Main bg-neutral-10 rounded-full w-7 h-7 p-1 overflow-visible"
                         icon={"uil:balance-scale"}
                       ></Icon>
                     }

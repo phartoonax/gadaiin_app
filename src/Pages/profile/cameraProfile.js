@@ -173,6 +173,13 @@ const CameraProfile = () => {
                     }`,
                   }}
                 ></div>
+                <div
+                  className="absolute top-[15%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-white text-sm font-bold leading-[18px]"
+                  style={{ width: `${videoBorderWidth}px` }}
+                >
+                  Pastikan wajah masuk dalam kotak dan dalam keadaan pencahayaan
+                  yang cukup
+                </div>
               </div>
             ) : (
               <div>
