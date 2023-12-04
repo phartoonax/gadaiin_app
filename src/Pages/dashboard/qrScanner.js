@@ -61,7 +61,7 @@ const QRScanner = () => {
 
   return (
     <>
-      <div className="w-screen h-screen flex flex-col justify-start items-start  font-inter">
+      <div className="w-screen h-screen flex flex-col justify-start items-start font-inter overflow-auto">
         <AppBarPlain iconButton={"feather:zap-off"} placeholder={"Scan QR"} />
         <QrScanner
           onDecode={handleScan}
