@@ -6,6 +6,7 @@ import store from "./redux/store/configureStore";
 import Rute from "./Routes";
 import { Provider } from "react-redux";
 import { createTheme, ThemeProvider } from "@mui/material";
+import { Icon } from "@iconify/react";
 
 const theme = createTheme({
   components: {
@@ -14,6 +15,26 @@ const theme = createTheme({
         root: {
           paddingBottom: "16px",
         },
+      },
+    },
+    MuiCheckbox: {
+      defaultProps: {
+        icon: (
+          <Icon
+            className="border border-success-Main rounded h-4 w-4"
+            color="transparent"
+            icon="feather:check"
+          />
+        ),
+        checkedIcon: (
+          <Icon
+            className="border border-success-Main rounded h-4 w-4"
+            icon="feather:check"
+          />
+        ),
+      },
+      styleOverrides: {
+        root: { paddingRight: "1px" },
       },
     },
     MuiButton: {

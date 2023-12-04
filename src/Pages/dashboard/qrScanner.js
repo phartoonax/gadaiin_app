@@ -115,25 +115,19 @@ const QRScanner = () => {
           constraints={{ facingMode }}
         />
         <div
-          className="absolute top-[20%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-white text-center text-sm font-bold leading-[18px]"
+          className="absolute top-[20%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-white text-center text-sm font-normal leading-[18px]"
           style={{ width: `${videoBorderWidth}px` }}
         >
           Arahkan kamera pada QR dan pastikan dalam keadaan pencahayaan yang
           cukup
         </div>
         <div className="bg-neutral-100 w-full flex flex-grow flex-row justify-between  items-center px-4 py-[26px] gap-2.5">
-          <TextField
-            className="border-neutral-40 bg-neutral-10
-          hover:bg-neutral-10 rounded-lg	 w-full"
-            height="48px"
-            id="filled-basic"
-            label="Masukkan Kode Gadai"
-            variant="filled"
-            size="small"
-            color="success"
+          <input
+            className="w-full rounded-lg py-[15px] px-4 placeholder:text-neutral-100 focus:outline-none"
+            placeholder="Masukkan Kode Gadai"
           />
           <IconButton
-            className="bg-success-Main hover:bg-success-Main "
+            className="bg-success-Main hover:bg-success-Main text-center"
             sx={{ borderRadius: "6px", width: "32px", height: "32px" }}
           >
             <Icon

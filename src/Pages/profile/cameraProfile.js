@@ -3,6 +3,7 @@ import { Button, IconButton } from "@mui/material";
 import React, { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AppBarPlain from "../../components/appBarPlain";
+import { useTorchLight } from "@blackbox-vision/use-torch-light";
 
 /**
  * @description Komponen ini menampilkan antarmuka kamera untuk mengambil foto profil. Ini mencakup akses ke kamera perangkat dan memungkinkan pengguna untuk mengambil foto, yang kemudian dapat disimpan dan digunakan sebagai foto profil.
@@ -21,8 +22,8 @@ const CameraProfile = () => {
   const [isCameraAccessGranted, setIsCameraAccessGranted] = useState(true);
 
   const [image, setImage] = useState(null);
-  const [isFlashOn, setIsFlashOn] = useState(false);
   const videoRef = useRef(null);
+  const [on, toggle] = useTorchLight(videoRef.current);
   const [videoBorderHeight, setVideoBorderHeight] = useState(null);
   const [videoBorderWidth, setVideoBorderWidth] = useState(null);
   const [facingMode, setFacingMode] = useState("environment");
@@ -236,12 +237,12 @@ const CameraProfile = () => {
           {!image ? (
             <IconButton
               className="text-neutral-10 hover:text-neutral-10"
-              onClick={setIsFlashOn(!isFlashOn)}
+              onClick={toggle}
             >
               <Icon
                 width={"24px"}
                 height={"24px"}
-                icon={isFlashOn ? "feather:zap" : "feather:zap-off"}
+                icon={on ? "feather:zap" : "feather:zap-off"}
               />
             </IconButton>
           ) : (
