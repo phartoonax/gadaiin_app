@@ -43,6 +43,11 @@ module.exports = withMT({
       ],
     },
 
+    screens: {
+      ssm: "320px",
+      smm: "375px",
+    },
+
     extend: {
       boxShadow: {
         "outline-up":

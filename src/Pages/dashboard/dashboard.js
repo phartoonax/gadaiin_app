@@ -73,7 +73,7 @@ const Dashboard = (props) => {
           <div className="text-[10px] leading-3 tracking-wide font-normal">
             {data.id}
           </div>
-          <div className="text-xs tracking-wide font-semibold max-h-5 overflow-ellipsis overflow-hidden whitespace-nowrap max-w-[108px]">
+          <div className="text-xs tracking-wide font-semibold max-h-5 overflow-ellipsis overflow-hidden whitespace-nowrap max-w-lg ssm:max-w-[108px] smm:max-w-[158px]">
             {data.name}
           </div>
         </div>
