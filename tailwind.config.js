@@ -5,6 +5,14 @@ module.exports = withMT({
   darkMode: "class",
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    fontSize: {
+      xxs: ["10px", "12px"],
+      xs: ["12px", "20px"],
+      sm: ["14px", "18px"],
+      base: ["16px", "24px"],
+      lg: ["18px", "28px"],
+      xl: ["20px", "30px"],
+    },
     fontFamily: {
       inter: ["Inter", "Sans-serif"],
       body: [

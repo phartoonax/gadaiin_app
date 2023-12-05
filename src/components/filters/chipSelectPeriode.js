@@ -51,7 +51,11 @@ const ChipSelectPeriode = ({
                   periodeGadaiValues.includes(value) ? "solid" : "outlined"
                 }
                 color={"success"}
-                className="font-normal text-sm px-0.5 py-[7px]"
+                className={`font-normal text-sm px-0.5 py-[7px] focus:bg-themeColor ${
+                  periodeGadaiValues.includes(value)
+                    ? "text-neutral-10"
+                    : "text-themeColor"
+                }`}
                 onClick={() => handleChipClick(value)}
               />
             </Grid>

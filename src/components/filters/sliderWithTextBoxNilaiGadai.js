@@ -67,40 +67,42 @@ const SliderWithTextboxNilaiGadai = ({
             />
           </div>
         </Stack>
-        <Slider
-          value={valueSlider}
-          onChange={handleChangeSlider}
-          disableSwap
-          max={5000000}
-          min={0}
-          sx={{
-            color: "#AAAAAA",
-            "& .MuiSlider-thumb": {
-              backgroundColor: "#FFFFFF",
-              border: "1px solid #BDBDBD",
-            },
-            "& .MuiSlider-track": {
-              backgroundColor: "success.main",
-            },
-            "& .MuiSlider-rail": {
-              opacity: 0.5,
-              backgroundColor: "#AAAAAA",
-            },
-            "& .MuiSlider-valueLabel": {
-              color: "black",
-              "& *": {
-                background: "transparent",
-                color: "inherit",
-              },
-            },
-            "&:hover, &.Mui-focusVisible": {
+        <div className="mx-1.5">
+          <Slider
+            value={valueSlider}
+            onChange={handleChangeSlider}
+            disableSwap
+            max={5000000}
+            min={0}
+            sx={{
+              color: "#AAAAAA",
               "& .MuiSlider-thumb": {
                 backgroundColor: "#FFFFFF",
-                boxShadow: `0px 0px 0px 8px ${alpha("#AAAAAA", 0.16)}`,
+                border: "1px solid #BDBDBD",
               },
-            },
-          }}
-        ></Slider>
+              "& .MuiSlider-track": {
+                backgroundColor: "success.main",
+              },
+              "& .MuiSlider-rail": {
+                opacity: 0.5,
+                backgroundColor: "#AAAAAA",
+              },
+              "& .MuiSlider-valueLabel": {
+                color: "black",
+                "& *": {
+                  background: "transparent",
+                  color: "inherit",
+                },
+              },
+              "&:hover, &.Mui-focusVisible": {
+                "& .MuiSlider-thumb": {
+                  backgroundColor: "#FFFFFF",
+                  boxShadow: `0px 0px 0px 8px ${alpha("#AAAAAA", 0.16)}`,
+                },
+              },
+            }}
+          />
+        </div>
       </Stack>
     </>
   );

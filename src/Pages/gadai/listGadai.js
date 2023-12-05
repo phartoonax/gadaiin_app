@@ -81,6 +81,26 @@ function ListGadai() {
     });
     setFilteredArray(filtered);
   };
+  const handleSortChangeFAB = (sortKeys) => {
+    const isiSortKey = sortKeys.valueStatusSort;
+    const sortedArray = [...filteredArray].sort((a, b) => {
+      for (let key in isiSortKey) {
+        if (key === "harga") {
+          return sortKeys[key] === 1 ? a[key] - b[key] : b[key] - a[key];
+        } else if (key === "idtransaksi") {
+          const aId = parseInt(a[key].substring(3));
+          const bId = parseInt(b[key].substring(3));
+          return sortKeys[key] === 1 ? aId - bId : bId - aId;
+        } else if (key === "tglkredit") {
+          const aDate = new Date(a[key]);
+          const bDate = new Date(b[key]);
+          return sortKeys[key] === 1 ? aDate - bDate : bDate - aDate;
+        }
+      }
+      return 0;
+    });
+    setFilteredArray(sortedArray);
+  };
 
   const iconKiri = "heroicons-outline:adjustments";
   const iconKanan = "heroicons-outline:switch-vertical";
@@ -102,6 +122,7 @@ function ListGadai() {
             iconFab={iconFab}
             onFabClick={handleFabClick}
             onFilterChange={handleFilterChangeFAB}
+            onSortChange={handleSortChangeFAB}
             status={null}
           />
           <div className="mx-4">

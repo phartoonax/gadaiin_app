@@ -25,7 +25,7 @@ const SwitcherSortItem = ({
 
       const statusSort = {};
       isiSortItem.forEach((name) => {
-        statusSort[name] = newState[name] || 0;
+        statusSort[name["keyValue"]] = newState[name["keyValue"]] || 0;
       });
 
       return newState;
@@ -70,10 +70,10 @@ const SwitcherSortItem = ({
             width="100%"
             className="flex"
           >
-            <div className="text-sm text-[15px] font-bold">{name}</div>
+            <div className="text-sm text-[15px] font-bold">{name["Nama"]}</div>
 
-            <IconButton onClick={() => handleButtonClick(name)}>
-              {getIcon(name)}
+            <IconButton onClick={() => handleButtonClick(name["keyValue"])}>
+              {getIcon(name["keyValue"])}
             </IconButton>
           </Stack>
         ))}

@@ -64,7 +64,11 @@ const ChipKelengkapanForm = ({
                   SelectedChipValues.includes(value) ? "solid" : "outlined"
                 }
                 color={"success"}
-                className="font-normal text-sm px-0.5 py-[7px] max-w-[150px] overflow-ellipsis"
+                className={`font-normal text-sm px-0.5 py-[7px] max-w-[150px] overflow-ellipsis focus:bg-themeColor ${
+                  SelectedChipValues.includes(value)
+                    ? "text-neutral-10"
+                    : "text-themeColor"
+                }`}
                 onClick={() =>
                   handleChipClick ? handleChipClick(value) : null
                 }

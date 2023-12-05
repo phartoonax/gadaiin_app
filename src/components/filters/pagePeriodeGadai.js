@@ -69,25 +69,27 @@ function PagePeriodeGadai({ setShowFullPageModal, setPeriodeGadaiValues }) {
                 className="border-neutral-100"
                 sx={{
                   marginY: "10px",
-                  borderBottomWidth: "3px",
+                  borderBottomWidth: "2px",
                 }}
               />
             }
           >
             {selectedPeriodeArray.length > 0 && (
-              <Grid container direction="row" wrap="wrap" spacing={1}>
-                {selectedPeriodeArray.map((value) => (
-                  <Grid item key={value}>
-                    <Chip
-                      label={value}
-                      variant={"solid"}
-                      color={"success"}
-                      className="font-normal text-sm px-0.5 py-[7px] max-w-[150px] overflow-ellipsis"
-                      onClick={() => handleChipClick(value)}
-                    />
-                  </Grid>
-                ))}
-              </Grid>
+              <Stack gap={"8px"}>
+                <div className="font-bold text-xs">Periode Gadai</div>
+                <Grid container direction="row" wrap="wrap" spacing={1}>
+                  {selectedPeriodeArray.map((value) => (
+                    <Grid item key={value}>
+                      <Chip
+                        label={value}
+                        variant={"solid"}
+                        className="font-normal text-sm px-0.5 py-[7px] max-w-[150px] overflow-ellipsis bg-themeColor text-neutral-10 focus:bg-themeColor focus:text-neutral-10 hover:bg-themeColor hover:text-neutral-10"
+                        onClick={() => handleChipClick(value)}
+                      />
+                    </Grid>
+                  ))}
+                </Grid>
+              </Stack>
             )}
             <CheckboxStatus
               needDivider={true}

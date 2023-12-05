@@ -44,6 +44,8 @@ const BotDrawerFilter = ({
 
   const [checkboxStatusValues, setCheckboxStatusValues] = useState([]);
 
+  const [valueMinMaxSlider, setValueMinMaxSlider] = useState([0, 5000000]);
+
   const [valueDatePicker1, setValueDatePicker1] = useState(null);
 
   const [valueDatePicker2, setValueDatePicker2] = useState(null);
@@ -62,8 +64,8 @@ const BotDrawerFilter = ({
   };
 
   const [valueDisplaySlider, setValueDisplaySlider] = useState([
-    pemisahRibuan(0),
-    pemisahRibuan(5000000),
+    pemisahRibuan(valueMinMaxSlider[0]),
+    pemisahRibuan(valueMinMaxSlider[1]),
   ]);
 
   /**
@@ -156,8 +158,11 @@ const BotDrawerFilter = ({
    * @description Fungsi untuk mereset semua field.
    */
   const resetFields = () => {
-    setValueSlider([0, 0]);
-    setValueDisplaySlider([pemisahRibuan(0), pemisahRibuan(0)]);
+    setValueSlider([valueMinMaxSlider[0], valueMinMaxSlider[1]]);
+    setValueDisplaySlider([
+      pemisahRibuan(valueMinMaxSlider[0]),
+      pemisahRibuan(valueMinMaxSlider[1]),
+    ]);
     setValueDatePicker1(null);
     setValueDatePicker2(null);
     setCheckboxStatusValues([]);
@@ -178,7 +183,12 @@ const BotDrawerFilter = ({
     };
 
     const isEmpty = Object.values(filters).every(
-      (val) => !val || val === 0 || val === "" || val.length === 0
+      (val) =>
+        !val ||
+        val === 0 ||
+        val === "" ||
+        val.length === 0 ||
+        val === valueMinMaxSlider[1]
     );
 
     onFilterSubmit(isEmpty ? {} : filters);
@@ -190,7 +200,10 @@ const BotDrawerFilter = ({
       <SwipeableDrawer
         anchor="bottom"
         open={openDrawer}
-        onClose={() => setOpenDrawer(false)}
+        onClose={() => {
+          setOpenDrawer(false);
+          resetFields();
+        }}
         PaperProps={{ style: drawerStyle }}
         swipeAreaWidth={"38px"}
         disableSwipeToOpen={true}
@@ -227,9 +240,7 @@ const BotDrawerFilter = ({
         </Stack>
         <Stack
           direction="column"
-          divider={
-            <Divider variant="fullWidth" sx={{ marginY: "10px" }}/>
-          }
+          divider={<Divider variant="fullWidth" sx={{ marginY: "10px" }} />}
           sx={{ px: "16px", mb: "72px" }}
         >
           <TextboxDateSelectorTglTrans

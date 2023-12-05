@@ -22,7 +22,11 @@ import { drawerStyle } from "../variableGlobal";
 const BotDrawerSort = ({ openDrawer, setOpenDrawer, onSortSubmit }) => {
   const [valueStatusSort, setValueStatusSort] = useState({});
 
-  const isiSortItem = ["Nilai Gadai", "Nomer Gadai", "Tanggal Transaksi"];
+  const isiSortItem = [
+    { Nama: "Nilai Gadai", keyValue: "harga" },
+    { Nama: "Nomer Gadai", keyValue: "idtransaksi" },
+    { Nama: "Tanggal Transaksi", keyValue: "tglkredit" },
+  ];
 
   const resetFields = () => {
     //TODO: GANTI DENGAN VALUE SORT
@@ -31,16 +35,12 @@ const BotDrawerSort = ({ openDrawer, setOpenDrawer, onSortSubmit }) => {
 
   const handleApply = () => {
     const filters = {
-      StatusSort: valueStatusSort,
+      valueStatusSort,
     };
 
-    const isEmpty = Object.values(filters).every(
-      (val) => !val || val === 0 || val === "" || val.length === 0
-    );
+    const isEmpty = Object.keys(valueStatusSort).length === 0;
 
-    // onFilterSubmit(isEmpty ? {} : filters);
-    const senttest = isEmpty ? {} : filters;
-    console.log(senttest);
+    onSortSubmit(isEmpty ? {} : filters);
     setOpenDrawer(false);
   };
 
@@ -53,7 +53,10 @@ const BotDrawerSort = ({ openDrawer, setOpenDrawer, onSortSubmit }) => {
       <SwipeableDrawer
         anchor="bottom"
         open={openDrawer}
-        onClose={() => setOpenDrawer(false)}
+        onClose={() => {
+          setOpenDrawer(false);
+          resetFields();
+        }}
         PaperProps={{ style: drawerStyle }}
         swipeAreaWidth={"38px"}
         disableSwipeToOpen={true}

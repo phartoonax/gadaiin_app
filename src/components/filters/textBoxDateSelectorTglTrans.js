@@ -39,13 +39,13 @@ const TextboxDateSelectorTglTrans = ({
         <div className="text-sm text-[15px] font-bold">{title}</div>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Stack direction="row" justifyContent="space-between" width="100%">
-            {" "}
             <MobileDatePicker
               open={openDatePicker1}
               value={valueDatePicker1}
               onChange={(newValue) => {
                 setValueDatePicker1(newValue);
               }}
+              onOpen={() => setOpenDatePicker1(true)}
               onClose={() => setOpenDatePicker1(false)}
               format="DD MMM YYYY"
               slotProps={{
@@ -60,10 +60,15 @@ const TextboxDateSelectorTglTrans = ({
                       borderColor: valueDatePicker1
                         ? "neutral.100"
                         : "neutral.40",
+                      "& .MuiInput-root:focus": { outline: "none" },
                     },
                     startAdornment: (
-                      <InputAdornment position="start">
-                        <IconButton onClick={handleOpenDatePicker1}>
+                      <InputAdornment
+                        onClick={handleOpenDatePicker1}
+                        position="start"
+                        sx={{ marginRight: "0px" }}
+                      >
+                        <IconButton>
                           <Icon
                             icon={"uil:calendar-alt"}
                             className="text-[#50555B]"
@@ -72,6 +77,9 @@ const TextboxDateSelectorTglTrans = ({
                         </IconButton>
                       </InputAdornment>
                     ),
+                  },
+                  InputLabelProps: {
+                    shrink: false,
                   },
                 },
               }}
@@ -85,6 +93,7 @@ const TextboxDateSelectorTglTrans = ({
               onChange={(newValue) => {
                 setValueDatePicker2(newValue);
               }}
+              onOpen={() => setOpenDatePicker2(true)}
               onClose={() => setOpenDatePicker2(false)}
               format="DD MMM YYYY"
               slotProps={{
@@ -101,8 +110,12 @@ const TextboxDateSelectorTglTrans = ({
                         : "neutral.40",
                     },
                     startAdornment: (
-                      <InputAdornment position="start">
-                        <IconButton onClick={handleOpenDatePicker2}>
+                      <InputAdornment
+                        onClick={handleOpenDatePicker2}
+                        position="start"
+                        sx={{ marginRight: "0px" }}
+                      >
+                        <IconButton>
                           <Icon
                             icon={"uil:calendar-alt"}
                             className="text-[#50555B]"

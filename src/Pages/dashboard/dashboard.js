@@ -4,7 +4,7 @@ import DefaultPerson from "../../assets/images/DefaultPerson.png";
 import { UilQrcodeScan } from "@iconscout/react-unicons";
 import { HomeIcon } from "@heroicons/react/20/solid";
 
-import { Button, Divider, Fab, IconButton } from "@mui/material";
+import { Button, Divider, Fab, IconButton, Stack } from "@mui/material";
 import Rangkuman from "./rangkuman";
 import Grafik from "./grafik";
 import { useEffect, useState } from "react";
@@ -42,21 +42,24 @@ const Dashboard = (props) => {
   const datatemp = [
     {
       id: "GDJBD231020",
-      name: "Gadai Aktif",
+      name: "Badrun Sukmawati",
       value: "Rp 126.000.000",
       transaksi: "14/08/2023 16:40",
+      logo: "uil:balance-scale",
     },
     {
       id: "GDJBD231020",
-      name: "Gadai Jatuh Tempo",
+      name: "Badrun Sukmawati",
       value: "Rp 82.430.000",
       transaksi: "14/08/2023 16:40",
+      logo: "uil:hourglass",
     },
     {
       id: "GDJBD231020",
-      name: "Gadai Lelang Belum Terjual",
+      name: "Badrun Sukmawati",
       value: "Rp 52.150.000",
       transaksi: "14/08/2023 16:40",
+      logo: "uil:money-withdraw",
     },
   ];
   const renderdat = datatemp.map((data) => (
@@ -65,23 +68,23 @@ const Dashboard = (props) => {
         <div className="relative flex-shrink-0">
           <Icon
             className="text-success-Main"
-            icon="uil:balance-scale"
+            icon={data.logo}
             style={{ fontSize: "14px" }}
           />
         </div>
         <div className="flex flex-col items-start gap-0.5 flex-auto overflow-hidden ">
-          <div className="text-[10px] leading-3 tracking-wide font-normal">
-            {data.id}
-          </div>
-          <div className="text-xs tracking-wide font-semibold max-h-5 overflow-ellipsis overflow-hidden whitespace-nowrap max-w-lg ssm:max-w-[108px] smm:max-w-[158px]">
+          <div className="text-xxs tracking-wide font-normal">{data.id}</div>
+          <div className="text-xs leading-[14px] tracking-wide font-semibold max-h-5 overflow-ellipsis overflow-hidden whitespace-nowrap max-w-lg ssm:max-w-[108px] smm:max-w-[158px]">
             {data.name}
           </div>
         </div>
         <div className="flex flex-col items-end gap-0.5 flex-1 min-w-[96px] flex-shrink-0">
-          <div className="text-[10px] leading-3 tracking-wide font-normal">
+          <div className="text-xxs tracking-wide font-normal">
             {data.transaksi}
           </div>
-          <div className="text-xs tracking-wide font-normal">{data.value}</div>
+          <div className="text-xs leading-[14px]  tracking-wide font-normal">
+            {data.value}
+          </div>
         </div>
       </div>
       <div className="w-full">
@@ -105,7 +108,10 @@ const Dashboard = (props) => {
         </div>
         <div className="z-[3] w-full">
           <div className="absolute top-0 left-0 p-4 mt-6 flex items-center">
-            <div className=" rounded-full overflow-hidden drop-shadow-xl">
+            <div
+              className=" rounded-full overflow-hidden"
+              style={{ boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)" }}
+            >
               {savedImage === !null ? (
                 <img
                   src={savedImage || DefaultPerson}
@@ -123,11 +129,19 @@ const Dashboard = (props) => {
               )}
             </div>
             <div className="ml-1 flex flex-col">
-              <span className="font-bold text-lg text-neutral-10">
+              <span className="font-bold text-base text-neutral-10">
                 Happy Working, Bagas !
               </span>{" "}
               {/* replace with the actual username */}
-              <span className="text-neutral-10">Jabodetabek</span>{" "}
+              <Stack
+                gap={"4px"}
+                direction={"row"}
+                alignItems="center"
+                className="text-neutral-10"
+              >
+                <span className="font-normal text-xs">Jabodetabek</span>
+                <Icon fontSize={"14px"} icon={"uil:map-marker"} />
+              </Stack>
               {/* replace with the actual city */}
             </div>
           </div>
@@ -142,7 +156,7 @@ const Dashboard = (props) => {
                   activeTab === "Rangkuman"
                     ? "border-neutral-100  border-b-4 text-neutral-100"
                     : "text-neutral-70 border-neutral-10"
-                } rounded-bl-md`}
+                } rounded-bl-md text-base`}
                 onClick={() => handleTabClick("Rangkuman")}
               >
                 Rangkuman
@@ -153,20 +167,20 @@ const Dashboard = (props) => {
                   activeTab === "Grafik"
                     ? "border-neutral-100  border-b-4"
                     : "text-neutral-70 border-neutral-10"
-                } rounded-br-md`}
+                } rounded-br-md text-base`}
                 onClick={() => handleTabClick("Grafik")}
               >
                 Grafik
               </div>
             </div>{" "}
-            <div className="relative w-full">
+            <div className="relative w-full ">
               {activeTab === "Rangkuman" && (
-                <div className="transition-transform duration-200 ease-in-out">
+                <div className="transition-transform duration-200 ease-in-out pb-20">
                   <Rangkuman />
                 </div>
               )}
               {activeTab === "Grafik" && (
-                <div className="transition-transform duration-200 ease-in-out">
+                <div className="transition-transform duration-200 ease-in-out pb-20">
                   <Grafik />
                 </div>
               )}
@@ -177,7 +191,7 @@ const Dashboard = (props) => {
             <div className="relative w-full z-50 -mr-1">
               {" "}
               <svg
-                className="w-full h-14 z-50  drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]"
+                className="w-full h-14 z-50  drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] "
                 viewBox="0 0 118 56"
                 preserveAspectRatio="none"
                 fill="none"
@@ -273,7 +287,7 @@ const Dashboard = (props) => {
                 onAnimationEnd={() => !isMenuOpen && setShouldRender(false)}
                 onClick={changeMenuState}
               >
-                <div className="flex flex-col items-start transform translate-x-1/2 -ml-8">
+                <div className="flex flex-col items-start transform translate-x-1/2 -ml-[37px]">
                   <Button
                     startIcon={
                       <Icon

@@ -28,6 +28,10 @@ function Profile() {
     formState: { errors: errorsChangePass },
   } = useForm();
 
+  const [valueEmailProfile, setValueEmailProfile] = useState("ADMIN@EMAIL.COM");
+  const [valueUsernameProfile, setValueUsernameProfile] = useState("BAGAS");
+  const [valuePhoneProfile, setValuePhoneProfile] = useState(87884044994);
+
   const [isDialogOpenChangePass, setIsDialogOpenChangePass] = useState(false);
   const [isFormPasswordChangeFilled, setIsFormPasswordChangeFilled] =
     useState(false);
@@ -117,7 +121,7 @@ function Profile() {
                         type={
                           isCurrentPasswordChangeVisible ? "text" : "password"
                         }
-                        className={`pl-2 bg-gray-50 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                        className={`pl-2 bg-gray-50 border border-gray-300 text-neutral-100 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
                           isFormPasswordChangeFilled
                             ? "border-black"
                             : "border-gray-300"
@@ -162,7 +166,7 @@ function Profile() {
                           required: true,
                         })}
                         type={isNewPasswordChangeVisible ? "text" : "password"}
-                        className={`pl-2 bg-gray-50 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                        className={`pl-2 bg-gray-50 border border-gray-300 text-neutral-100 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
                           isFormPasswordChangeFilled
                             ? "border-black"
                             : "border-gray-300"
@@ -203,7 +207,7 @@ function Profile() {
                             ? "text"
                             : "password"
                         }
-                        className={`pl-2 bg-gray-50 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                        className={`pl-2 bg-gray-50 border border-gray-300 text-neutral-100 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
                           isFormPasswordChangeFilled
                             ? "border-black"
                             : "border-gray-300"
@@ -242,7 +246,7 @@ function Profile() {
                     disabled={!isFormPasswordChangeFilled}
                     onClick={handleSubmitChangePass(null)}
                     type="button"
-                    className={` font-bold py-3.5 px-5 w-2/4 rounded-xl ${
+                    className={` font-bold py-3.5 px-5 w-2/4 rounded-xl  ${
                       isFormPasswordChangeFilled
                         ? "bg-success-Main text-neutral-10"
                         : "bg-neutral-30 text-neutral-70"
@@ -271,15 +275,14 @@ function Profile() {
                   <span className="text-danger-Main">*</span>
                 </div>
                 <input
-                  value={"ADMIN@EMAIL.COM"}
+                  value={valueEmailProfile}
+                  onChange={setValueEmailProfile}
                   {...register("emailprofile", {
                     type: "email",
                     required: true,
                   })}
-                  className={`pl-2 bg-gray-50 border border-neutral-60 text-[#1F2933] sm:text-sm rounded-lg focus:ring-neborder-neutral-90 focus:border-neutral-90 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
-                    isFormProfileChangeFilled
-                      ? "border-black"
-                      : "border-neutral-60"
+                  className={`pl-2 bg-gray-50 border border-neutral-60 text-neutral-100 text-sm  rounded-lg focus:ring-neborder-neutral-90 focus:border-neutral-90 block w-full px-4 py-[15px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                    valueEmailProfile ? "border-black" : "border-neutral-60"
                   } ${
                     errors.emailprofile
                       ? "border-[#E53A34] bg-[#FCF3F2]"
@@ -293,12 +296,12 @@ function Profile() {
                   <span className="text-danger-Main">*</span>
                 </div>
                 <input
-                  value={"BAGAS"}
+                  value={valueUsernameProfile}
                   {...register("usernameprofile", {
                     type: "text",
                     required: true,
                   })}
-                  className={`pl-2 bg-gray-50 border border-neutral-60 text-[#1F2933] sm:text-sm rounded-lg focus:ring-neborder-neutral-90 focus:border-neutral-90 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                  className={`pl-2 bg-gray-50 border border-neutral-60 text-neutral-100 text-sm  rounded-lg focus:ring-neborder-neutral-90 focus:border-neutral-90 block w-full px-4 py-[15px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
                     isFormProfileChangeFilled
                       ? "border-black"
                       : "border-neutral-60"
@@ -314,22 +317,28 @@ function Profile() {
                   <span className="text-neutral-100">No HP</span>{" "}
                   <span className="text-danger-Main">*</span>
                 </div>
-                <input
-                  value={87884044994}
-                  {...register("phoneprofile", {
-                    type: "number",
-                    required: true,
-                  })}
-                  className={`pl-2 bg-gray-50 border border-neutral-60 text-[#1F2933] sm:text-sm rounded-lg focus:ring-neborder-neutral-90 focus:border-neutral-90 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
-                    isFormProfileChangeFilled
-                      ? "border-black"
-                      : "border-neutral-60"
-                  } ${
-                    errors.phoneprofile
-                      ? "border-[#E53A34] bg-[#FCF3F2]"
-                      : "border-neutral-60"
-                  }`}
-                />
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-sm text-neutral-80">
+                    +62
+                  </span>
+                  <input
+                    type="number"
+                    value={valuePhoneProfile}
+                    {...register("phoneprofile", {
+                      type: "number",
+                      required: true,
+                    })}
+                    className={`pl-12 bg-gray-50 border border-neutral-60 text-neutral-100 text-sm rounded-lg focus:ring-neborder-neutral-90 focus:border-neutral-90 block w-full px-4 py-[15px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                      isFormProfileChangeFilled
+                        ? "border-black"
+                        : "border-neutral-60"
+                    } ${
+                      errors.phoneprofile
+                        ? "border-[#E53A34] bg-[#FCF3F2]"
+                        : "border-neutral-60"
+                    }`}
+                  />
+                </div>
               </Stack>
               <PhotoCameraForm
                 savedImage={savedImage}
@@ -339,7 +348,7 @@ function Profile() {
               />
               <Button
                 variant="outlined"
-                className="text-sm leading-[18px]"
+                className="text-sm leading-[18px] mb-20"
                 sx={{
                   textTransform: "capitalize",
                   borderRadius: "6px",
@@ -387,8 +396,8 @@ function Profile() {
             }}
             className={`${
               isFormProfileChangeFilled
-                ? "bg-themeColor text-neutral-10"
-                : "bg-neutral-30 text-neutral-70"
+                ? "bg-themeColor focus:bg-themeColor hover:bg-themeColor text-neutral-10"
+                : "bg-neutral-30 focus:bg-neutral-30 hover:bg-neutral-30 text-neutral-70"
             }`}
           >
             Simpan

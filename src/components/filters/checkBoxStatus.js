@@ -38,6 +38,7 @@ const CheckboxStatus = ({
                 label={name}
                 labelPlacement="start"
                 sx={{
+                  height: needDivider ? "38px" : "30px",
                   width: "100%",
                   display: "flex",
                   justifyContent: "space-between",

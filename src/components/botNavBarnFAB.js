@@ -57,7 +57,7 @@ function BotNavBarNFab({
           <div className="relative w-full z-50 -mr-1">
             {" "}
             <svg
-              className="w-full h-14 z-50  drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]"
+              className="w-full h-14 z-50  drop-shadow-[0_35px_35px_rgba(0,0,0,0.85)]"
               viewBox="0 0 118 56"
               preserveAspectRatio="none"
               fill="none"
@@ -84,7 +84,7 @@ function BotNavBarNFab({
           <div className="z-[60]">
             {" "}
             <svg
-              className="w-32 h-14 drop-shadow-[0_-3px_10px_ 0px_rgba(0,0,0,0.3)] z-10"
+              className="w-32 h-14 drop-shadow-[0_-3px_10px_ 0px_rgba(0,0,0,0.85)] z-10"
               viewBox="0 0 128 56"
               preserveAspectRatio="xMidYMid meet"
               fill="none"
@@ -116,7 +116,7 @@ function BotNavBarNFab({
           </div>
           <div className="relative w-full z-50 -ml-1">
             <svg
-              className="flex-grow w-full h-14 z-50 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]"
+              className="flex-grow w-full h-14 z-50 drop-shadow-[0_35px_35px_rgba(0,0,0,0.85)]"
               viewBox="0 0 121 56"
               preserveAspectRatio="none"
               fill="none"

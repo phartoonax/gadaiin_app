@@ -37,10 +37,46 @@ const theme = createTheme({
         root: { paddingRight: "1px" },
       },
     },
+    MuiInputBase: {
+      styleOverrides: {
+        input: {
+          "&.Mui-focused": {
+            outline: "none",
+          },
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "transparent",
+          },
+          "&:focus-within": {
+            outline: "none",
+          },
+          "&:focus": {
+            outline: "none",
+          },
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
           textTransform: "capitalize",
+          "&:focus-within": {
+            outline: "none",
+          },
+        },
+      },
+    },
+    MuiFormControlLabel: {
+      styleOverrides: {
+        label: {
+          fontSize: "14px",
+          lineHeight: "18px",
+          fontWeight: "400",
         },
       },
     },
@@ -49,10 +85,10 @@ const theme = createTheme({
     fontFamily: ["Inter", "Sans-serif"].join(","),
   },
   palette: {
-    themeColor: "#1EBF65",
-    lelang: "#B267FF",
-    lelangSurface: "#FAF5FF",
     primary: {
+      themeColor: "#1EBF65",
+      lelang: "#B267FF",
+      lelangSurface: "#FAF5FF",
       hover: "#00A9D1",
       main: "#03B8E8",
       border: "#E3F9FF",
@@ -78,7 +114,7 @@ const theme = createTheme({
       pressed: "#9D1515",
     },
     success: {
-      main: "#28A138",
+      main: "#1EBF65",
       hover: "#238B31",
       pressed: "#1D7228",
       border: "#C3DFC7",
