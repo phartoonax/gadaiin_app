@@ -21,6 +21,26 @@ const ItemListHistory = (data) => {
   const dats = data.data;
   const status = dats.status;
 
+  const needBunga = (status) => {
+    if (
+      status === "Aktif" ||
+      status === "Gadai" ||
+      status === "perpanjang" ||
+      status === "Batal"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const isPeriode = (status) => {
+    if (status === "Aktif" || status === "Gadai" || status === "perpanjang") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const formatDate = (dateString) => {
     // Convert the date string to an array of day, month, and year
     const [day, month, year] = dateString.split("/");
@@ -46,6 +66,7 @@ const ItemListHistory = (data) => {
         boxShadow: "0px 4px 6px 0px #00000008",
         background: getCardGradientColor(status),
       }}
+      className="font-inter"
     >
       <CardContent
         sx={{
@@ -73,10 +94,17 @@ const ItemListHistory = (data) => {
                 icon={"heroicons-solid:cash"}
                 className={`${getTextIconColor(status)} } mr-1`}
               />
-              <p className="font-normal text-base">
-                {dats.bunga} | Rp
-                {pemisahRibuan(hitungBunga(dats.harga, dats.bunga))}
-              </p>
+              {needBunga(status) ? (
+                <p className="font-normal text-base text-neutral-100">
+                  {dats.bunga} | Rp
+                  {pemisahRibuan(hitungBunga(dats.harga, dats.bunga))}
+                </p>
+              ) : (
+                <p className="font-normal text-sm  text-neutral-100">
+                  Rp
+                  {pemisahRibuan(hitungBunga(dats.harga, dats.bunga))}
+                </p>
+              )}
             </Stack>
             <Chip
               variant="outlined"
@@ -92,20 +120,36 @@ const ItemListHistory = (data) => {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Stack
-              className="py-1.5 text-neutral-100 text-base leading-[18px] font-normal items-center"
-              direction="row"
-            >
-              <Icon
-                fontSize={"16px"}
-                icon={"heroicons-outline:clock"}
-                className={`${getTextIconColor(status)} } mr-1`}
-              ></Icon>
-              <p className="font-normal text-base">
-                {dats.periodegadai} ({formatDate(dats.tglkredit)} -{" "}
-                {formatDate(dats.tgljatuhtempo)})
-              </p>
-            </Stack>
+            {isPeriode(status) ? (
+              <Stack
+                className="py-1.5 text-neutral-100 text-base leading-[18px] font-normal items-center"
+                direction="row"
+              >
+                <Icon
+                  fontSize={"16px"}
+                  icon={"uil:clock"}
+                  className={`${getTextIconColor(status)} } mr-1`}
+                ></Icon>
+                <p className="font-normal text-sm  text-neutral-100">
+                  {dats.periodegadai} ({formatDate(dats.tglkredit)} -{" "}
+                  {formatDate(dats.tgljatuhtempo)})
+                </p>
+              </Stack>
+            ) : (
+              <Stack
+                className="py-1.5 text-neutral-100 text-base leading-[18px] font-normal items-center"
+                direction="row"
+              >
+                <Icon
+                  fontSize={"16px"}
+                  icon={"uil:calendar-alt"}
+                  className={`${getTextIconColor(status)} } mr-1`}
+                ></Icon>
+                <p className="font-normal text-sm  text-neutral-100">
+                  {formatDate(dats.tglkredit)}
+                </p>
+              </Stack>
+            )}
           </Stack>
         </Stack>
       </CardContent>

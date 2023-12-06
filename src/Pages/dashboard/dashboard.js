@@ -91,7 +91,7 @@ const Dashboard = (props) => {
         </div>
       </div>
       <div className="w-full">
-        <Divider variant="middle"></Divider>
+        <Divider variant="fullWidth"></Divider>
       </div>
     </div>
   ));

@@ -200,7 +200,7 @@ const Login = (props) => {
                           required: true,
                         })}
                         onChange={handleResetPassChange}
-                        className={`pl-2 bg-gray-50 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                        className={`pl-2 bg-neutral-10 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
                           isResetPassFilled ? "border-black" : "border-gray-300"
                         }`}
                       />
@@ -276,7 +276,7 @@ const Login = (props) => {
                             type: "email",
                             required: true,
                           })}
-                          className={`pl-2 bg-gray-50 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                          className={`pl-2 bg-neutral-10 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
                             isFormRegisterFilled
                               ? "border-black"
                               : "border-gray-300"
@@ -304,7 +304,7 @@ const Login = (props) => {
                             required: true,
                           })}
                           type={isPasswordRegisterVisible ? "text" : "password"}
-                          className={`pl-2 bg-gray-50 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                          className={`pl-2 bg-neutral-10 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
                             isFormRegisterFilled
                               ? "border-black"
                               : "border-gray-300"
@@ -345,7 +345,7 @@ const Login = (props) => {
                               ? "text"
                               : "password"
                           }
-                          className={`pl-2 bg-gray-50 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                          className={`pl-2 bg-neutral-10 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
                             isFormRegisterFilled
                               ? "border-black"
                               : "border-gray-300"
@@ -429,7 +429,7 @@ const Login = (props) => {
                           type: "email",
                           required: true,
                         })}
-                        className={`pl-10 bg-gray-50 border ${
+                        className={`pl-10 bg-neutral-10 border ${
                           errors1.email ? "border-red-500" : "border-gray-300"
                         }  text-[#101C42] placeholder:text-[#6E7377] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0`}
                       />
@@ -460,7 +460,7 @@ const Login = (props) => {
                         placeholder="Password"
                         autoComplete="current-password"
                         type={isPasswordVisible ? "text" : "password"}
-                        className="px-10 bg-gray-50 border border-gray-300 text-[#101C42] placeholder:text-[#6E7377]  sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
+                        className="px-10 bg-neutral-10 border border-gray-300 text-[#101C42] placeholder:text-[#6E7377]  sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
                       />
 
                       <button
