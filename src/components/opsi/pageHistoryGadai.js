@@ -34,7 +34,7 @@ function PageHistoryGadai() {
           </p>
         </toolbar>
       </AppBar>
-      <div className="bg-white px-4 pt-4 w-full max-w-md rounded-md">
+      <div className="bg-white px-4  w-full mt-[15px]">
         <Stack
           divider={
             <Divider

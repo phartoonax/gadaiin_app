@@ -42,7 +42,7 @@ const Dashboard = (props) => {
   const datatemp = [
     {
       id: "GDJBD231020",
-      name: "Badrun Sukmawati",
+      name: "Badrun Sukmawati Badrun Sukmawati Badrun Sukmawati",
       value: "Rp 126.000.000",
       transaksi: "14/08/2023 16:40",
       logo: "uil:balance-scale",
@@ -56,7 +56,7 @@ const Dashboard = (props) => {
     },
     {
       id: "GDJBD231020",
-      name: "Badrun Sukmawati",
+      name: "Badrun Sukmawati Badrun Sukmawati",
       value: "Rp 52.150.000",
       transaksi: "14/08/2023 16:40",
       logo: "uil:money-withdraw",
@@ -64,7 +64,7 @@ const Dashboard = (props) => {
   ];
   const renderdat = datatemp.map((data) => (
     <div className="w-full px-2.5 flex flex-col justify-start items-start font-inter overflow-ellipsis">
-      <div className="w-full py-1 flex items-center justify-center gap-2">
+      <div className="w-full py-1 flex items-center justify-between gap-2">
         <div className="relative flex-shrink-0">
           <Icon
             className="text-success-Main"
@@ -72,9 +72,12 @@ const Dashboard = (props) => {
             style={{ fontSize: "14px" }}
           />
         </div>
-        <div className="flex flex-col items-start gap-0.5 flex-auto overflow-hidden ">
+        <div
+          //  className="flex flex-col items-start gap-0.5 flex-auto flex-shrink "
+          className="flex flex-col items-start gap-0.5 flex-auto overflow-hidden"
+        >
           <div className="text-xxs tracking-wide font-normal">{data.id}</div>
-          <div className="text-xs leading-[14px] tracking-wide font-semibold max-h-5 overflow-ellipsis overflow-hidden whitespace-nowrap max-w-lg ssm:max-w-[108px] smm:max-w-[158px]">
+          <div className="text-xs leading-[14px] tracking-wide font-semibold max-h-5 truncate max-w-full">
             {data.name}
           </div>
         </div>
@@ -146,7 +149,7 @@ const Dashboard = (props) => {
             </div>
           </div>
           <div className="bg-neutral-20 w-full h-[78vh] absolute bottom-0 rounded-t-[30px] flex-col items-center justify-center ">
-            <div className="max-w-screen-2xl bg-neutral-10 h-16 mx-[35px] mt-[-32px] rounded-[10px] shadow-lg overflow-auto">
+            <div className="max-w-screen-2xl bg-neutral-10 h-16 mx-[35px] mt-[-32px] rounded-[10px] shadow-lg overflow-auto hide-scrollbar">
               {renderdat}
             </div>
             <div className="bg-neutral-10 m-4 max-w-screen-2xl pt-3 rounded-md flex items-center justify-center text-[14px] leading-[18px] font-bold">
@@ -186,8 +189,7 @@ const Dashboard = (props) => {
               )}
             </div>
           </div>
-          <div className="fixed inset-x-0 bottom-0 w-full bg-transparent flex z-50">
-            {" "}
+          <div className="fixed inset-x-0 -bottom-0.5 w-full bg-transparent flex z-50">
             <div className="relative w-full z-50 -mr-1">
               {" "}
               <svg
@@ -211,7 +213,6 @@ const Dashboard = (props) => {
               </div>
             </div>
             <div className="z-[60]">
-              {" "}
               <svg
                 className="w-32 h-14 drop-shadow-[0_-3px_10px_ 0px_rgba(0,0,0,0.3)] z-10"
                 viewBox="0 0 128 56"

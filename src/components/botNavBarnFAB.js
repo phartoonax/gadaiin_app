@@ -52,7 +52,7 @@ function BotNavBarNFab({
   return (
     <>
       <div>
-        <div className="fixed inset-x-0 bottom-0 w-full bg-transparent flex z-50">
+        <div className="fixed inset-x-0 -bottom-0.5 w-full bg-transparent flex z-50">
           {" "}
           <div className="relative w-full z-50 -mr-1">
             {" "}

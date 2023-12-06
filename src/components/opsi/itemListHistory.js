@@ -40,6 +40,7 @@ const ItemListHistory = (data) => {
     <Card
       sx={{
         mt: "16px",
+        borderRadius: "6px",
         borderWidth: "1px",
         borderColor: "neutral.30",
         boxShadow: "0px 4px 6px 0px #00000008",
@@ -48,15 +49,15 @@ const ItemListHistory = (data) => {
     >
       <CardContent
         sx={{
-          pt: "12px",
+          py: "4px",
           px: "16px",
           display: "block",
 
-          "&:last-child": { paddingBottom: "16px" },
+          "&:last-child": { paddingBottom: "4px" },
           height: "max-content",
         }}
       >
-        <Stack direction="column" spacing={1}>
+        <Stack direction="column" spacing={0}>
           <Stack
             direction="row"
             spacing={2}
@@ -64,7 +65,7 @@ const ItemListHistory = (data) => {
             alignItems="center"
           >
             <Stack
-              className="py-1 text-neutral-100 text-base leading-[18px] font-normal items-center"
+              className="py-1.5 text-neutral-100 text-base leading-[18px] font-normal items-center"
               direction="row"
             >
               <Icon
@@ -79,10 +80,10 @@ const ItemListHistory = (data) => {
             </Stack>
             <Chip
               variant="outlined"
-              className={`border h-[25px] px-3.5 ${getTextIconColor(
+              className={`border h-[18px] font-normal text-xs leading-[14px] px-1 ${getTextIconColor(
                 status
               )} ${getChipsBorderColor(status)} ${getDateColor(status)}`}
-              label={status}
+              label={status === "Aktif" ? "Gadai" : status}
             ></Chip>
           </Stack>
           <Stack
@@ -92,7 +93,7 @@ const ItemListHistory = (data) => {
             alignItems="center"
           >
             <Stack
-              className="py-1 text-neutral-100 text-base leading-[18px] font-normal items-center"
+              className="py-1.5 text-neutral-100 text-base leading-[18px] font-normal items-center"
               direction="row"
             >
               <Icon
