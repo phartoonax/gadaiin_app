@@ -276,7 +276,7 @@ function Profile() {
                 </div>
                 <input
                   value={valueEmailProfile}
-                  onChange={setValueEmailProfile}
+                  onChange={(e) => setValueEmailProfile(e.target.value)}
                   {...register("emailprofile", {
                     type: "email",
                     required: true,
@@ -297,6 +297,7 @@ function Profile() {
                 </div>
                 <input
                   value={valueUsernameProfile}
+                  onChange={setValueUsernameProfile}
                   {...register("usernameprofile", {
                     type: "text",
                     required: true,
@@ -324,6 +325,7 @@ function Profile() {
                   <input
                     type="number"
                     value={valuePhoneProfile}
+                    onChange={setValuePhoneProfile}
                     {...register("phoneprofile", {
                       type: "number",
                       required: true,

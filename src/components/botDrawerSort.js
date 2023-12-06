@@ -84,7 +84,7 @@ const BotDrawerSort = ({ openDrawer, setOpenDrawer, onSortSubmit }) => {
           </div>
           <Button
             variant="text"
-            className="text-success-Main font-semibold text-sm leading-[14px]"
+            className="text-success-Main font-semibold text-xs leading-[14px]"
             onClick={resetFields}
             sx={{ paddingRight: "0px", justifyContent: "flex-end" }}
           >

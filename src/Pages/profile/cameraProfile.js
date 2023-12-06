@@ -32,7 +32,7 @@ const CameraProfile = () => {
     if (isCameraAccessGranted) {
       navigator.mediaDevices
         .getUserMedia({
-          video: { facingMode, flashMode: isFlashOn ? "torch" : "auto" },
+          video: { facingMode, torch: isFlashOn },
         })
         .then((mediaStream) => {
           stream = mediaStream;
