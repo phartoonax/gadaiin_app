@@ -75,7 +75,7 @@ const BotDrawerFilter = ({
    */
   const handleChangeDisplaySlider = (index, newValue) => {
     // Remove thousand separators and convert to number
-    const numberValue = Number(newValue.replace(/\./g, ""));
+    const numberValue = Number(newValue.replace(/\D/g, ""));
     const displayValue = pemisahRibuan(numberValue);
     // Update valueSlider
     const newValueSlider = [...valueSlider];
