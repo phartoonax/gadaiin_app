@@ -110,7 +110,7 @@ const BotDrawerFilter = ({
    * @description Fungsi untuk menangani klik pada chip.
    * @param {string} value Nilai dari chip yang diklik
    */
-  const handleChipClick = (value) => {
+  const handleChipClick = React.useCallback((value) => {
     setPeriodeGadaiValues((prevValues) => {
       if (prevValues.includes(value)) {
         return prevValues.filter((v) => v !== value);
@@ -118,7 +118,7 @@ const BotDrawerFilter = ({
         return [...prevValues, value];
       }
     });
-  };
+  }, []);
 
   const defaultChipValues = [
     "7 Hari",

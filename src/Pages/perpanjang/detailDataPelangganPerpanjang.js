@@ -42,7 +42,7 @@ function DetailDataPelangganPerpanjang() {
             />
             <IsiFormDefault
               enabled={false}
-              title={"Alamat Sesuai KTP"}
+              title={"Alamat Tinggal"}
               isRequired={true}
               valueForm={dataPelanggan?.address || undefined}
             />

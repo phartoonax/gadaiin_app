@@ -7,13 +7,13 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 /**
- * @description Komponen ini menampilkan formulir Gadai. Formulir ini mencakup bidang seperti Nama, Telpon, Alamat Sesuai KTP, No. Identitas Sesuai KTP, dan Foto Pelanggan. Ada juga indikator kemajuan dan tombol 'Selanjutnya' di bagian bawah.
+ * @description Komponen ini menampilkan formulir Gadai. Formulir ini mencakup bidang seperti Nama, Telpon, Alamat Tinggal, No. Identitas Sesuai KTP, dan Foto Pelanggan. Ada juga indikator kemajuan dan tombol 'Selanjutnya' di bagian bawah.
  * @author Henry
  * @date 27/11/2023 - 3:10:08 PM
  * @return {*} Komponen React yang menampilkan formulir Gadai.
  */
 const FormDataPelangganGadai = () => {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const dataPelanggan = location?.state?.dataPelanggan || null;
   console.log("idPelanggan", dataPelanggan);
@@ -42,14 +42,21 @@ const FormDataPelangganGadai = () => {
   }, [dataPelanggan, savedImage]);
 
   const handleSetCustomerData = () => {
-    navigation("/form/gadai/transaksi");
+    navigate("/form/gadai/transaksi");
   };
+
+  function handlerBackButton() {
+    navigate("/list/gadai", { replace: true });
+  }
 
   return (
     <>
       <div className="w-screen h-screen flex flex-col justify-start items-start  font-inter">
         <div className="fixed top-0 z-50">
-          <AppBarPlain placeholder={"Tambah Gadai"} />
+          <AppBarPlain
+            handlerBackButton={handlerBackButton}
+            placeholder={"Tambah Gadai"}
+          />
           <ProgressIndicatorForm />
         </div>
         <div className="bg-white px-4 pt-[112px] w-full pb-[82px]">
@@ -70,12 +77,12 @@ const FormDataPelangganGadai = () => {
             />
             <IsiFormDefault
               enabled={true}
-              title={"Alamat Sesuai KTP"}
+              title={"Alamat Tinggal"}
               isRequired={true}
               valueForm={dataPelanggan?.address || undefined}
             />
             <IsiFormDefault
-              enabled={true}
+              enabled={dataPelanggan?.noCustomer ? false : true}
               title={"No. Identitas Sesuai KTP"}
               isRequired={true}
               valueForm={dataPelanggan?.noCustomer || undefined}

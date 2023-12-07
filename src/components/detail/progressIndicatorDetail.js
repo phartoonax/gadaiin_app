@@ -12,9 +12,8 @@ import React from "react";
 const ProgressIndicatorDetail = ({ isFirstDone }) => {
   return (
     <>
-      {" "}
       <Stack
-        className="px-4 bg-neutral-20 w-screen py-3 h-[50px]"
+        className="px-4 bg-neutral-20 w-screen py-[11px] h-[50px]"
         spacing={2}
         direction="row"
         justifyContent="space-between"
@@ -22,7 +21,7 @@ const ProgressIndicatorDetail = ({ isFirstDone }) => {
       >
         <Stack spacing={"12px"} direction="row" alignItems="center">
           <div
-            className={`flex items-center  rounded-full border border-success-Main h-[26px] ${
+            className={`flex items-center text-sm rounded-full border border-success-Main h-[26px] ${
               isFirstDone
                 ? "pl-2 pr-[9px] text-success-Main"
                 : "text-neutral-10 pl-2 pr-[9px] bg-success-Main"
@@ -30,7 +29,7 @@ const ProgressIndicatorDetail = ({ isFirstDone }) => {
           >
             {1}
           </div>
-          <div className="text-base font-medium text-neutral-100">
+          <div className=" text-sm font-medium text-neutral-100">
             Data Pelanggan
           </div>
         </Stack>
@@ -41,16 +40,16 @@ const ProgressIndicatorDetail = ({ isFirstDone }) => {
         />
         <Stack spacing={"12px"} direction="row" alignItems="center">
           <div
-            className={` ${
+            className={`flex items-center ${
               !isFirstDone
                 ? "text-success-Main"
                 : "text-neutral-10 bg-success-Main"
-            } border-success-Main rounded-full border  pl-[7px] pr-2 h-[26px]`}
+            } border-success-Main rounded-full text-sm border  pl-[7px] pr-2 h-[26px]`}
           >
             2
           </div>
           <div
-            className={`text-base font-normal ${
+            className={` text-sm  font-normal ${
               isFirstDone ? "text-neutral-100 " : "text-neutral-100 "
             }`}
           >

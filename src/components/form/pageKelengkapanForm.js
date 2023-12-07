@@ -129,14 +129,20 @@ function PageKelengkapanForm({
             {isEnabled && selectedKelengkapanArray.length > 0 && (
               <Stack gap={"8px"}>
                 <div className="font-bold text-xs">Kelengkapan</div>
-                <Grid container direction="row" wrap="wrap" spacing={1}>
+                <Grid
+                  container
+                  direction="row"
+                  wrap="wrap"
+                  spacing={1}
+                  className="max-h-40 overflow-auto hide-scrollbar"
+                >
                   {selectedKelengkapanArray.map((value) => (
                     <Grid item key={value}>
                       <Chip
                         label={value}
                         variant={"solid"}
-                        color={"success"}
-                        className="font-normal text-sm px-0.5 py-[7px] max-w-[150px] overflow-ellipsis"
+                        className="font-normal text-sm px-0.5 py-[7px] max-w-[150px] overflow-ellipsis focus:bg-themeColor bg-themeColor
+                        text-neutral-10"
                         onClick={() => handleChipClick(value)}
                       />
                     </Grid>

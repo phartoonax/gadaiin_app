@@ -24,3 +24,8 @@ code {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+input:focus-visible {
+  outline: none;
+  border: 1px solid #101C42; /* Example: Add a black border when focused */
+}

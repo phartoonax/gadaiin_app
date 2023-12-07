@@ -59,6 +59,25 @@ const IsiFormDefault = ({
                 ))}
             </div>
           </div>
+        ) : title === "Telpon" ? (
+          <div className="relative">
+            <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-sm text-neutral-80">
+              +62
+            </span>
+            <input
+              type={type || "text"}
+              disabled={enabled ? !enabled : true}
+              value={valueForm}
+              onChange={valueFormChange ? valueFormChange : null}
+              className={` pl-12 w-full  rounded-md border p-[11px] ${
+                !enabled
+                  ? "border-neutral-40 bg-neutral-20 text-neutral-60"
+                  : valueForm !== "" && valueForm !== undefined
+                  ? "border-neutral-100"
+                  : "border-neutral-40"
+              } focus-visible:outline-black text-neutral-100 text-sm leading-[18px] py-4 font-medium`}
+            />
+          </div>
         ) : (
           <input
             type={type || "text"}

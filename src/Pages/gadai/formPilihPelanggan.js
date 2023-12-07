@@ -42,9 +42,19 @@ const FormPilihPelanggan = () => {
     setIsDialogOpenConfirmCustomerPass(true);
   }
 
+  function handlerBackButton() {
+    navigate("/form/gadai/pelanggan", { replace: true });
+  }
+
   function handlePickCustomer() {
     setIsDialogOpenConfirmCustomerPass(false);
-
+    const data =
+      "https://placehold.co/285x285?text=Hello+" +
+      pickedCustomer?.name.split(" ")[0];
+    localStorage.setItem(
+      "savedImage-" + pickedCustomer?.noCustomer,
+      JSON.stringify(data)
+    );
     navigate("/form/gadai/pelanggan", {
       state: { dataPelanggan: pickedCustomer },
       replace: true,
@@ -53,7 +63,10 @@ const FormPilihPelanggan = () => {
 
   return (
     <div className=" font-inter">
-      <AppBarWithSearch placeholder={"Cari Nama Pelanggan"} />
+      <AppBarWithSearch
+        handlerBackButton={handlerBackButton}
+        placeholder={"Cari Nama Pelanggan"}
+      />
 
       <Stack
         className="px-4 pt-4 w-full"
@@ -194,7 +207,10 @@ const FormPilihPelanggan = () => {
           <Button
             variant="outlined"
             className="text-success-Main border-success-Main hover:border-success-Main rounded-xl px-5 py-3.5 w-full text-base font-bold"
-            onClick={() => setIsDialogOpenConfirmCustomerPass(false)}
+            onClick={() => {
+              setIsDialogOpenConfirmCustomerPass(false);
+              setPickedCustomer(null);
+            }}
           >
             Kembali
           </Button>

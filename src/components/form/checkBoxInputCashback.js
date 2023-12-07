@@ -2,6 +2,19 @@ import { Checkbox, Stack } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 
+/**
+ * @description
+ * @author Henry
+ * @date 07/12/2023 - 9:01:15 AM
+ * @param {*} {
+ *   isChecked,
+ *   SetisChecked,
+ *   textboxValue,
+ *   setTextboxValue,
+ *   enabled,
+ * }
+ * @return {*} 
+ */
 const CheckBoxInputCashback = ({
   isChecked,
   SetisChecked,

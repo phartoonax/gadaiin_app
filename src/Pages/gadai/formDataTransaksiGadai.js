@@ -39,7 +39,7 @@ const FormDataTransaksiGadai = () => {
     localStorage.getItem("valueBunga") || ""
   );
   const [valueNilaiPinjaman, setValueNilaiPinjaman] = useState(
-    localStorage.getItem("valueNilaiPinjaman") || undefined
+    localStorage.getItem("valueNilaiPinjaman") || null
   );
   const [valueNominal, setValueNominal] = useState();
   const [ValueSavedImage, setValueSavedImage] = useState(
@@ -129,7 +129,7 @@ const FormDataTransaksiGadai = () => {
   };
 
   const handleNilaiPinjamanChange = (newValue) => {
-    const numberValue = Number(newValue.replace(/\./g, ""));
+    const numberValue = Number(newValue.replace(/\D/g, ""));
     const displayValue = pemisahRibuan(numberValue);
     setValueNilaiPinjaman(displayValue);
   };
