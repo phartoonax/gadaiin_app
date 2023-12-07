@@ -121,7 +121,7 @@ function Profile() {
                         type={
                           isCurrentPasswordChangeVisible ? "text" : "password"
                         }
-                        className={`pl-2 bg-gray-50 border border-gray-300 text-neutral-100 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                        className={`input-border pl-2 bg-gray-50 border border-gray-300 text-neutral-100 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
                           isFormPasswordChangeFilled
                             ? "border-black"
                             : "border-gray-300"
@@ -166,7 +166,7 @@ function Profile() {
                           required: true,
                         })}
                         type={isNewPasswordChangeVisible ? "text" : "password"}
-                        className={`pl-2 bg-gray-50 border border-gray-300 text-neutral-100 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                        className={`input-border pl-2 bg-gray-50 border border-gray-300 text-neutral-100 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
                           isFormPasswordChangeFilled
                             ? "border-black"
                             : "border-gray-300"
@@ -207,7 +207,7 @@ function Profile() {
                             ? "text"
                             : "password"
                         }
-                        className={`pl-2 bg-gray-50 border border-gray-300 text-neutral-100 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                        className={`input-border pl-2 bg-gray-50 border border-gray-300 text-neutral-100 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
                           isFormPasswordChangeFilled
                             ? "border-black"
                             : "border-gray-300"
@@ -281,7 +281,7 @@ function Profile() {
                     type: "email",
                     required: true,
                   })}
-                  className={`pl-2 bg-gray-50 border border-neutral-60 text-neutral-100 text-sm  rounded-lg focus:ring-neborder-neutral-90 focus:border-neutral-90 block w-full px-4 py-[15px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                  className={`input-border pl-2 bg-gray-50 border border-neutral-60 text-neutral-100 text-sm  rounded-lg focus:ring-neborder-neutral-90 focus:border-neutral-90 block w-full px-4 py-[15px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
                     valueEmailProfile ? "border-black" : "border-neutral-60"
                   } ${
                     errors.emailprofile
@@ -302,7 +302,7 @@ function Profile() {
                     type: "text",
                     required: true,
                   })}
-                  className={`pl-2 bg-gray-50 border border-neutral-60 text-neutral-100 text-sm  rounded-lg focus:ring-neborder-neutral-90 focus:border-neutral-90 block w-full px-4 py-[15px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                  className={`input-border pl-2 bg-gray-50 border border-neutral-60 text-neutral-100 text-sm  rounded-lg focus:ring-neborder-neutral-90 focus:border-neutral-90 block w-full px-4 py-[15px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
                     isFormProfileChangeFilled
                       ? "border-black"
                       : "border-neutral-60"
@@ -330,7 +330,7 @@ function Profile() {
                       type: "number",
                       required: true,
                     })}
-                    className={`pl-12 bg-gray-50 border border-neutral-60 text-neutral-100 text-sm rounded-lg focus:ring-neborder-neutral-90 focus:border-neutral-90 block w-full px-4 py-[15px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                    className={`input-border pl-12 bg-gray-50 border border-neutral-60 text-neutral-100 text-sm rounded-lg focus:ring-neborder-neutral-90 focus:border-neutral-90 block w-full px-4 py-[15px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
                       isFormProfileChangeFilled
                         ? "border-black"
                         : "border-neutral-60"

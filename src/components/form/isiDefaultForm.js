@@ -46,7 +46,7 @@ const IsiFormDefault = ({
               type={"text"}
               value={valueForm}
               disabled={enabled ? !enabled : true}
-              className={`font-inter text-sm w-full rounded-md border p-4 py-[15px]  focus:outline-none pr-10 ${
+              className={`input-border font-inter text-sm w-full rounded-md border p-4 py-[15px]  focus:outline-none pr-10 ${
                 valueForm !== "" && valueForm !== undefined && enabled
                   ? "border-neutral-100"
                   : "border-neutral-40"
@@ -69,13 +69,13 @@ const IsiFormDefault = ({
               disabled={enabled ? !enabled : true}
               value={valueForm}
               onChange={valueFormChange ? valueFormChange : null}
-              className={`font-inter pl-12 w-full  rounded-md border p-4 ${
+              className={`input-border font-inter pl-12 w-full  rounded-md border p-4 ${
                 !enabled
                   ? "border-neutral-40 bg-neutral-20 text-neutral-60"
                   : valueForm !== "" && valueForm !== undefined
                   ? "border-neutral-100"
                   : "border-neutral-40"
-              } focus-visible:outline-black text-neutral-100 text-sm leading-[18px] py-[15px] font-medium`}
+              } focus-visible:outline-black text-neutral-100 text-sm leading-[18px] py-[15px]`}
             />
           </div>
         ) : (
@@ -84,13 +84,13 @@ const IsiFormDefault = ({
             disabled={enabled ? !enabled : true}
             value={valueForm}
             onChange={valueFormChange ? valueFormChange : null}
-            className={`font-inter w-full  rounded-md border p-4 ${
+            className={`input-border font-inter w-full  rounded-md border p-4 ${
               !enabled
                 ? "border-neutral-40 bg-neutral-20 text-neutral-60"
                 : valueForm !== "" && valueForm !== undefined
                 ? "border-neutral-100"
                 : "border-neutral-40"
-            } focus:outline-black text-neutral-100 text-sm leading-[18px] py-[15px]  font-medium`}
+            } focus:outline-black text-neutral-100 text-sm leading-[18px] py-[15px] `}
           />
         )}
       </Stack>

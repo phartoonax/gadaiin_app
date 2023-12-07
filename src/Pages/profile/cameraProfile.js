@@ -32,13 +32,12 @@ const CameraProfile = () => {
     if (isCameraAccessGranted) {
       navigator.mediaDevices
         .getUserMedia({
-          video: { facingMode, advanced: [{ torch: isFlashOn }] },
+          video: { facingMode },
         })
         .then((mediaStream) => {
           stream = mediaStream;
           if (videoRef.current) {
             videoRef.current.srcObject = stream;
-            videoRef.current.rotate = 90;
             videoRef.current.onloadedmetadata = () => {
               videoRef.current.play();
               const squareSize =
@@ -62,8 +61,23 @@ const CameraProfile = () => {
         });
       }
     };
-  }, [facingMode, isCameraAccessGranted, isFlashOn]);
+  }, [facingMode, isCameraAccessGranted]);
 
+  // useEffect hook for applying the torch constraint
+  useEffect(() => {
+    if (videoRef.current && videoRef.current.srcObject) {
+      const videoTrack = videoRef.current.srcObject.getVideoTracks()[0];
+      if (facingMode === "environment" && videoTrack.getCapabilities().torch) {
+        videoTrack
+          .applyConstraints({
+            advanced: [{ torch: isFlashOn }],
+          })
+          .catch((error) => {
+            console.error("Error applying torch constraint", error);
+          });
+      }
+    }
+  }, [isFlashOn, facingMode]);
   const handleCapture = () => {
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");

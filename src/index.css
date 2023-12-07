@@ -7,6 +7,7 @@ body {
   font-family: Inter, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior: none;
 }
 
 code {
@@ -25,5 +26,10 @@ code {
 
 input:focus-visible {
   outline: none;
-  border: 1px solid #101C42; /* Example: Add a black border when focused */
+  border: 0px;
+}
+
+input.input-border:focus-visible {
+  outline: none;
+  border: 1px solid #101C42;
 }

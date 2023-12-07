@@ -36,12 +36,7 @@ const IsiTglAwalAkhirDurasiForm = ({
   const tglKredit =
     tglKreditLama === undefined
       ? new Date()
-      : new Date(
-          ...tglKreditLama
-            .split("/")
-            .reverse()
-            .map((val, i) => val - (i === 1 ? 1 : 0))
-        );
+      : new Date(Date.parse(tglKreditLama));
   const [durasiGadai, setDurasiGadai] = useState(
     durasiGadaiLama === undefined
       ? arrayTemplateDurasiGadai[0].durasi
@@ -99,7 +94,7 @@ const IsiTglAwalAkhirDurasiForm = ({
 
   return (
     <>
-      <Stack gap="20px">
+      <Stack gap="20px" className="font-inter">
         <Stack gap="8px">
           <Stack direction="row" gap={"2px"}>
             <span className="text-neutral-100 text-base font-bold">
@@ -114,7 +109,7 @@ const IsiTglAwalAkhirDurasiForm = ({
               month: "short",
               year: "numeric",
             })}
-            className={`w-full  rounded-md border p-[11px] border-neutral-40 bg-neutral-20 text-neutral-60 focus:outline-none`}
+            className={`w-full  rounded-md border px-[15px] py-4 border-neutral-40 bg-neutral-20 text-neutral-60 text-sm focus:outline-none`}
           />
         </Stack>
         <Stack gap="8px">
@@ -129,7 +124,7 @@ const IsiTglAwalAkhirDurasiForm = ({
             className="relative"
             onClick={() => isEnabled && handleDurasiGadaiClick()}
           >
-            <div className="w-full h-[48px] rounded-md border p-[11px] border-neutral-40 bg-neutral-10 text-neutral-60 focus:outline-none">
+            <div className="w-full h-[48px] flex items-center rounded-md border px-[15px] py-4 border-neutral-40 bg-neutral-10 text-neutral-100 text-sm focus:outline-none">
               {durasiGadai}
             </div>
             <Icon
@@ -149,7 +144,7 @@ const IsiTglAwalAkhirDurasiForm = ({
             type={"text"}
             disabled={true}
             value={tglJatuhTempo}
-            className={`w-full  rounded-md border p-[11px] border-neutral-40 bg-neutral-20 text-neutral-60 focus:outline-none`}
+            className={`w-full  rounded-md border px-[15px] py-4 border-neutral-40 bg-neutral-20 text-neutral-60 text-sm focus:outline-none`}
           />
         </Stack>
       </Stack>

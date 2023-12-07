@@ -34,30 +34,46 @@ function AppBarWithSearch({
     setIsSearchFilled(false);
   };
 
+  const [isInputFocused, setIsInputFocused] = useState(false);
+
+  const handleInputFocus = () => {
+    setIsInputFocused(true);
+  };
+
+  const handleInputBlur = () => {
+    setIsInputFocused(false);
+  };
+
   const renderSearchBar = () => (
     <div
       className={`flex items-center bg-white rounded-lg px-1 pl-2 pr-4 h-12 w-full flex-grow border ${
-        isSearchFilled ? "border-neutral-100" : "border-neutral-60"
+        isInputFocused
+          ? "border-neutral-100"
+          : isSearchFilled
+          ? "border-neutral-100"
+          : "border-neutral-60"
       }`}
     >
       <Icon
         className="text-themeColor mr-2"
         icon="uil:search"
-        style={{ fontSize: "24px" }}
+        style={{ fontSize: "24px", flex: "none" }}
       />
       <input
-        className="bg-transparent text-neutral-100 outline-none w-full focus:w-full transition-width duration-200 ease-in-out placeholder:text-neutral-80"
+        className="bg-transparent text-neutral-100 outline-none w-full focus:w-full  placeholder:text-neutral-80 focus:border-none"
         type="text"
         placeholder={placeholder}
         value={searchInput}
         onChange={handleSearchInputChange}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
       />
       {isSearchFilled && (
         <IconButton onClick={handleClearSearch}>
           <Icon
-            className="text-neutral-60"
-            icon="carbon:close"
-            style={{ fontSize: "20px" }}
+            className="text-themeColor"
+            icon="heroicons:x-circle"
+            style={{ fontSize: "24px" }}
           />
         </IconButton>
       )}

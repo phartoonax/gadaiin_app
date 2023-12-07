@@ -206,12 +206,19 @@ function generateRandomDataGadai(designatedFor, jumlah) {
      * @param {Date} date - Tanggal yang akan diformat.
      * @returns {string} Tanggal dalam format "dd/mm/yyyy".
      */
-    function formatDate(date) {
-      const day = String(date.getDate()).padStart(2, "0");
-      const month = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
-      const year = date.getFullYear();
+    // function formatDate(date) {
+    //   const day = String(date.getDate()).padStart(2, "0");
+    //   const month = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
+    //   const year = date.getFullYear();
 
-      return day + "/" + month + "/" + year;
+    //   return day + "/" + month + "/" + year;
+    // }
+    function formatDate(date) {
+      return date.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      });
     }
 
     const getStatuses = () => {

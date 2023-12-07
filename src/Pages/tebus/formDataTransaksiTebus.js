@@ -78,6 +78,8 @@ function FormDataTransaksiTebus() {
     }
   }, [dataPelanggan?.harga, valueBunga, valueImageBuktiPembayaran]);
 
+  const [valueAlasanCashback, setValueAlasanCashback] = useState();
+
   return (
     <>
       <div className="w-screen h-screen flex flex-col justify-start items-start  font-inter">
@@ -136,7 +138,10 @@ function FormDataTransaksiTebus() {
               valueForm={dataPelanggan?.harga || undefined}
             />
             <IsiBungaForm valueBunga={valueBunga} valueNominal={valueNominal} />
-            <CheckBoxInputCashback />
+            <CheckBoxInputCashback
+              textboxValue={valueAlasanCashback}
+              setTextboxValue={setValueAlasanCashback}
+            />
             <PhotoCameraForm
               title={"Bukti Pembayaran Non Tunai"}
               savedImage={valueImageBuktiPembayaran}

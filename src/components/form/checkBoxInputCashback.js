@@ -7,16 +7,14 @@ import { useState } from "react";
  * @author Henry
  * @date 07/12/2023 - 9:01:15 AM
  * @param {*} {
- *   isChecked,
  *   SetisChecked,
  *   textboxValue,
  *   setTextboxValue,
  *   enabled,
  * }
- * @return {*} 
+ * @return {*}
  */
 const CheckBoxInputCashback = ({
-  isChecked,
   SetisChecked,
   textboxValue,
   setTextboxValue,
@@ -34,7 +32,13 @@ const CheckBoxInputCashback = ({
         <Checkbox
           checked={isCheckBoxChecked}
           disabled={!isEnabled}
-          onChange={(e) => setIsCheckBoxChecked(!isCheckBoxChecked)}
+          onChange={(e) => {
+            const newCheckedState = !isCheckBoxChecked;
+            setIsCheckBoxChecked(newCheckedState);
+            if (!newCheckedState) {
+              setTextboxValue("");
+            }
+          }}
           sx={{
             paddingY: "0px",
             "&.Mui-checked": {

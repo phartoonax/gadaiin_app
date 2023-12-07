@@ -208,36 +208,45 @@ const BotDrawerFilter = ({
         swipeAreaWidth={"38px"}
         disableSwipeToOpen={true}
       >
-        <div className="w-full pt-[5px] pb-[12px] flex-col justify-center items-center gap-[10px] inline-flex">
-          <div className="w-[38px] h-[2px] bg-green-600 rounded-md"></div>
-        </div>
-        <Stack className="px-4" direction="row" justifyContent="space-between">
-          <IconButton
-            onClick={() => setOpenDrawer(false)}
-            style={{
-              width: "62px",
-              justifyContent: "flex-start",
-              paddingLeft: "0px",
-            }}
-          >
-            <Icon
-              icon={"feather:x"}
-              className="text-success-Main"
-              style={{ fontSize: "24px" }}
-            ></Icon>
-          </IconButton>
-          <div className="text-base leading-[18px] font-bold text-success-Main text-center items-center flex ">
-            Filter
+        <div
+          className="bg-neutral-10"
+          style={{ position: "sticky", top: -1, zIndex: 9999 }}
+        >
+          <div className="w-full pt-[5px] pb-[12px] flex-col justify-center items-center gap-[10px] inline-flex">
+            <div className="w-[38px] h-[2px] bg-green-600 rounded-md"></div>
           </div>
-          <Button
-            variant="text"
-            className="text-success-Main font-semibold text-xs leading-[14px]"
-            onClick={resetFields}
-            sx={{ paddingRight: "0px", justifyContent: "flex-end" }}
+          <Stack
+            className="px-4"
+            direction="row"
+            justifyContent="space-between"
           >
-            Reset
-          </Button>
-        </Stack>
+            <IconButton
+              onClick={() => setOpenDrawer(false)}
+              style={{
+                width: "62px",
+                justifyContent: "flex-start",
+                paddingLeft: "0px",
+              }}
+            >
+              <Icon
+                icon={"feather:x"}
+                className="text-success-Main"
+                style={{ fontSize: "24px" }}
+              ></Icon>
+            </IconButton>
+            <div className="text-base leading-[18px] font-bold text-success-Main text-center items-center flex ">
+              Filter
+            </div>
+            <Button
+              variant="text"
+              className="text-success-Main font-semibold text-xs leading-[14px]"
+              onClick={resetFields}
+              sx={{ paddingRight: "0px", justifyContent: "flex-end" }}
+            >
+              Reset
+            </Button>
+          </Stack>
+        </div>
         <Stack
           direction="column"
           divider={<Divider variant="fullWidth" sx={{ marginY: "10px" }} />}

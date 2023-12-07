@@ -19,7 +19,7 @@ import {
  * @author Henry
  * @date 27/11/2023 - 11:30:00 PM
  */
-const ListItem = ({ data,usedIn }) => {
+const ListItem = ({ data, usedIn }) => {
   const status = data.status;
 
   const [isDrawerOpsiOpen, setDrawerOpsirOpen] = useState(false);
@@ -33,10 +33,10 @@ const ListItem = ({ data,usedIn }) => {
       <div className="px-4 py-2">
         {" "}
         <Stack direction="row" spacing={2} justifyContent="space-between">
-          <p className="font-bold">{data.idtransaksi}</p>
+          <p className="font-bold text-base">{data.idtransaksi}</p>
           <Stack direction="row">
-            <div className="rounded-lg bg-neutral-100 text-neutral-10 px-2.5 ">
-              {data.lokasi}{" "}
+            <div className="rounded-lg bg-neutral-100 text-neutral-10 px-2.5 text-sm font-bold flex items-center">
+              {data.lokasi}
             </div>
             <IconButton
               sx={{ padding: 0, marginRight: "-8px" }}
@@ -51,15 +51,17 @@ const ListItem = ({ data,usedIn }) => {
           </Stack>
         </Stack>
         <Divider className="pt-2"></Divider>
-        <p className="text-ellipsis font-bold text-base leading-[18px] overflow-hidden whitespace-nowrap py-[4px]">
-          {data.nama}
-        </p>
-        <p
-          className="text-sm font-semibold text-neutral-60 leading-[14px] pt-[3px]
+        <Stack gap={"0px"} className="pb-1">
+          <p className="text-ellipsis font-bold text-sm leading-[18px] overflow-hidden whitespace-nowrap py-[3px]">
+            {data.nama}
+          </p>
+          <p
+            className="text-xs font-semibold text-neutral-60 leading-[14px] pt-[3px]
 pb-1"
-        >
-          +{data.notelp}
-        </p>
+          >
+            +{data.notelp}
+          </p>
+        </Stack>
         <Stack
           className="py-1 text-neutral-100 text-base leading-[18px] font-normal"
           direction="row"
@@ -69,7 +71,7 @@ pb-1"
             icon={"heroicons-solid:shopping-bag"}
             className={`${getTextIconColor(status)} mr-1`}
           ></Icon>
-          <p>{data.barang}</p>
+          <p className="text-sm font-normal">{data.barang}</p>
         </Stack>
         <Stack
           className="py-1 text-neutral-100 text-base leading-[18px] font-normal"
@@ -80,7 +82,7 @@ pb-1"
             icon={"heroicons-solid:cash"}
             className={`${getTextIconColor(status)} } mr-1`}
           />
-          <p>
+          <p className="text-sm font-normal">
             Rp{pemisahRibuan(data.harga)} ({data.bunga} | Rp
             {pemisahRibuan(hitungBunga(data.harga, data.bunga))})
           </p>
@@ -94,7 +96,7 @@ pb-1"
             icon={"heroicons-outline:clock"}
             className={`${getTextIconColor(status)} } mr-1`}
           ></Icon>
-          <p>{data.periodegadai}</p>
+          <p className="text-sm font-normal">{data.periodegadai}</p>
         </Stack>
       </div>
       <Stack
@@ -114,21 +116,21 @@ pb-1"
         alignItems="center"
         className={getDateColor(status)}
       >
-        <Stack direction="column" className=" pl-4 pt-1 pb-2 text-start">
-          <div className="text-sm leading-5 font-normal text-neutral-70">
-            Tgl Kredit
-          </div>
-          <div className="text-base leading-[18px] font-bold">
-            {data.tglkredit}
-          </div>
+        <Stack
+          direction="column"
+          gap={"4px"}
+          className=" pl-4 pt-1 pb-2 text-start"
+        >
+          <div className="text-xs font-normal text-neutral-70">Tgl Kredit</div>
+          <div className="text-sm font-bold">{data.tglkredit}</div>
         </Stack>
-        <Stack direction="column" className=" pr-4 pt-1 pb-2 text-end">
-          <div className="text-sm leading-5 font-normal text-neutral-70">
-            Jatuh Tempo
-          </div>
-          <div className="text-base leading-[18px] font-bold">
-            {data.tgljatuhtempo}
-          </div>
+        <Stack
+          direction="column"
+          gap={"4px"}
+          className=" pr-4 pt-1 pb-2 text-end"
+        >
+          <div className="text-xs font-normal text-neutral-70">Jatuh Tempo</div>
+          <div className="text-sm font-bold">{data.tgljatuhtempo}</div>
         </Stack>
       </Stack>
       <BotDrawerOpsi

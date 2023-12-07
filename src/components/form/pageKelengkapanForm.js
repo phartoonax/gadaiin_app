@@ -42,10 +42,11 @@ function PageKelengkapanForm({
   );
 
   const [searchInput, setSearchInput] = useState("");
-  const [isSearchFilled, setIsSearchFilled] = useState(false);
+  const [isAddFilled, setIsAddFilled] = useState(false);
+  const [isAddFocused, setIsAddFocused] = useState(false);
   const handleSearchInputChange = (event) => {
     setSearchInput(event.target.value);
-    setIsSearchFilled(event.target.value !== "");
+    setIsAddFilled(event.target.value !== "");
   };
 
   const [selectedKelengkapanArray, setSelectedKelengkapanArray] = useState(
@@ -96,7 +97,7 @@ function PageKelengkapanForm({
       }
     });
     setSearchInput("");
-    setIsSearchFilled(false);
+    setIsAddFilled(false);
     setSelectedKelengkapanArray((prevValues) => {
       if (prevValues.includes(searchInput)) {
         return prevValues.filter((v) => v !== searchInput);
@@ -162,24 +163,30 @@ function PageKelengkapanForm({
               <Stack gap="8px" width={"100%"}>
                 <div
                   className={`flex items-center bg-white rounded-lg p-4 h-12 w-full flex-grow border ${
-                    isSearchFilled ? "border-neutral-100" : "border-neutral-60"
+                    isAddFocused
+                      ? "border-neutral-100"
+                      : isAddFilled
+                      ? "border-neutral-100"
+                      : "border-neutral-60"
                   }`}
                 >
                   <input
-                    className="bg-transparent text-neutral-100 outline-none w-full focus:w-full transition-width duration-200 ease-in-out"
+                    className="bg-transparent text-neutral-100 outline-none w-full focus:w-full pr-3"
                     type="text"
                     placeholder={"tambah Kelengkapan"}
                     value={searchInput}
                     onChange={handleSearchInputChange}
+                    onFocus={() => setIsAddFocused(true)}
+                    onBlur={() => setIsAddFocused(false)}
                   />
                   <IconButton
                     className={`rounded-lg   p-1 ${
-                      isSearchFilled
+                      isAddFilled
                         ? "bg-success-Main focus:bg-success-Main"
                         : "focus:bg-neutral-60 bg-neutral-60"
                     }`}
                     onClick={() =>
-                      isSearchFilled ? handleAddKelengkapan() : null
+                      isAddFilled ? handleAddKelengkapan() : null
                     }
                   >
                     <Icon

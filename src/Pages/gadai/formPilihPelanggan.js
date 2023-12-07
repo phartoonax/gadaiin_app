@@ -136,7 +136,7 @@ const FormPilihPelanggan = () => {
             className="text-neutral-10 bg-success-Main rounded-xl px-5 py-3.5 w-full text-base font-bold hover:bg-success-Main"
             onClick={handlePickCustomer}
           >
-            Pilih
+            Simpan
           </Button>
           <Button
             variant="outlined"
