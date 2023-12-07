@@ -405,7 +405,7 @@ const Login = (props) => {
             </div>
           )}
           <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:pt-10">
-            <img className="w-64 auto mb-4" src={logo} alt="logo"></img>
+            <img className="w-64 auto mb-[52px]" src={logo} alt="logo"></img>
             <div className="w-full bg-white rounded-lg  md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
               <div className="px-2 py-3.5 space-y-4 md:space-y-2.5">
                 <form
@@ -510,7 +510,7 @@ const Login = (props) => {
                 </form>
               </div>
             </div>{" "}
-            <p className="text-sm font-normal  text-[#1EBF65] dark:text-gray-400 p-14">
+            <p className="text-sm font-normal  text-[#1EBF65] dark:text-gray-400 py-14">
               {"Tidak Punya Akun? "}
               <button
                 onClick={(event) => {
@@ -523,13 +523,15 @@ const Login = (props) => {
                 {" Daftar Disini"}
               </button>
             </p>
-            <button
+            {/**
+           <button
               type="submit"
               className="bg-[#36393f] text-[#7B8794] w-full sm:max-w-md  hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-[700] rounded-lg text-base px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               onClick={handleTestButtonClick}
             >
               {"test"}
             </button>
+           */}
             {signatureData && (
               <div className="my-5 border-gray-700 bordert-solid border-2 rounded">
                 <img src={signatureData} alt="signature" id="signature" />
