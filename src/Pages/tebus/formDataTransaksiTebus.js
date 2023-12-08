@@ -226,7 +226,7 @@ function FormDataTransaksiTebus() {
             sx: { borderRadius: "8px", marginX: "16px", padding: "16px" },
           }}
         >
-          <DialogContentText className="text-center text-base font-semibold leading-[18px] text-neutral-100 ">
+          <DialogContentText className="text-center text-sm font-semibold leading-[18px] text-neutral-100 ">
             Apakah anda yakin data gadai yang anda masukkan sudah benar?
           </DialogContentText>
           <Stack

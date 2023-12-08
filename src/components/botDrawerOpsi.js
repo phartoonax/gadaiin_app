@@ -1,5 +1,13 @@
 import { Icon } from "@iconify/react";
-import { Divider, IconButton, Stack, SwipeableDrawer } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogContentText,
+  Divider,
+  IconButton,
+  Stack,
+  SwipeableDrawer,
+} from "@mui/material";
 import React from "react";
 import ButtonOpsiItem from "./opsi/buttonOpsiItem";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +25,8 @@ import { pemisahRibuan } from "../functionGlobal";
  */
 const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data, usedIn }) => {
   const Navigate = useNavigate();
+
+  const [isDialogBatalOpen, setIsDialogBatalOpen] = React.useState(false);
 
   const tempPerpanjangData = {
     name: data.nama,
@@ -82,6 +92,7 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data, usedIn }) => {
 
   const handleBatalClick = () => {
     console.log("Clicked option: Batal");
+    setIsDialogBatalOpen(true);
   };
 
   const handleHistoryClick = () => {
@@ -164,6 +175,49 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data, usedIn }) => {
           ))}
         </Stack>
       </SwipeableDrawer>
+      <Dialog
+        className="rounded-lg w-full "
+        open={isDialogBatalOpen}
+        onClose={() => setIsDialogBatalOpen(false)}
+        PaperProps={{
+          sx: {
+            borderRadius: "8px",
+            marginX: "16px",
+            paddingY: "16px",
+            paddingX: "12px",
+          },
+        }}
+      >
+        <DialogContentText className="text-center text-sm font-semibold leading-[18px] text-neutral-100 ">
+          Apakah anda yakin data gadai yang anda masukkan sudah benar?
+        </DialogContentText>
+        <Stack
+          direction="row"
+          gap={"10px"}
+          className="w-full justify-between pt-4"
+        >
+          <Button
+            variant="contained"
+            className="text-neutral-10 bg-success-Main rounded-xl px-5 py-3.5 w-full text-base font-bold hover:bg-success-Main"
+            onClick={() => {
+              setIsDialogBatalOpen(false);
+              setOpenDrawer(false);
+            }}
+          >
+            Ya
+          </Button>
+          <Button
+            variant="outlined"
+            className="text-success-Main border-success-Main hover:border-success-Main rounded-xl px-5 py-3.5 w-full text-base font-bold"
+            onClick={() => {
+              setIsDialogBatalOpen(false);
+              setOpenDrawer(false);
+            }}
+          >
+            Tidak
+          </Button>
+        </Stack>
+      </Dialog>
     </>
   );
 };

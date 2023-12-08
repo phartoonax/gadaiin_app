@@ -32,6 +32,8 @@ const FormPilihPelanggan = () => {
   //Untuk buka Customer Baru
   const [isDialogOpenNewCustomerPass, setIsDialogOpenNewCustomerPass] =
     useState(false);
+  const [isInputNewCustomerFilled, setIsInputNewCustomerFilled] =
+    useState(false);
 
   //Untuk buka konfirmasi pemilihan Customer
   const [isDialogOpenConfirmCustomerPass, setIsDialogOpenConfirmCustomerPass] =
@@ -124,6 +126,10 @@ const FormPilihPelanggan = () => {
           title="Nama Pelanggan"
           isRequired={false}
           enabled={true}
+          valueFormChange={(e) => {
+            const inputValue = e.target.value;
+            setIsInputNewCustomerFilled(inputValue.trim() !== "");
+          }}
         />
 
         <Stack
@@ -133,7 +139,13 @@ const FormPilihPelanggan = () => {
         >
           <Button
             variant="contained"
-            className="text-neutral-10 bg-success-Main rounded-xl px-5 py-3.5 w-full text-base font-bold hover:bg-success-Main"
+            disableElevation={isInputNewCustomerFilled ? false : true}
+            disabled={isInputNewCustomerFilled ? false : true}
+            className={` ${
+              isInputNewCustomerFilled
+                ? "bg-success-Main text-neutral-10"
+                : "bg-neutral-30 text-neutral-70"
+            } rounded-xl px-5 py-3.5 w-full text-base font-bold hover:bg-success-Main`}
             onClick={handlePickCustomer}
           >
             Simpan
@@ -141,7 +153,10 @@ const FormPilihPelanggan = () => {
           <Button
             variant="outlined"
             className="text-success-Main border-success-Main hover:border-success-Main rounded-xl px-5 py-3.5 w-full text-base font-bold"
-            onClick={() => setIsDialogOpenNewCustomerPass(false)}
+            onClick={() => {
+              setIsDialogOpenNewCustomerPass(false);
+              setIsInputNewCustomerFilled(false);
+            }}
           >
             Kembali
           </Button>
@@ -156,7 +171,7 @@ const FormPilihPelanggan = () => {
           sx: { borderRadius: "8px", marginX: "16px", padding: "16px" },
         }}
       >
-        <DialogContentText className="text-center text-base font-semibold leading-[18px] text-neutral-100 pb-4">
+        <DialogContentText className="text-center text-sm font-semibold leading-[18px] text-neutral-100 pb-4">
           Apakah anda yakin ingin memilih data untuk pelanggan di bawah ini ?
         </DialogContentText>
         <DialogContent className="border border-neutral-100 rounded-lg overflow-hidden p-0 h-[120px] font-sans">
