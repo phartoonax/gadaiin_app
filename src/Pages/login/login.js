@@ -14,25 +14,40 @@ import SignatureCanvas from "react-signature-canvas";
 
 import { useForm } from "react-hook-form";
 import { browserName, BrowserTypes } from "react-device-detect";
+import { Snackbar } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 console.log(`${browserName} 
 ${BrowserTypes}`);
 
 library.add(faEnvelope, faKey, faEye, faEyeSlash);
 
 const Login = (props) => {
+  const navigate = useNavigate();
   const {
-    register: register1,
-    handleSubmit: handleSubmit1,
-    setValue: setValue1,
-    formState: { errors: errors1 },
+    register: registerLogin,
+    handleSubmit: handleSubmitLogin,
+    // setValue: setValueLogin,
+
+    formState: { errors: errorsLogin },
   } = useForm();
 
   const {
-    register: register2,
-    handleSubmit: handleSubmit2,
-    reset: reset2,
-    // setValue: setValue2,
-    formState: { errors: errors2 },
+    register: registerRegister,
+    handleSubmit: handleSubmitRegister,
+    reset: resetRegister,
+    // setValue: setValueRegister,
+    formState: { errors: errorsRegister },
+    watch: watchRegister,
+  } = useForm();
+
+  const password = watchRegister("passwordregister");
+
+  const {
+    register: registerForgetPass,
+    handleSubmit: handleSubmitForgetPass,
+    reset: resetForgetPass,
+    setValue: setValueForgetPass,
+    formState: { errors: errorsForgetPass },
   } = useForm();
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -54,10 +69,16 @@ const Login = (props) => {
     isConfirmPasswordRegisterVisible,
     setIsConfirmPasswordRegisterVisible,
   ] = useState(false);
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
+  const [isRegisterSuccess, setIsRegisterSuccess] = useState(false); //! set register used in api
 
-  const onSubmit = (data) => {
+  const onSubmitRegister = (data) => {
     console.log(data);
-    window.location.href = "/main";
+    toggleDialogRegister();
+  };
+  const onSubmitLogin = (data) => {
+    console.log(data);
+    navigate("/main");
   };
 
   function togglePasswordVisibility() {
@@ -71,16 +92,20 @@ const Login = (props) => {
   }
 
   function toggleDialogResetPass() {
-    setValue1("emailresetsandi", "");
+    setValueForgetPass("emailresetsandi", "");
     setIsResetPassFilled(false);
+    resetForgetPass();
     setIsDialogOpenResetPass((prevState) => !prevState);
     console.log(isDialogOpenResetPass);
   }
   function toggleDialogRegister() {
-    reset2();
+    resetRegister();
     setIsFormRegisterFilled(false);
     setIsDialogOpenRegister((prevState) => !prevState);
     console.log(isDialogOpenRegister);
+    if (isDialogOpenRegister === true) {
+      setIsSnackbarOpen(true);
+    }
   }
 
   function handleFormChange(event) {
@@ -97,9 +122,10 @@ const Login = (props) => {
       event.target.form[3].value !== "";
     setIsFormRegisterFilled(isFormRegisterFilled);
   }
-  function handleTestButtonClick() {
-    setIsSignaturePadVisible(true);
-  }
+  // function handleTestButtonClick() {
+  //   setIsSignaturePadVisible(true);
+  // }
+
   function handleSaveButtonClick() {
     const signatureData = signatureRef.current.toDataURL();
     setSignatureData(signatureData);
@@ -195,22 +221,35 @@ const Login = (props) => {
                     <div>
                       <input
                         placeholder=""
-                        {...register1("emailresetsandi", {
+                        {...registerForgetPass("emailresetsandi", {
                           type: "email",
                           required: true,
+                          pattern: {
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                            message: "Format email salah",
+                          },
                         })}
                         onChange={handleResetPassChange}
-                        className={`pl-2 bg-neutral-10 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
-                          isResetPassFilled ? "border-black" : "border-gray-300"
+                        className={`input-border pl-2  border text-[#1F2933] sm:text-sm rounded-lg block w-full p-2.5  ${
+                          errorsForgetPass.emailresetsandi
+                            ? "border-danger-Main bg-danger-Surface"
+                            : isResetPassFilled
+                            ? "border-black bg-neutral-10"
+                            : "border-gray-300 bg-neutral-10"
                         }`}
                       />
+                      {errorsForgetPass.emailresetsandi && (
+                        <p className="text-danger-Main text-xs leading-[14px] pt-2">
+                          {errorsForgetPass.emailresetsandi.message}
+                        </p>
+                      )}
                     </div>
                   </div>
 
                   <div className="px-3 pb-4 pt-2 sm:px-6 flex gap-2.5 justify-between">
                     <button
                       disabled={!isResetPassFilled}
-                      onClick={toggleDialogResetPass}
+                      onClick={handleSubmitForgetPass(toggleDialogResetPass)}
                       type="button"
                       className={` font-bold py-3.5 px-5 w-2/4 rounded-xl ${
                         isResetPassFilled
@@ -272,26 +311,29 @@ const Login = (props) => {
                       <div>
                         <input
                           placeholder=""
-                          {...register2("emailregister", {
+                          {...registerRegister("emailregister", {
                             type: "email",
                             required: true,
+                            pattern: {
+                              value:
+                                /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                              message: "Format email salah",
+                            },
                           })}
-                          className={`pl-2 bg-neutral-10 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
-                            isFormRegisterFilled
-                              ? "border-black"
-                              : "border-gray-300"
-                          } ${
-                            errors2.emailregister
-                              ? "border-[#E53A34] bg-[#FCF3F2]"
-                              : "border-gray-300"
+                          className={`input-border pl-2  border text-[#1F2933] sm:text-sm rounded-lg block w-full p-2.5  ${
+                            errorsRegister.emailregister
+                              ? "border-danger-Main bg-danger-Surface"
+                              : isResetPassFilled
+                              ? "border-black bg-neutral-10"
+                              : "border-gray-300 bg-neutral-10"
                           }`}
                         />
+                        {errorsRegister.emailregister && (
+                          <p className="text-danger-Main text-xs leading-[14px] pt-2">
+                            {errorsRegister.emailregister.message}
+                          </p>
+                        )}
                       </div>
-                      {errors2.emailregister && (
-                        <span className="text-[#E53A34] text-xs leading-[14px] font-normal">
-                          Format email salah
-                        </span>
-                      )}
                     </div>
                     <div className="px-3 py-2 justify-between">
                       <div className="text-start pb-2">
@@ -300,11 +342,11 @@ const Login = (props) => {
                       <div className="relative w-full">
                         <input
                           placeholder=""
-                          {...register2("passwordregister", {
+                          {...registerRegister("passwordregister", {
                             required: true,
                           })}
                           type={isPasswordRegisterVisible ? "text" : "password"}
-                          className={`pl-2 bg-neutral-10 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                          className={`input-border pl-2 bg-neutral-10 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
                             isFormRegisterFilled
                               ? "border-black"
                               : "border-gray-300"
@@ -337,24 +379,26 @@ const Login = (props) => {
                       <div className="relative w-full">
                         <input
                           placeholder=""
-                          {...register2("konfirmasipasswordregister", {
+                          {...registerRegister("konfirmasipasswordregister", {
                             required: true,
+                            validate: (value) =>
+                              value === password ||
+                              "Konfirmasi password tidak sama dengan password",
                           })}
                           type={
                             isConfirmPasswordRegisterVisible
                               ? "text"
                               : "password"
                           }
-                          className={`pl-2 bg-neutral-10 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
-                            isFormRegisterFilled
-                              ? "border-black"
-                              : "border-gray-300"
-                          }  ${
-                            errors2.konfirmasipasswordregister
-                              ? "border-[#E53A34] bg-[#FCF3F2]"
-                              : "border-gray-300"
+                          className={`input-border pl-2  border text-[#1F2933] sm:text-sm rounded-lg block w-full p-2.5  ${
+                            errorsRegister.konfirmasipasswordregister
+                              ? "border-danger-Main bg-danger-Surface"
+                              : isResetPassFilled
+                              ? "border-black bg-neutral-10"
+                              : "border-gray-300 bg-neutral-10"
                           }`}
                         />
+
                         <div>
                           <button
                             type="button"
@@ -372,17 +416,17 @@ const Login = (props) => {
                           </button>
                         </div>
                       </div>
-                      {errors2.konfirmasipasswordregister && (
-                        <span className="text-[#E53A34] text-xs leading-[14px] font-normal">
-                          Konfirmasi password tidak sama dengan password
-                        </span>
+                      {errorsRegister.konfirmasipasswordregister && (
+                        <p className="text-danger-Main text-xs leading-[14px] pt-2">
+                          {errorsRegister.konfirmasipasswordregister.message}
+                        </p>
                       )}
                     </div>
                   </form>
                   <div className="px-3 pb-4 pt-2 sm:px-6 flex gap-2.5 justify-between">
                     <button
                       disabled={!isFormRegisterFilled}
-                      onClick={handleSubmit2(onSubmit)}
+                      onClick={handleSubmitRegister(onSubmitRegister)}
                       type="button"
                       className={` font-bold py-3.5 px-5 w-2/4 rounded-xl ${
                         isFormRegisterFilled
@@ -425,16 +469,18 @@ const Login = (props) => {
                       <input
                         placeholder="Email"
                         autoComplete="email"
-                        {...register1("email", {
+                        {...registerLogin("email", {
                           type: "email",
                           required: true,
                         })}
-                        className={`pl-10 bg-neutral-10 border ${
-                          errors1.email ? "border-red-500" : "border-gray-300"
+                        className={`input-border pl-10 bg-neutral-10 border ${
+                          errorsLogin.email
+                            ? "border-red-500"
+                            : "border-gray-300"
                         }  text-[#101C42] placeholder:text-[#6E7377] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0`}
                       />
                     </div>{" "}
-                    {errors1.email && (
+                    {errorsLogin.email && (
                       <span className="pt-2 text-left w-auto text-xs leading-[14px] text-red-500 block">
                         Format email salah
                       </span>
@@ -452,7 +498,7 @@ const Login = (props) => {
                       </div>
 
                       <input
-                        {...register1("password", {
+                        {...registerLogin("password", {
                           required: true,
 
                           maxLength: 20,
@@ -460,7 +506,7 @@ const Login = (props) => {
                         placeholder="Password"
                         autoComplete="current-password"
                         type={isPasswordVisible ? "text" : "password"}
-                        className="px-10 bg-neutral-10 border border-gray-300 text-[#101C42] placeholder:text-[#6E7377]  sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
+                        className="input-border px-10 bg-neutral-10 border border-gray-300 text-[#101C42] placeholder:text-[#6E7377]  sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
                       />
 
                       <button
@@ -478,7 +524,7 @@ const Login = (props) => {
                         />
                       </button>
                     </div>{" "}
-                    {errors1.password && (
+                    {errorsLogin.password && (
                       <span className="pt-2 text-left w-auto text-xs leading-[14px] text-red-500 block">
                         Password harus terisi
                       </span>
@@ -490,8 +536,8 @@ const Login = (props) => {
                       isFormFilled
                         ? "bg-green-500 hover:bg-green-600 text-white"
                         : "bg-[#F2F3F5] text-[#7B8794]"
-                    } w-full  hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-[700] rounded-lg text-base px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800`}
-                    onClick={handleSubmit1(onSubmit)}
+                    } w-full  hover:bg-none focus:outline-none focus:ring-none font-[700] rounded-lg text-base px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800`}
+                    onClick={handleSubmitLogin(onSubmitLogin)}
                   >
                     Login
                   </button>
@@ -591,6 +637,22 @@ const Login = (props) => {
           </div>
         )}
       </div>
+      <Snackbar
+        open={isSnackbarOpen}
+        onClose={() => setIsSnackbarOpen(false)}
+        autoHideDuration={3000}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <div
+          className={`rounded-full border mt-12  text-sm px-[8px] py-[7px] ${
+            isRegisterSuccess
+              ? "bg-success-Surface border-success-Pressed text-success-Main"
+              : "bg-danger-Surface border-danger-Pressed text-danger-Main"
+          }`}
+        >
+          {isRegisterSuccess ? "Pendaftaran Berhasil" : "Pendaftaran Gagal"}
+        </div>
+      </Snackbar>
     </>
   );
 };

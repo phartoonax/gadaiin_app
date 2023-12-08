@@ -51,7 +51,7 @@ const FormPilihPelanggan = () => {
   function handlePickCustomer() {
     setIsDialogOpenConfirmCustomerPass(false);
     const data =
-      "https://placehold.co/285x285?text=Hello+" +
+      "https://placehold.co/290x290?text=Hello+" +
       pickedCustomer?.name.split(" ")[0];
     localStorage.setItem(
       "savedImage-" + pickedCustomer?.noCustomer,

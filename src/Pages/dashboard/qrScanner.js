@@ -1,6 +1,15 @@
 /* eslint-disable no-unused-vars */
 import { Icon } from "@iconify/react";
-import { AppBar, IconButton, TextField } from "@mui/material";
+import {
+  AppBar,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  IconButton,
+  Stack,
+  TextField,
+} from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { QrScanner } from "@yudiel/react-qr-scanner";
@@ -34,11 +43,13 @@ const QRScanner = () => {
 
   const navigate = useNavigate();
   const [scanResult, setScanResult] = useState("");
+  const [isTorchOn, setIsTorchOn] = useState(false);
   const [facingMode, setFacingMode] = useState("environment");
   const handleScan = (data) => {
     if (data) {
       setScanResult(data);
       console.log(data);
+      setIsDialogPerpanjangTebusOpen(true);
     }
   };
 
@@ -59,10 +70,21 @@ const QRScanner = () => {
     };
   };
 
+  const toggleTorch = () => {
+    setIsTorchOn((prevIsTorchOn) => !prevIsTorchOn);
+  };
+
+  const [isDialogPerpanjangTebusOpen, setIsDialogPerpanjangTebusOpen] =
+    useState(false);
+
   return (
     <>
       <div className="w-screen min-h-screen h-screen flex flex-col justify-start items-start font-inter overflow-auto">
-        <AppBarPlain iconButton={"feather:zap-off"} placeholder={"Scan QR"} />
+        <AppBarPlain
+          buttonOnClick={toggleTorch}
+          iconButton={"feather:zap-off"}
+          placeholder={"Scan QR"}
+        />
         <QrScanner
           onDecode={handleScan}
           containerStyle={{ width: "100vw", height: "80vh" }}
@@ -112,7 +134,7 @@ const QRScanner = () => {
           )}
           viewFinderBorder={80}
           onError={handleError}
-          constraints={{ facingMode }}
+          constraints={{ advanced: [{ torch: isTorchOn }], facingMode }}
         />
         <div
           className="absolute top-[20%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-white text-center text-sm font-normal leading-[18px]"
@@ -138,6 +160,58 @@ const QRScanner = () => {
           </IconButton>
         </div>
       </div>
+      <Dialog
+        className="rounded-lg w-full "
+        open={isDialogPerpanjangTebusOpen}
+        onClose={() => setIsDialogPerpanjangTebusOpen(false)}
+        PaperProps={{
+          sx: {
+            borderRadius: "8px",
+            marginX: "16px",
+            paddingY: "16px",
+            paddingX: "12px",
+          },
+        }}
+      >
+        <DialogContentText className="text-center text-sm font-normal leading-[18px] text-neutral-100 font-inter">
+          {" Apakah anda mau mengubah status data gadai dengan kode "}
+          <span className="font-bold">CX3705</span>
+          {" atas nama "}
+          <span className="font-bold">Budi Raharjo</span>
+          {" ke perpanjang atau tebus gadai?"}
+        </DialogContentText>
+        <Stack
+          direction="row"
+          gap={"10px"}
+          className="w-full justify-between pt-4"
+        >
+          <Button
+            variant="contained"
+            disableElevation={true}
+            className="text-neutral-10 bg-success-Main rounded-lg px-3.5 py-3.5 w-full text-base font-bold hover:bg-success-Main"
+            onClick={() => {
+              setIsDialogPerpanjangTebusOpen(false);
+            }}
+          >
+            <Stack direction={"row"} gap={"10px"} alignItems={"center"}>
+              <Icon fontSize={"20px"} icon={"uil:hourglass"} />
+              <div>Perpanjang</div>
+            </Stack>
+          </Button>
+          <Button
+            variant="outlined"
+            className="text-success-Main border-success-Main hover:border-success-Main rounded-lg px-3.5 py-3.5 w-full text-base font-bold"
+            onClick={() => {
+              setIsDialogPerpanjangTebusOpen(false);
+            }}
+          >
+            <Stack direction={"row"} gap={"10px"} alignItems={"center"}>
+              <Icon fontSize={"20px"} icon={"uil:money-withdraw"} />
+              <div>Tebus</div>
+            </Stack>
+          </Button>
+        </Stack>
+      </Dialog>
     </>
   );
 };

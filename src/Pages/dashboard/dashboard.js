@@ -62,6 +62,16 @@ const Dashboard = (props) => {
       logo: "uil:money-withdraw",
     },
   ];
+  //! WILL BE SET FROM API
+  const dataProfile = {
+    name: "Bagas",
+    email: "ADMIN@EMAIL.COM",
+    phone: 87884044994,
+    password: "123456",
+    picture: savedImage ?? "https://placehold.co/290x290?text=Hello+Bagas", //change this if want to simulate null image
+  };
+  localStorage.setItem("dataProfile", JSON.stringify(dataProfile));
+
   const renderdat = datatemp.map((data) => (
     <div className="w-full px-2.5 flex flex-col justify-start items-start font-inter overflow-ellipsis">
       <div className="w-full py-1 flex items-center justify-between gap-2">
@@ -115,12 +125,18 @@ const Dashboard = (props) => {
               className=" rounded-full overflow-hidden"
               style={{ boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)" }}
             >
-              {savedImage === !null ? (
+              {savedImage[0] !== null ? (
                 <img
-                  src={savedImage || DefaultPerson}
+                  src={savedImage[0] || DefaultPerson}
                   alt=""
                   className={`h-[50px] w-[50px] rounded-full`}
-                  onClick={() => navigate("/profile")}
+                  onClick={() => {
+                    navigate("/profile");
+                    localStorage.setItem(
+                      "savedImage-ProfileFromCamera",
+                      JSON.stringify(savedImage[0])
+                    );
+                  }}
                 />
               ) : (
                 <img

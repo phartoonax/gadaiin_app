@@ -1,22 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Paper, Stack } from "@mui/material";
-
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AppBarPlain from "../../components/appBarPlain";
 import PhotoCameraForm from "../../components/form/photoCameraForm";
 
 function Profile() {
+  const dataProfile = JSON.parse(localStorage.getItem("dataProfile"));
+  const navigate = useNavigate();
   const [isFormProfileChangeFilled, setIsFormProfileChangeFilled] =
     useState(false);
-  const [savedImage, setSavedImage] = useState(
-    JSON.parse(localStorage.getItem("savedImage-Profile")) || null
-  );
 
   const {
     register,
     handleSubmit,
-
     formState: { errors },
   } = useForm();
 
@@ -26,11 +24,18 @@ function Profile() {
     // reset: resetChangePass,
     setValue: setValueChangePass,
     formState: { errors: errorsChangePass },
+    getValues: getValuesChangePass,
   } = useForm();
 
-  const [valueEmailProfile, setValueEmailProfile] = useState("ADMIN@EMAIL.COM");
-  const [valueUsernameProfile, setValueUsernameProfile] = useState("BAGAS");
-  const [valuePhoneProfile, setValuePhoneProfile] = useState(87884044994);
+  const [valueEmailProfile, setValueEmailProfile] = useState(dataProfile.email);
+  const [valueUsernameProfile, setValueUsernameProfile] = useState(
+    dataProfile.name
+  );
+  const [valuePhoneProfile, setValuePhoneProfile] = useState(dataProfile.phone);
+  const [savedImage, setSavedImage] = useState(
+    JSON.parse(localStorage.getItem("savedImage-ProfileFromCamera")) ||
+      dataProfile.picture[0]
+  );
 
   const [isDialogOpenChangePass, setIsDialogOpenChangePass] = useState(false);
   const [isFormPasswordChangeFilled, setIsFormPasswordChangeFilled] =
@@ -55,14 +60,55 @@ function Profile() {
     setIsConfrimNewPasswordChangeVisible((prevState) => !prevState);
   }
 
-  function handleFormProfileChangeChange(event) {
-    // Check if all forms are filled
+  function handleFormProfileChange(event) {
+    const { name, value } = event.target;
+
+    // Create a copy of the current state
+    let updatedState = {
+      email: valueEmailProfile,
+      username: valueUsernameProfile,
+      phone: valuePhoneProfile,
+      picture: savedImage,
+    };
+
+    // Update the copy based on the input changes
+    switch (name) {
+      case "usernameprofile":
+        updatedState.username = value;
+        break;
+      case "phoneprofile":
+        updatedState.phone = value;
+        break;
+      case "emailprofile":
+        updatedState.email = value;
+        break;
+      // Add more cases as needed
+      default:
+        break;
+    }
+
+    // Update the actual state
+    setValueEmailProfile(updatedState.email);
+    setValueUsernameProfile(updatedState.username);
+    setValuePhoneProfile(updatedState.phone);
+
+    // Check if all forms are filled using the updated copy
     const isFormProfileChangeFilled =
-      event.target.form[0].value !== "" &&
-      event.target.form[1].value !== "" &&
-      event.target.form[2].value !== "";
+      updatedState.email !== dataProfile.email ||
+      updatedState.username !== dataProfile.name ||
+      updatedState.phone !== dataProfile.phone;
     setIsFormProfileChangeFilled(isFormProfileChangeFilled);
   }
+  useEffect(() => {
+    const isFormProfileChangeFilled =
+      valueEmailProfile !== dataProfile.email ||
+      valueUsernameProfile !== dataProfile.name ||
+      valuePhoneProfile !== dataProfile.phone ||
+      savedImage !== dataProfile.picture[0];
+
+    setIsFormProfileChangeFilled(isFormProfileChangeFilled);
+  }, [valueEmailProfile, valueUsernameProfile, valuePhoneProfile, savedImage]);
+
   function handleFormPasswordChangeChange(event) {
     // Check if all forms are filled
     const isFormPasswordChangeFilled =
@@ -71,6 +117,7 @@ function Profile() {
       event.target.form[4].value !== "";
     setIsFormPasswordChangeFilled(isFormPasswordChangeFilled);
   }
+
   function toggleDialogChangePass() {
     setValueChangePass("changeoldpassword", "");
     setValueChangePass("changenewpassword", "");
@@ -84,10 +131,24 @@ function Profile() {
     setIsDialogOpenChangePass((prevState) => !prevState);
   }
 
+  function handleBackButton() {
+    navigate(-1);
+    localStorage.removeItem("savedImage-ProfileFromCamera");
+  }
+
+  function handleSimpanButton() {
+    localStorage.setItem("savedImage-Profile", JSON.stringify(savedImage));
+    localStorage.removeItem("savedImage-ProfileFromCamera");
+    navigate(-1);
+  }
+
   return (
     <>
       <div className="w-screen h-screen flex flex-col justify-start items-start  font-inter">
-        <AppBarPlain placeholder={"Profile"} />
+        <AppBarPlain
+          handlerBackButton={handleBackButton}
+          placeholder={"Profile"}
+        />
         {isDialogOpenChangePass && (
           <div
             className="fixed z-10 inset-0 overflow-y-auto"
@@ -117,20 +178,22 @@ function Profile() {
                         placeholder=""
                         {...registerChangePass("changeoldpassword", {
                           required: true,
+                          validate: (value) =>
+                            value === dataProfile.password ||
+                            "Password lama tidak sesuai",
                         })}
                         type={
                           isCurrentPasswordChangeVisible ? "text" : "password"
                         }
-                        className={`input-border pl-2 bg-gray-50 border border-gray-300 text-neutral-100 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
-                          isFormPasswordChangeFilled
-                            ? "border-black"
-                            : "border-gray-300"
-                        } ${
+                        className={`input-border pl-2  border text-[#1F2933] sm:text-sm rounded-lg block w-full p-2.5  ${
                           errorsChangePass.changeoldpassword
-                            ? "border-[#E53A34] bg-[#FCF3F2]"
-                            : "border-gray-300"
+                            ? "border-danger-Main bg-danger-Surface"
+                            : isFormPasswordChangeFilled
+                            ? "border-black bg-neutral-10"
+                            : "border-gray-300 bg-neutral-10"
                         }`}
                       />
+
                       <div>
                         <button
                           type="button"
@@ -148,10 +211,9 @@ function Profile() {
                         </button>
                       </div>
                     </div>
-
                     {errorsChangePass.changeoldpassword && (
-                      <span className="text-[#E53A34] text-xs leading-[14px] font-normal">
-                        Format email salah
+                      <span className="text-danger-Main text-xs leading-[14px] pt-2">
+                        {errorsChangePass.changeoldpassword.message}
                       </span>
                     )}
                   </div>
@@ -166,10 +228,10 @@ function Profile() {
                           required: true,
                         })}
                         type={isNewPasswordChangeVisible ? "text" : "password"}
-                        className={`input-border pl-2 bg-gray-50 border border-gray-300 text-neutral-100 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                        className={`input-border pl-2  border text-[#1F2933] sm:text-sm rounded-lg block w-full p-2.5  ${
                           isFormPasswordChangeFilled
-                            ? "border-black"
-                            : "border-gray-300"
+                            ? "border-black bg-neutral-10"
+                            : "border-gray-300 bg-neutral-10"
                         }`}
                       />
                       <div>
@@ -201,20 +263,22 @@ function Profile() {
                         placeholder=""
                         {...registerChangePass("changeconfirmnewpassword", {
                           required: true,
+                          validate: (value) =>
+                            value ===
+                              getValuesChangePass("changenewpassword") ||
+                            "Password baru dan Konfirmasi Password baru tidak sesuai",
                         })}
                         type={
                           isConfrimNewPasswordChangeVisible
                             ? "text"
                             : "password"
                         }
-                        className={`input-border pl-2 bg-gray-50 border border-gray-300 text-neutral-100 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
-                          isFormPasswordChangeFilled
-                            ? "border-black"
-                            : "border-gray-300"
-                        }  ${
-                          errorsChangePass.konfirmasipasswordregister
-                            ? "border-[#E53A34] bg-[#FCF3F2]"
-                            : "border-gray-300"
+                        className={`input-border pl-2  border text-[#1F2933] sm:text-sm rounded-lg block w-full p-2.5  ${
+                          errorsChangePass.changeconfirmnewpassword
+                            ? "border-danger-Main bg-danger-Surface"
+                            : isFormPasswordChangeFilled
+                            ? "border-black bg-neutral-10"
+                            : "border-gray-300 bg-neutral-10"
                         }`}
                       />
                       <div>
@@ -234,9 +298,9 @@ function Profile() {
                         </button>
                       </div>
                     </div>
-                    {errorsChangePass.konfirmasipasswordregister && (
+                    {errorsChangePass.changeconfirmnewpassword && (
                       <span className="text-[#E53A34] text-xs leading-[14px] font-normal">
-                        Konfirmasi password tidak sama dengan password
+                        {errorsChangePass.changeconfirmnewpassword.message}
                       </span>
                     )}
                   </div>
@@ -244,7 +308,7 @@ function Profile() {
                 <div className="px-3 pb-4 pt-2 sm:px-6 flex gap-2.5 justify-between">
                   <button
                     disabled={!isFormPasswordChangeFilled}
-                    onClick={handleSubmitChangePass(null)}
+                    onClick={handleSubmitChangePass(toggleDialogChangePass)}
                     type="button"
                     className={` font-bold py-3.5 px-5 w-2/4 rounded-xl  ${
                       isFormPasswordChangeFilled
@@ -267,7 +331,7 @@ function Profile() {
           </div>
         )}
         <div className="px-4 pt-5 w-full">
-          <form onChange={handleFormProfileChangeChange}>
+          <form onChange={handleFormProfileChange}>
             <Stack gap={"20px"}>
               <Stack gap={"8px"}>
                 <div className="text-base font-bold">
@@ -275,7 +339,8 @@ function Profile() {
                   <span className="text-danger-Main">*</span>
                 </div>
                 <input
-                  value={valueEmailProfile}
+                  name="emailprofile"
+                  defaultValue={valueEmailProfile}
                   onChange={(e) => setValueEmailProfile(e.target.value)}
                   {...register("emailprofile", {
                     type: "email",
@@ -296,8 +361,9 @@ function Profile() {
                   <span className="text-danger-Main">*</span>
                 </div>
                 <input
-                  value={valueUsernameProfile}
-                  onChange={setValueUsernameProfile}
+                  name="usernameprofile"
+                  defaultValue={valueUsernameProfile}
+                  onChange={(e) => setValueUsernameProfile(e.target.value)}
                   {...register("usernameprofile", {
                     type: "text",
                     required: true,
@@ -323,9 +389,13 @@ function Profile() {
                     +62
                   </span>
                   <input
+                    name="phoneprofile"
                     type="number"
-                    value={valuePhoneProfile}
-                    onChange={setValuePhoneProfile}
+                    defaultValue={valuePhoneProfile}
+                    onChange={(e) => {
+                      setValuePhoneProfile(e.target.value);
+                      console.log(valuePhoneProfile);
+                    }}
                     {...register("phoneprofile", {
                       type: "number",
                       required: true,
@@ -344,13 +414,13 @@ function Profile() {
               </Stack>
               <PhotoCameraForm
                 savedImage={savedImage}
-                setSavedImage={setSavedImage}
-                idPelanggan={"Profile"}
+                setSavedImage={setSavedImage} //TODO: MUNGKIN PERUBAHAN TERHADAP DELETE PROFILE PICTURE, DELETE JIKA ADA FOTO SEBELUMNYA BALIK KE FOTO SEBELUMNYA
+                idPelanggan={"ProfileFromCamera"}
                 enabled={true}
               />
               <Button
                 variant="outlined"
-                className="text-sm leading-[18px] mb-20"
+                className="text-sm leading-[18px]"
                 sx={{
                   textTransform: "capitalize",
                   borderRadius: "6px",
@@ -371,6 +441,27 @@ function Profile() {
               >
                 Ganti Password
               </Button>
+              <Button
+                variant="contained"
+                onClick={handleSubmit(handleSimpanButton)}
+                enabled={isFormProfileChangeFilled ? true : false}
+                disableElevation={isFormProfileChangeFilled ? false : true}
+                sx={{
+                  borderRadius: "8px",
+                  color: "neutral.10",
+                  width: "100%",
+                  paddingY: "10px",
+                  fontWeight: 500,
+                  fontSize: "15px",
+                }}
+                className={` mb-20 ${
+                  isFormProfileChangeFilled
+                    ? "bg-themeColor focus:bg-themeColor hover:bg-themeColor text-neutral-10"
+                    : "bg-neutral-30 focus:bg-neutral-30 hover:bg-neutral-30 text-neutral-70"
+                }`}
+              >
+                Simpan
+              </Button>
             </Stack>
           </form>
         </div>
@@ -388,6 +479,10 @@ function Profile() {
         >
           <Button
             variant="contained"
+            onClick={() => {
+              navigate("/");
+              localStorage.clear();
+            }}
             sx={{
               borderRadius: "8px",
               color: "neutral.10",
@@ -396,13 +491,9 @@ function Profile() {
               fontWeight: 500,
               fontSize: "15px",
             }}
-            className={`${
-              isFormProfileChangeFilled
-                ? "bg-themeColor focus:bg-themeColor hover:bg-themeColor text-neutral-10"
-                : "bg-neutral-30 focus:bg-neutral-30 hover:bg-neutral-30 text-neutral-70"
-            }`}
+            className={`bg-danger-Main focus:bg-danger-Main hover:bg-danger-Main text-danger-Surface`}
           >
-            Simpan
+            Logout
           </Button>
         </Paper>
       </div>
