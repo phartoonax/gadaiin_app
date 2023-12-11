@@ -185,11 +185,12 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data, usedIn }) => {
             marginX: "16px",
             paddingY: "16px",
             paddingX: "12px",
+            width: "100%",
           },
         }}
       >
         <DialogContentText className="text-center text-sm font-semibold leading-[18px] text-neutral-100 ">
-          Apakah anda yakin data gadai yang anda masukkan sudah benar?
+          Apakah anda yakin mau membatalkan gadai?
         </DialogContentText>
         <Stack
           direction="row"

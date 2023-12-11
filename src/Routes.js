@@ -22,6 +22,7 @@ import DetailDataTransaksiPerpanjang from "./Pages/perpanjang/detailDataTransaks
 import DetailDataPelangganTebus from "./Pages/tebus/detailDataPelangganTebus";
 import DetailDataTransaksiTebus from "./Pages/tebus/detailDataTransaksiTebus";
 import PageHistoryGadai from "./components/opsi/pageHistoryGadai";
+import PilihLokasi from "./Pages/login/pilihLokasi";
 
 /**
  * Description placeholder
@@ -35,6 +36,7 @@ const Rute = (props) => {
     <>
       <Routes>
         <Route exact path="/" element={<Login />} />
+        <Route exact path="/pilihLokasi" element={<PilihLokasi />} />
         <Route exact path="/login" element={<Login />} />
         <Route path="/main" element={<Dashboard />} />
         <Route path="/main/qrscanner" element={<QRScanner />} />

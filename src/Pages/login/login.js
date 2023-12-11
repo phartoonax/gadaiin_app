@@ -16,6 +16,9 @@ import { useForm } from "react-hook-form";
 import { browserName, BrowserTypes } from "react-device-detect";
 import { Snackbar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { urlAPI } from "../../variableGlobal";
+import axios from "axios";
+
 console.log(`${browserName} 
 ${BrowserTypes}`);
 
@@ -27,7 +30,7 @@ const Login = (props) => {
     register: registerLogin,
     handleSubmit: handleSubmitLogin,
     // setValue: setValueLogin,
-
+    watch: watchLogin,
     formState: { errors: errorsLogin },
   } = useForm();
 
@@ -69,16 +72,47 @@ const Login = (props) => {
     isConfirmPasswordRegisterVisible,
     setIsConfirmPasswordRegisterVisible,
   ] = useState(false);
-  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
+  const [isSnackbarRegisterOpen, setIsSnackbarRegisterOpen] = useState(false);
   const [isRegisterSuccess, setIsRegisterSuccess] = useState(false); //! set register used in api
+
+  const [isSnackBarLoginOpen, setIsSnackBarLoginOpen] = useState(false);
+  const [isLoginSuccess, setIsLoginSuccess] = useState(false);
+  const [messageSnackBarLogin, setMessageSnackBarLogin] = useState("");
 
   const onSubmitRegister = (data) => {
     console.log(data);
     toggleDialogRegister();
   };
-  const onSubmitLogin = (data) => {
+  const onSubmitLogin = async (data) => {
     console.log(data);
-    navigate("/main");
+    const dataSend = {
+      email: data.email,
+      pass: data.password,
+    };
+
+    try {
+      const response = await axios.post(urlAPI + "login", dataSend);
+      console.log(response.data);
+      const responseData = response.data;
+
+      if (responseData.success) {
+        setMessageSnackBarLogin("Login Berhasil");
+        localStorage.setItem("accessToken", responseData.data.access_token);
+        setIsLoginSuccess(true);
+        setIsSnackBarLoginOpen(true);
+
+        setTimeout(() => {
+          navigate("/pilihLokasi", { state: { from: "/login" } });
+        }, 1500);
+      } else {
+        // Handle unsuccessful login
+      }
+    } catch (error) {
+      console.error("Error:", error.response.data.message);
+      setMessageSnackBarLogin(error.response.data.message);
+      setIsLoginSuccess(false);
+      setIsSnackBarLoginOpen(true);
+    }
   };
 
   function togglePasswordVisibility() {
@@ -104,11 +138,11 @@ const Login = (props) => {
     setIsDialogOpenRegister((prevState) => !prevState);
     console.log(isDialogOpenRegister);
     if (isDialogOpenRegister === true) {
-      setIsSnackbarOpen(true);
+      setIsSnackbarRegisterOpen(true);
     }
   }
 
-  function handleFormChange(event) {
+  function handleFormLoginChange(event) {
     // Check if all forms are filled
     const isFormFilled =
       event.target.form[0].value !== "" && event.target.form[1].value !== "";
@@ -234,7 +268,7 @@ const Login = (props) => {
                           errorsForgetPass.emailresetsandi
                             ? "border-danger-Main bg-danger-Surface"
                             : isResetPassFilled
-                            ? "border-black bg-neutral-10"
+                            ? "border-neutral-100 bg-neutral-10"
                             : "border-gray-300 bg-neutral-10"
                         }`}
                       />
@@ -323,9 +357,10 @@ const Login = (props) => {
                           className={`input-border pl-2  border text-[#1F2933] sm:text-sm rounded-lg block w-full p-2.5  ${
                             errorsRegister.emailregister
                               ? "border-danger-Main bg-danger-Surface"
-                              : isResetPassFilled
-                              ? "border-black bg-neutral-10"
-                              : "border-gray-300 bg-neutral-10"
+                              : watchRegister("emailregister") !== "" &&
+                                watchRegister("emailregister") !== undefined
+                              ? "border-neutral-100 bg-neutral-10"
+                              : "border-neutral-40 bg-neutral-10"
                           }`}
                         />
                         {errorsRegister.emailregister && (
@@ -346,10 +381,13 @@ const Login = (props) => {
                             required: true,
                           })}
                           type={isPasswordRegisterVisible ? "text" : "password"}
-                          className={`input-border pl-2 bg-neutral-10 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                          className={`input-border pl-2 bg-neutral-10 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg block w-full p-2.5  ${
                             isFormRegisterFilled
-                              ? "border-black"
-                              : "border-gray-300"
+                              ? "border-neutral-100"
+                              : watchRegister("passwordregister") !== "" &&
+                                watchRegister("passwordregister") !== undefined
+                              ? "border-neutral-100 bg-neutral-10"
+                              : "border-neutral-40 bg-neutral-10"
                           }`}
                         />
                         <div>
@@ -393,9 +431,12 @@ const Login = (props) => {
                           className={`input-border pl-2  border text-[#1F2933] sm:text-sm rounded-lg block w-full p-2.5  ${
                             errorsRegister.konfirmasipasswordregister
                               ? "border-danger-Main bg-danger-Surface"
-                              : isResetPassFilled
-                              ? "border-black bg-neutral-10"
-                              : "border-gray-300 bg-neutral-10"
+                              : watchRegister("konfirmasipasswordregister") !==
+                                  "" &&
+                                watchRegister("konfirmasipasswordregister") !==
+                                  undefined
+                              ? "border-neutral-100 bg-neutral-10"
+                              : "border-neutral-40 bg-neutral-10"
                           }`}
                         />
 
@@ -453,18 +494,16 @@ const Login = (props) => {
             <div className="w-full bg-white rounded-lg  md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
               <div className="px-2 py-3.5 space-y-4 md:space-y-2.5">
                 <form
-                  onChange={handleFormChange}
+                  onChange={handleFormLoginChange}
                   className="space-y-2.5 md:space-y-2.5 font-inter"
                 >
                   <div className="w-full block">
                     <div className="relative w-full">
                       <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        {""}
                         <FontAwesomeIcon
                           className="w-5 h-5 text-[#50555B]"
                           icon="fa-regular fa-envelope"
                         />
-                        {""}
                       </div>
                       <input
                         placeholder="Email"
@@ -476,7 +515,10 @@ const Login = (props) => {
                         className={`input-border pl-10 bg-neutral-10 border ${
                           errorsLogin.email
                             ? "border-red-500"
-                            : "border-gray-300"
+                            : watchLogin("email") !== "" &&
+                              watchLogin("email") !== undefined
+                            ? "border-neutral-100"
+                            : "border-neutral-40"
                         }  text-[#101C42] placeholder:text-[#6E7377] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0`}
                       />
                     </div>{" "}
@@ -489,12 +531,10 @@ const Login = (props) => {
                   <div className="w-full block">
                     <div className="relative w-full mt-2.5">
                       <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        {""}
                         <FontAwesomeIcon
                           className="w-5 h-5 text-[#50555B]"
                           icon="fa-solid fa-key"
                         />
-                        {""}
                       </div>
 
                       <input
@@ -506,7 +546,12 @@ const Login = (props) => {
                         placeholder="Password"
                         autoComplete="current-password"
                         type={isPasswordVisible ? "text" : "password"}
-                        className="input-border px-10 bg-neutral-10 border border-gray-300 text-[#101C42] placeholder:text-[#6E7377]  sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
+                        className={`input-border px-10 bg-neutral-10 border ${
+                          watchLogin("password") !== "" &&
+                          watchLogin("password") !== undefined
+                            ? "border-neutral-100"
+                            : "border-neutral-40"
+                        } text-[#101C42] placeholder:text-[#6E7377]  sm:text-sm rounded-lg block w-full p-2.5`}
                       />
 
                       <button
@@ -638,8 +683,8 @@ const Login = (props) => {
         )}
       </div>
       <Snackbar
-        open={isSnackbarOpen}
-        onClose={() => setIsSnackbarOpen(false)}
+        open={isSnackbarRegisterOpen}
+        onClose={() => setIsSnackbarRegisterOpen(false)}
         autoHideDuration={3000}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -651,6 +696,22 @@ const Login = (props) => {
           }`}
         >
           {isRegisterSuccess ? "Pendaftaran Berhasil" : "Pendaftaran Gagal"}
+        </div>
+      </Snackbar>
+      <Snackbar
+        open={isSnackBarLoginOpen}
+        onClose={() => setIsSnackBarLoginOpen(false)}
+        autoHideDuration={1500}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <div
+          className={`rounded-full border mt-12  text-sm px-[8px] py-[7px] ${
+            isLoginSuccess
+              ? "bg-success-Surface border-success-Pressed text-success-Main"
+              : "bg-danger-Surface border-danger-Pressed text-danger-Main"
+          }`}
+        >
+          {messageSnackBarLogin}
         </div>
       </Snackbar>
     </>

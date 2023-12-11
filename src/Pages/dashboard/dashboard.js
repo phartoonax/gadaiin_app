@@ -10,6 +10,8 @@ import Grafik from "./grafik";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { urlAPI } from "../../variableGlobal";
 
 const Dashboard = (props) => {
   const navigate = useNavigate();
@@ -21,9 +23,27 @@ const Dashboard = (props) => {
   const [shouldRender, setShouldRender] = useState(false);
   const [shouldRenderBackground, setShouldRenderBackground] = useState(false);
 
-  const savedImage = useState(
-    JSON.parse(localStorage.getItem("savedImage-Profile")) || null
-  );
+  const [dataDashboard, setDataDashboard] = useState(null);
+  const [savedImage, setSavedImage] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(urlAPI + "get-profile-dashboard", {
+          headers: {
+            access_token: localStorage.getItem("accessToken"),
+          },
+        });
+        const data = response.data.data.datauser;
+        setDataDashboard(data);
+        setSavedImage(urlAPI + "images/" + data?.gambar || null);
+      } catch (error) {
+        console.error("Error:", error.response.data.message);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -71,6 +91,7 @@ const Dashboard = (props) => {
     picture: savedImage ?? "https://placehold.co/290x290?text=Hello+Bagas", //change this if want to simulate null image
   };
   localStorage.setItem("dataProfile", JSON.stringify(dataProfile));
+  const lokasi = JSON.parse(localStorage.getItem("lokasi"));
 
   const renderdat = datatemp.map((data) => (
     <div className="w-full px-2.5 flex flex-col justify-start items-start font-inter overflow-ellipsis">
@@ -125,16 +146,16 @@ const Dashboard = (props) => {
               className=" rounded-full overflow-hidden"
               style={{ boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)" }}
             >
-              {savedImage[0] !== null ? (
+              {savedImage !== null ? (
                 <img
-                  src={savedImage[0] || DefaultPerson}
+                  src={savedImage || DefaultPerson}
                   alt=""
                   className={`h-[50px] w-[50px] rounded-full`}
                   onClick={() => {
                     navigate("/profile");
                     localStorage.setItem(
                       "savedImage-ProfileFromCamera",
-                      JSON.stringify(savedImage[0])
+                      JSON.stringify(savedImage)
                     );
                   }}
                 />
@@ -149,7 +170,7 @@ const Dashboard = (props) => {
             </div>
             <div className="ml-1 flex flex-col">
               <span className="font-bold text-base text-neutral-10">
-                Happy Working, Bagas !
+                Happy Working, {dataDashboard?.username} !
               </span>{" "}
               {/* replace with the actual username */}
               <Stack
@@ -157,11 +178,13 @@ const Dashboard = (props) => {
                 direction={"row"}
                 alignItems="center"
                 className="text-neutral-10"
+                onClick={() =>
+                  navigate("/pilihLokasi", { state: { from: "/main" } })
+                }
               >
-                <span className="font-normal text-xs">Jabodetabek</span>
+                <span className="font-normal text-xs">{lokasi.namaLokasi}</span>
                 <Icon fontSize={"14px"} icon={"uil:map-marker"} />
               </Stack>
-              {/* replace with the actual city */}
             </div>
           </div>
           <div className="bg-neutral-20 w-full h-[78vh] absolute bottom-0 rounded-t-[30px] flex-col items-center justify-center ">
