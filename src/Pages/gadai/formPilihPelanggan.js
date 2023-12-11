@@ -32,6 +32,7 @@ const FormPilihPelanggan = () => {
   //Untuk buka Customer Baru
   const [isDialogOpenNewCustomerPass, setIsDialogOpenNewCustomerPass] =
     useState(false);
+  const [valueNewCustomer, setValueNewCustomer] = useState("");
   const [isInputNewCustomerFilled, setIsInputNewCustomerFilled] =
     useState(false);
 
@@ -59,6 +60,16 @@ const FormPilihPelanggan = () => {
     );
     navigate("/form/gadai/pelanggan", {
       state: { dataPelanggan: pickedCustomer },
+      replace: true,
+    });
+  }
+  function handleMakeNewCustomer() {
+    setIsDialogOpenNewCustomerPass(false);
+    const data = {
+      name: valueNewCustomer,
+    };
+    navigate("/form/gadai/pelanggan", {
+      state: { dataPelanggan: data },
       replace: true,
     });
   }
@@ -126,8 +137,10 @@ const FormPilihPelanggan = () => {
           title="Nama Pelanggan"
           isRequired={false}
           enabled={true}
+          valueForm={valueNewCustomer}
           valueFormChange={(e) => {
             const inputValue = e.target.value;
+            setValueNewCustomer(inputValue);
             setIsInputNewCustomerFilled(inputValue.trim() !== "");
           }}
         />
@@ -146,7 +159,7 @@ const FormPilihPelanggan = () => {
                 ? "bg-success-Main text-neutral-10"
                 : "bg-neutral-30 text-neutral-70"
             } rounded-xl px-5 py-3.5 w-full text-base font-bold hover:bg-success-Main`}
-            onClick={handlePickCustomer}
+            onClick={handleMakeNewCustomer}
           >
             Simpan
           </Button>

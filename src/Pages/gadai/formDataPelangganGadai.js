@@ -16,11 +16,20 @@ const FormDataPelangganGadai = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dataPelanggan = location?.state?.dataPelanggan || null;
-  console.log("idPelanggan", dataPelanggan);
   const [savedImage, setSavedImage] = useState(
     JSON.parse(
       localStorage.getItem("savedImage-" + dataPelanggan?.noCustomer)
     ) || null
+  );
+  const [valueName, setValueName] = useState(dataPelanggan?.name || undefined);
+  const [valuePhoneNumber, setValuePhoneNumber] = useState(
+    dataPelanggan?.phoneNumber || undefined
+  );
+  const [valueAddress, setValueAddress] = useState(
+    dataPelanggan?.address || undefined
+  );
+  const [valueNoCustomer, setValueNoCustomer] = useState(
+    dataPelanggan?.noCustomer || undefined
   );
 
   const [isFormComplete, setIsFormComplete] = useState(false);
@@ -66,26 +75,30 @@ const FormDataPelangganGadai = () => {
               title={"Nama"}
               isRequired={true}
               type={"button"}
-              valueForm={dataPelanggan?.name || undefined}
+              valueForm={valueName}
+              valueFormChange={(e) => setValueName(e.target.value)}
             />
             <IsiFormDefault
               enabled={true}
               title={"Telpon"}
               type={"number"}
               isRequired={true}
-              valueForm={dataPelanggan?.phoneNumber || undefined}
+              valueForm={valuePhoneNumber}
+              valueFormChange={(e) => setValuePhoneNumber(e.target.value)}
             />
             <IsiFormDefault
               enabled={true}
               title={"Alamat Tinggal"}
               isRequired={true}
-              valueForm={dataPelanggan?.address || undefined}
+              valueForm={valueAddress}
+              valueFormChange={(e) => setValueAddress(e.target.value)}
             />
             <IsiFormDefault
               enabled={dataPelanggan?.noCustomer ? false : true}
               title={"No. Identitas Sesuai KTP"}
               isRequired={true}
-              valueForm={dataPelanggan?.noCustomer || undefined}
+              valueForm={valueNoCustomer}
+              valueFormChange={(e) => setValueNoCustomer(e.target.value)}
             />
             <PhotoCameraForm
               title={"Foto Pelanggan"}

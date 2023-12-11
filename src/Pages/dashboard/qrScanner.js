@@ -11,13 +11,16 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { QrScanner } from "@yudiel/react-qr-scanner";
 import AppBarPlain from "../../components/appBarPlain";
 
 const QRScanner = () => {
+  const location = useLocation();
   const [borderSizes, setSBorderSizes] = useState("");
   const [videoBorderWidth, setVideoBorderWidth] = useState(null);
+
+  const from = location.state ? location.state.from : null;
 
   useEffect(() => {
     const div = document.querySelector(".scanner");
@@ -178,7 +181,11 @@ const QRScanner = () => {
           <span className="font-bold">CX3705</span>
           {" atas nama "}
           <span className="font-bold">Budi Raharjo</span>
-          {" ke perpanjang atau tebus gadai?"}
+          {from === "tebus"
+            ? " ke tebus gadai?"
+            : from === "perpanjang"
+            ? " ke perpanjang gadai?"
+            : " ke perpanjang atau tebus gadai?"}
         </DialogContentText>
         <Stack
           direction="row"
@@ -193,10 +200,14 @@ const QRScanner = () => {
               setIsDialogPerpanjangTebusOpen(false);
             }}
           >
-            <Stack direction={"row"} gap={"10px"} alignItems={"center"}>
-              <Icon fontSize={"20px"} icon={"uil:hourglass"} />
-              <div>Perpanjang</div>
-            </Stack>
+            {from === "tebus" || from === "perpanjang" ? (
+              <div>Ya</div>
+            ) : (
+              <Stack direction={"row"} gap={"10px"} alignItems={"center"}>
+                <Icon fontSize={"20px"} icon={"uil:hourglass"} />
+                <div>Perpanjang</div>
+              </Stack>
+            )}
           </Button>
           <Button
             variant="outlined"
@@ -205,10 +216,14 @@ const QRScanner = () => {
               setIsDialogPerpanjangTebusOpen(false);
             }}
           >
-            <Stack direction={"row"} gap={"10px"} alignItems={"center"}>
-              <Icon fontSize={"20px"} icon={"uil:money-withdraw"} />
-              <div>Tebus</div>
-            </Stack>
+            {from === "tebus" || from === "perpanjang" ? (
+              <div>Tidak</div>
+            ) : (
+              <Stack direction={"row"} gap={"10px"} alignItems={"center"}>
+                <Icon fontSize={"20px"} icon={"uil:money-withdraw"} />
+                <div>Tebus</div>
+              </Stack>
+            )}
           </Button>
         </Stack>
       </Dialog>

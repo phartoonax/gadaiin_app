@@ -346,8 +346,8 @@ function Profile() {
                     type: "email",
                     required: true,
                   })}
-                  className={`input-border pl-2 bg-gray-50 border border-neutral-60 text-neutral-100 text-sm  rounded-lg focus:ring-neborder-neutral-90 focus:border-neutral-90 block w-full px-4 py-[15px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
-                    valueEmailProfile ? "border-black" : "border-neutral-60"
+                  className={`input-border pl-2 bg-gray-50 border border-neutral-60 text-neutral-100 text-sm  rounded-lg  focus:border-[#101C42] block w-full px-4 py-[15px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white  ${
+                    valueEmailProfile ? "border-[#101C42]" : "border-neutral-60"
                   } ${
                     errors.emailprofile
                       ? "border-[#E53A34] bg-[#FCF3F2]"
@@ -368,9 +368,9 @@ function Profile() {
                     type: "text",
                     required: true,
                   })}
-                  className={`input-border pl-2 bg-gray-50 border border-neutral-60 text-neutral-100 text-sm  rounded-lg focus:ring-neborder-neutral-90 focus:border-neutral-90 block w-full px-4 py-[15px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
-                    isFormProfileChangeFilled
-                      ? "border-black"
+                  className={`input-border pl-2 bg-gray-50 border border-neutral-60 text-neutral-100 text-sm  rounded-lg  focus:border-[#101C42] block w-full px-4 py-[15px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white ${
+                    valueUsernameProfile
+                      ? "border-[#101C42]"
                       : "border-neutral-60"
                   } ${
                     errors.usernameprofile
@@ -400,9 +400,9 @@ function Profile() {
                       type: "number",
                       required: true,
                     })}
-                    className={`input-border pl-12 bg-gray-50 border border-neutral-60 text-neutral-100 text-sm rounded-lg focus:ring-neborder-neutral-90 focus:border-neutral-90 block w-full px-4 py-[15px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
-                      isFormProfileChangeFilled
-                        ? "border-black"
+                    className={`input-border pl-12 bg-gray-50 border border-neutral-60 text-neutral-100 text-sm rounded-lg  focus:border-[#101C42] block w-full px-4 py-[15px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                      valuePhoneProfile
+                        ? "border-[#101C42]"
                         : "border-neutral-60"
                     } ${
                       errors.phoneprofile
@@ -443,14 +443,18 @@ function Profile() {
               </Button>
               <Button
                 variant="contained"
-                onClick={handleSubmit(handleSimpanButton)}
-                enabled={isFormProfileChangeFilled ? true : false}
+                onClick={
+                  isFormProfileChangeFilled
+                    ? handleSubmit(handleSimpanButton)
+                    : null
+                }
+                enabled={isFormProfileChangeFilled ? false : true}
                 disableElevation={isFormProfileChangeFilled ? false : true}
                 sx={{
                   borderRadius: "8px",
                   color: "neutral.10",
                   width: "100%",
-                  paddingY: "10px",
+                  paddingY: "9px",
                   fontWeight: 500,
                   fontSize: "15px",
                 }}
@@ -472,7 +476,7 @@ function Profile() {
             bottom: "0px",
             left: 0,
             right: 0,
-
+            boxShadow: "0px -4px 4px 0px rgba(0,0,0,0.25)",
             borderRadius: "0px",
           }}
           elevation={5}
@@ -487,7 +491,7 @@ function Profile() {
               borderRadius: "8px",
               color: "neutral.10",
               width: "100%",
-              paddingY: "10px",
+              paddingY: "9px",
               fontWeight: 500,
               fontSize: "15px",
             }}

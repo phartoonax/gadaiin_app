@@ -39,7 +39,7 @@ const FormDataTransaksiGadai = () => {
     localStorage.getItem("valueBunga") || ""
   );
   const [valueNilaiPinjaman, setValueNilaiPinjaman] = useState(
-    localStorage.getItem("valueNilaiPinjaman") || null
+    localStorage.getItem("valueNilaiPinjaman") || 0
   );
   const [valueNominal, setValueNominal] = useState();
   const [ValueSavedImage, setValueSavedImage] = useState(
@@ -227,6 +227,7 @@ const FormDataTransaksiGadai = () => {
               savedImage={ValueSavedImage}
               setSavedImage={setValueSavedImage}
               idPelanggan={"tempBarang"}
+              type={"barang"}
               enabled={true}
             />
           </Stack>

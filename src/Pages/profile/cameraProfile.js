@@ -13,6 +13,7 @@ import AppBarPlain from "../../components/appBarPlain";
 const CameraProfile = () => {
   const location = useLocation();
   const idPelanggan = location.state.idPelanggan;
+  const type = location.state.type ?? "wajah";
   const idPhoto = idPelanggan
     ? "savedImage-" + idPelanggan
     : "savedImage-Profile";
@@ -78,6 +79,7 @@ const CameraProfile = () => {
       }
     }
   }, [isFlashOn, facingMode]);
+
   const handleCapture = () => {
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
@@ -86,7 +88,7 @@ const CameraProfile = () => {
     const videoHeight = videoRef.current.videoHeight;
 
     // Calculate the dimensions and position of the square
-    const squareSize = Math.min(videoBorderWidth, videoBorderHeight); // 75% of the smaller dimension
+    const squareSize = Math.min(videoBorderWidth, videoBorderHeight); // 70% of the smaller dimension
     const squareX = (videoWidth - squareSize) / 2;
     const squareY = (videoHeight - squareSize) / 2;
 
@@ -113,7 +115,7 @@ const CameraProfile = () => {
     //stop the camera
     handleStop();
   };
-
+  
   const handleStop = () => {
     if (videoRef.current && videoRef.current.srcObject) {
       const tracks = videoRef.current.srcObject.getTracks();
@@ -189,7 +191,7 @@ const CameraProfile = () => {
                 >
                   <svg
                     viewBox="0 0 100 100"
-                    className="scanner"
+                    className="overlay-border"
                     style={{
                       zIndex: 1,
                       boxSizing: "border-box",
@@ -233,8 +235,8 @@ const CameraProfile = () => {
                   className="absolute top-[15%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-white text-sm font-bold leading-[18px]"
                   style={{ width: `${videoBorderWidth}px` }}
                 >
-                  Pastikan wajah masuk dalam kotak dan dalam keadaan pencahayaan
-                  yang cukup
+                  {`Pastikan ${type} masuk dalam kotak dan dalam keadaan pencahayaan
+                  yang cukup`}
                 </div>
               </div>
             ) : (
@@ -263,7 +265,7 @@ const CameraProfile = () => {
                 >
                   <svg
                     viewBox="0 0 100 100"
-                    className="scanner"
+                    className="overlay-border"
                     style={{
                       zIndex: 1,
                       boxSizing: "border-box",
@@ -307,8 +309,8 @@ const CameraProfile = () => {
                   className="absolute top-[15%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-white text-sm font-bold leading-[18px]"
                   style={{ width: `${videoBorderWidth}px` }}
                 >
-                  Pastikan wajah masuk dalam kotak dan dalam keadaan pencahayaan
-                  yang cukup
+                  {`Pastikan ${type} masuk dalam kotak dan dalam keadaan pencahayaan
+                yang cukup`}
                 </div>
               </div>
             )}

@@ -88,14 +88,17 @@ const ListPerpanjangan = () => {
   const iconFab = "uil:qrcode-scan";
 
   const onFabClick = () => {
-    navigate("/main/qrscanner");
+    navigate("/main/qrscanner", { state: { from: "tebus" } });
   };
-
+  function handleBackButton() {
+    navigate("/main", { replace: true });
+  }
+  
   return (
     <>
       <div className="font-inter w-screen h-screen flex flex-col justify-start items-start">
         <div className="fixed top-0 z-50 w-full">
-          <AppBarWithSearch placeholder={"Cari Data Perpanjangan Gadai"} />
+          <AppBarWithSearch placeholder={"Cari Data Perpanjangan Gadai"}      handlerBackButton={handleBackButton}/>
         </div>
         <div className="bg-white pt-[68px] w-full">
           <BotNavbarNfab
@@ -113,7 +116,7 @@ const ListPerpanjangan = () => {
                   index === filteredArray.length - 1 ? "pb-24" : ""
                 }`}
               >
-                <ListItem data={data} usedIn="Perpanjang"/>
+                <ListItem data={data} usedIn="Perpanjang" />
               </div>
             ))}
           </div>

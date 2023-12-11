@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import { Stack } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 /**
@@ -25,9 +25,24 @@ const IsiFormDefault = ({
 }) => {
   const navigate = useNavigate();
 
+  const [isInputFilled, setIsInputFilled] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
+
+  const handleInputFocus = () => {
+    setIsInputFocused(true);
+  };
+
+  const handleInputBlur = () => {
+    setIsInputFocused(false);
+  };
+
   const handlePilihCustomer = () => {
     navigate("/pilihPelanggan");
   };
+
+  useEffect(() => {
+    setIsInputFilled(valueForm !== "" && valueForm !== undefined);
+  }, [valueForm]);
   return (
     <>
       <Stack gap="8px">
@@ -46,7 +61,7 @@ const IsiFormDefault = ({
               type={"text"}
               value={valueForm}
               disabled={enabled ? !enabled : true}
-              className={`input-border font-inter text-sm w-full rounded-md border p-4 py-[15px]  focus:outline-none pr-10 ${
+              className={`input-border font-inter text-sm w-full rounded-md border p-4 py-[15px]   pr-10 ${
                 valueForm !== "" && valueForm !== undefined && enabled
                   ? "border-neutral-100"
                   : "border-neutral-40"
@@ -68,14 +83,18 @@ const IsiFormDefault = ({
               type={type || "text"}
               disabled={enabled ? !enabled : true}
               value={valueForm}
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
               onChange={valueFormChange ? valueFormChange : null}
               className={`input-border font-inter pl-12 w-full  rounded-md border p-4 ${
                 !enabled
-                  ? "border-neutral-40 bg-neutral-20 text-neutral-60"
-                  : valueForm !== "" && valueForm !== undefined
+                  ? " bg-neutral-20 text-neutral-60"
+                  : isInputFocused
+                  ? "border-neutral-100"
+                  : isInputFilled
                   ? "border-neutral-100"
                   : "border-neutral-40"
-              } focus-visible:outline-black text-neutral-100 text-sm leading-[18px] py-[15px]`}
+              }  text-neutral-100 text-sm leading-[18px] py-[15px]`}
             />
           </div>
         ) : (
@@ -83,14 +102,18 @@ const IsiFormDefault = ({
             type={type || "text"}
             disabled={enabled ? !enabled : true}
             value={valueForm}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
             onChange={valueFormChange ? valueFormChange : null}
             className={`input-border font-inter w-full  rounded-md border p-4 ${
               !enabled
-                ? "border-neutral-40 bg-neutral-20 text-neutral-60"
-                : valueForm !== "" && valueForm !== undefined
+                ? " bg-neutral-20 text-neutral-60"
+                : isInputFocused
+                ? "border-neutral-100"
+                : isInputFilled
                 ? "border-neutral-100"
                 : "border-neutral-40"
-            } focus:outline-black text-neutral-100 text-sm leading-[18px] py-[15px] `}
+            }  text-neutral-100 text-sm leading-[18px] py-[15px] `}
           />
         )}
       </Stack>

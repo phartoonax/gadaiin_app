@@ -18,13 +18,23 @@ const PhotoCameraForm = ({
   savedImage,
   setSavedImage,
   idPelanggan,
+  type,
   enabled,
 }) => {
+  const helperText = (() => {
+    switch (type) {
+      case "barang":
+        return "Untuk membuka webcam dan mengambil foto apabila data foto Barang belum ada.";
+      case "bukti":
+        return "Untuk membuka webcam dan mengambil foto bukti Pembayaran apabila customer membayar non tunai.";
+      default:
+        return "Untuk membuka webcam dan mengambil foto apabila data foto customer belum ada.";
+    }
+  })();
   const navigate = useNavigate();
   const isEnabled = enabled;
   return (
     <>
-      {" "}
       <Stack gap="8px">
         {title && (
           <Stack direction="row" gap={"2px"}>
@@ -65,7 +75,7 @@ const PhotoCameraForm = ({
                   startIcon={<Icon icon="feather:camera"></Icon>}
                   onClick={() => {
                     navigate("/profile/camera", {
-                      state: { idPelanggan: idPelanggan },
+                      state: { idPelanggan: idPelanggan, type: type },
                     });
                   }}
                 >
@@ -93,8 +103,7 @@ const PhotoCameraForm = ({
             )}
             {isEnabled && (
               <p className="text-xs text-neutral-80 font-normal leading-5">
-                Untuk membuka webcam dan mengambil foto apabila data foto
-                customer belum ada.
+                {helperText}
               </p>
             )}
           </Stack>

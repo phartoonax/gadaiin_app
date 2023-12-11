@@ -149,6 +149,7 @@ const FormDataTransaksiPerpanjang = () => {
               setSavedImage={setValueImageBuktiPembayaran}
               idPelanggan={"Bukti-" + dataPelanggan?.noCustomer}
               enabled={true}
+              type={"bukti"}
             />
             <PhotoCameraForm
               title={"Foto Barang"}
