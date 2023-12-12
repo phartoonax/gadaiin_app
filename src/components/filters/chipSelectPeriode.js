@@ -27,8 +27,8 @@ const ChipSelectPeriode = ({
           justifyContent="space-between"
           alignItems="center"
         >
-          <Stack direction="row" gap={"6px"}>
-            <div className="text-sm text-[15px] font-bold">{title}</div>
+          <Stack direction="row" gap={"6px"} alignItems={"center"}>
+            <div className="text-sm text-black font-bold">{title}</div>
             <div className="rounded-full bg-themeColor px-2  text-neutral-10">
               {periodeGadaiValues.length}
             </div>
@@ -51,7 +51,7 @@ const ChipSelectPeriode = ({
                   periodeGadaiValues.includes(value) ? "solid" : "outlined"
                 }
                 color={"success"}
-                className={`font-normal text-sm px-0.5 py-[7px] focus:bg-themeColor ${
+                className={`font-normal  border-themeColor text-sm px-0.5 py-[7px] focus:bg-themeColor ${
                   periodeGadaiValues.includes(value)
                     ? "text-neutral-10"
                     : "text-themeColor"

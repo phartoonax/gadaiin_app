@@ -210,13 +210,20 @@ const BotDrawerFilter = ({
       >
         <div
           className="bg-neutral-10"
-          style={{ position: "sticky", top: -1, zIndex: 9999 }}
+          style={{
+            position: "sticky",
+            top: -1,
+            zIndex: 9999,
+            display: "flex",
+            flexDirection: "column",
+            paddingTop: "5px",
+          }}
         >
-          <div className="w-full pt-[5px] pb-[12px] flex-col justify-center items-center gap-[10px] inline-flex">
-            <div className="w-[38px] h-[2px] bg-green-600 rounded-md"></div>
+          <div className="w-full  flex-col justify-center items-center gap-[10px] inline-flex">
+            <div className="w-[38px] mb-3 h-[2px] bg-success-Pressed rounded-md"></div>
           </div>
           <Stack
-            className="px-4"
+            className="px-4 pb-[15px]"
             direction="row"
             justifyContent="space-between"
           >
@@ -225,7 +232,7 @@ const BotDrawerFilter = ({
               style={{
                 width: "62px",
                 justifyContent: "flex-start",
-                paddingLeft: "0px",
+                padding: "0px",
               }}
             >
               <Icon
@@ -286,7 +293,7 @@ const BotDrawerFilter = ({
       {openDrawer && (
         <div className="fixed bottom-0 w-full flex justify-between px-4 py-2 mt-4 space-x-2.5 bg-white  shadow-customForFilter z-[2000]">
           <button
-            className="bg-neutral-10 text-success-Main w-full px-3.5 py-2 rounded-xl shadow h-[52px] border border-success-Main text-lg font-bold"
+            className="bg-neutral-10 text-success-Main w-full px-3.5 py-2 rounded-xl shadow h-[52px] border border-success-Main text-base font-bold"
             onClick={() => {
               resetFields();
               setOpenDrawer(false);
@@ -295,7 +302,7 @@ const BotDrawerFilter = ({
             Batal
           </button>
           <button
-            className="bg-success-Main text-white w-full  px-3.5   py-2 rounded-xl shadow h-[52px] text-lg font-bold"
+            className="bg-success-Main text-white w-full  px-3.5   py-2 rounded-xl shadow h-[52px] text-base font-bold"
             onClick={handleApply}
           >
             Terapkan

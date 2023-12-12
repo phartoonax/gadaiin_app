@@ -28,7 +28,7 @@ const ListItem = ({ data, usedIn }) => {
     <div
       className={`border  ${getCardBorderColor(
         status
-      )}  border-solid border-t-4 rounded-md my-[10px] text-neutral-100 `}
+      )}  border-solid border-t-4 rounded-md my-[20px] text-neutral-100 `}
     >
       <div className="px-4 py-2">
         {" "}
@@ -88,7 +88,7 @@ pb-1"
           </p>
         </Stack>
         <Stack
-          className="py-1 text-neutral-100 text-base leading-[18px] font-normal"
+          className="pt-1 text-neutral-100 text-base leading-[18px] font-normal"
           direction="row"
         >
           <Icon
@@ -107,7 +107,7 @@ pb-1"
             <Divider
               orientation="vertical"
               flexItem
-              variant={"middle"}
+              variant={"fullWidth"}
               className="h-10 mx-auto my-auto"
             />
           </div>

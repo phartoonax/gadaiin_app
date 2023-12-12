@@ -28,7 +28,7 @@ const CheckboxStatus = ({
   return (
     <>
       <Stack gap={"10px"}>
-        <div className="text-sm text-[15px] font-bold">{title}</div>
+        <div className="text-sm text-black font-bold">{title}</div>
 
         <FormGroup>
           {arrayCheckBox.map((name, index) => (
@@ -43,6 +43,7 @@ const CheckboxStatus = ({
                   display: "flex",
                   justifyContent: "space-between",
                   marginLeft: "0px",
+                  color: "black",
                 }}
                 control={
                   <Checkbox

@@ -96,6 +96,7 @@ const FormDataPelangganGadai = () => {
             <IsiFormDefault
               enabled={dataPelanggan?.noCustomer ? false : true}
               title={"No. Identitas Sesuai KTP"}
+              type={"number"}
               isRequired={true}
               valueForm={valueNoCustomer}
               valueFormChange={(e) => setValueNoCustomer(e.target.value)}

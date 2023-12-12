@@ -17,6 +17,14 @@ const theme = createTheme({
         },
       },
     },
+    MuiChip: {
+      styleOverrides: {
+        label: {
+          paddingLeft: "8px",
+          paddingRight: "8px",
+        },
+      },
+    },
     MuiCheckbox: {
       defaultProps: {
         icon: (

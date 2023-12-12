@@ -36,7 +36,16 @@ const Dashboard = (props) => {
         });
         const data = response.data.data.datauser;
         setDataDashboard(data);
-        setSavedImage(urlAPI + "images/" + data?.gambar || null);
+        const getImage = await axios.get(
+          urlAPI + "profile/" + data?.gambar,
+          // "https://a845-202-80-216-36.ngrok-free.app/gadai/foto1-1702345901289562.jpg",
+          {
+            headers: { access_token: localStorage.getItem("accessToken") },
+            responseType: "blob",
+          }
+        );
+        const imageObjectURL = URL.createObjectURL(getImage.data);
+        setSavedImage(imageObjectURL);
       } catch (error) {
         console.error("Error:", error.response.data.message);
       }
@@ -148,8 +157,8 @@ const Dashboard = (props) => {
             >
               {savedImage !== null ? (
                 <img
-                  src={savedImage || DefaultPerson}
                   alt=""
+                  src={savedImage ?? DefaultPerson}
                   className={`h-[50px] w-[50px] rounded-full`}
                   onClick={() => {
                     navigate("/profile");
@@ -321,7 +330,7 @@ const Dashboard = (props) => {
             )}
             {shouldRender && (
               <div
-                className={`fixed inset-0 flex flex-col items-center justify-end z-50 mb-28 ${
+                className={`fixed inset-0 flex flex-col items-center justify-end z-50 mb-[104px] ${
                   isMenuOpen ? "animate-slideUp" : "animate-slideDown"
                 }`}
                 onAnimationEnd={() => !isMenuOpen && setShouldRender(false)}
@@ -331,11 +340,11 @@ const Dashboard = (props) => {
                   <Button
                     startIcon={
                       <Icon
-                        className="text-success-Main bg-neutral-10 rounded-full w-7 h-7 p-1 overflow-visible"
+                        className="text-success-Main bg-neutral-20 rounded-full w-7 h-7 p-1 -mr-1 overflow-visible"
                         icon={"uil:money-withdraw"}
                       ></Icon>
                     }
-                    className="bg-transparent text-neutral-10"
+                    className="bg-transparent text-success-Surface font-bold text-base"
                     onClick={() => navigate("/list/tebus")}
                   >
                     {"Tebus"}
@@ -343,11 +352,11 @@ const Dashboard = (props) => {
                   <Button
                     startIcon={
                       <Icon
-                        className="text-success-Main bg-neutral-10 rounded-full w-7 h-7 p-1 overflow-visible"
+                        className="text-success-Main bg-neutral-20 rounded-full w-7 h-7 p-1 -mr-1 overflow-visible"
                         icon={"uil:hourglass"}
                       ></Icon>
                     }
-                    className="bg-transparent text-neutral-10"
+                    className="bg-transparent text-success-Surface font-bold text-base"
                     onClick={() => navigate("/list/perpanjang")}
                   >
                     {"Perpanjang"}
@@ -355,11 +364,11 @@ const Dashboard = (props) => {
                   <Button
                     startIcon={
                       <Icon
-                        className="text-success-Main bg-neutral-10 rounded-full w-7 h-7 p-1 overflow-visible"
+                        className="text-success-Main bg-neutral-20 rounded-full w-7 h-7 p-1 -mr-1 overflow-visible"
                         icon={"uil:balance-scale"}
                       ></Icon>
                     }
-                    className="bg-transparent text-neutral-10"
+                    className="bg-transparent text-success-Surface font-bold text-base"
                     onClick={() => navigate("/list/gadai")}
                   >
                     {"Gadai"}

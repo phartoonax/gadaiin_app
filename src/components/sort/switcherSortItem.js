@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { IconButton, Stack } from "@mui/material";
+import { Divider, IconButton, Stack } from "@mui/material";
 import React from "react";
 
 /**
@@ -39,6 +39,7 @@ const SwitcherSortItem = ({
         return (
           <Icon
             className="text-neutral-90"
+            fontSize={"24px"}
             icon="heroicons-outline:switch-vertical"
           ></Icon>
         );
@@ -46,6 +47,7 @@ const SwitcherSortItem = ({
         return (
           <Icon
             className="text-success-Main"
+            fontSize={"24px"}
             icon="heroicons-outline:arrow-narrow-up"
           ></Icon>
         );
@@ -53,6 +55,7 @@ const SwitcherSortItem = ({
         return (
           <Icon
             className="text-success-Main"
+            fontSize={"24px"}
             icon="heroicons-outline:arrow-narrow-down"
           ></Icon>
         );
@@ -61,7 +64,12 @@ const SwitcherSortItem = ({
 
   return (
     <>
-      <Stack gap={"10px"}>
+      <Stack
+        gap={"10px"}
+        divider={
+          <Divider variant="fullWidth" sx={{}} color="#EEEEEE"></Divider>
+        }
+      >
         {isiSortItem.map((name) => (
           <Stack
             direction="row"
@@ -72,7 +80,10 @@ const SwitcherSortItem = ({
           >
             <div className="text-sm text-[15px] font-bold">{name["Nama"]}</div>
 
-            <IconButton onClick={() => handleButtonClick(name["keyValue"])}>
+            <IconButton
+              sx={{ padding: "0px" }}
+              onClick={() => handleButtonClick(name["keyValue"])}
+            >
               {getIcon(name["keyValue"])}
             </IconButton>
           </Stack>

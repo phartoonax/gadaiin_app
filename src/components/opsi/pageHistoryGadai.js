@@ -34,14 +34,14 @@ function PageHistoryGadai() {
           </p>
         </toolbar>
       </AppBar>
-      <div className="bg-white px-4  w-full mt-[15px]">
+      <div className="bg-white px-4  w-full mt-[5px]">
         <Stack
           divider={
             <Divider
               variant="fullWidth"
               className="border-neutral-70"
               sx={{
-                marginY: "10px",
+                marginY: "15px",
               }}
             ></Divider>
           }

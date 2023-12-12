@@ -18,7 +18,7 @@ const ButtonOpsiItem = ({ title, onClickFunctions }) => {
           alignItems: "center",
           justifyContent: "flex-start",
         }}
-        className="text-black text-base font-bold"
+        className="text-black text-sm font-bold px-0 py-1 -ml-[1px]"
         onClick={() => onClickFunctions[title]()}
       >
         {title}

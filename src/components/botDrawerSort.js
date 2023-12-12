@@ -1,10 +1,4 @@
-import {
-  Button,
-  Divider,
-  IconButton,
-  Stack,
-  SwipeableDrawer,
-} from "@mui/material";
+import { Button, IconButton, Stack, SwipeableDrawer } from "@mui/material";
 import { Icon } from "@iconify/react";
 import React, { useState } from "react";
 import SwitcherSortItem from "./sort/switcherSortItem";
@@ -62,15 +56,19 @@ const BotDrawerSort = ({ openDrawer, setOpenDrawer, onSortSubmit }) => {
         disableSwipeToOpen={true}
       >
         <div className="w-full pt-[5px] pb-[12px] flex-col justify-center items-center gap-[10px] inline-flex">
-          <div className="w-[38px] h-[2px] bg-green-600 rounded-md"></div>
+          <div className="w-[38px] h-[2px] bg-success-Pressed rounded-md"></div>
         </div>
-        <Stack className="px-4" direction="row" justifyContent="space-between">
+        <Stack
+          className="px-4 pb-[19px]"
+          direction="row"
+          justifyContent="space-between"
+        >
           <IconButton
             onClick={() => setOpenDrawer(false)}
             style={{
               width: "62px",
               justifyContent: "flex-start",
-              paddingLeft: "0px",
+              padding: "0px",
             }}
           >
             <Icon
@@ -91,14 +89,7 @@ const BotDrawerSort = ({ openDrawer, setOpenDrawer, onSortSubmit }) => {
             Reset
           </Button>
         </Stack>
-        <Stack
-          direction="column"
-          divider={
-            <Divider variant="fullWidth" sx={{ marginY: "10px" }}></Divider>
-          }
-          sx={{ px: "16px", mb: "72px" }}
-        >
-          {" "}
+        <Stack direction="column" sx={{ px: "16px", mb: "72px" }}>
           <SwitcherSortItem
             isiSortItem={isiSortItem}
             handleSortStatusChange={handleSortStatusChange}
@@ -109,7 +100,7 @@ const BotDrawerSort = ({ openDrawer, setOpenDrawer, onSortSubmit }) => {
         {openDrawer && (
           <div className="fixed bottom-0 w-full flex justify-between px-4 py-2 mt-4 space-x-2.5 bg-white  shadow-customForFilter z-[2000]">
             <button
-              className="bg-neutral-10 text-success-Main w-full px-3.5 py-2 rounded-xl shadow h-[52px] border border-success-Main text-lg font-bold"
+              className="bg-neutral-10 text-success-Main w-full px-3.5 py-2 rounded-xl shadow h-[52px] border border-success-Main text-base font-bold"
               onClick={() => {
                 resetFields();
                 setOpenDrawer(false);
@@ -118,7 +109,7 @@ const BotDrawerSort = ({ openDrawer, setOpenDrawer, onSortSubmit }) => {
               Batal
             </button>
             <button
-              className="bg-success-Main text-white w-full  px-3.5   py-2 rounded-xl shadow h-[52px] text-lg font-bold"
+              className="bg-success-Main text-white w-full  px-3.5   py-2 rounded-xl shadow h-[52px] text-base font-bold"
               onClick={handleApply}
             >
               Terapkan

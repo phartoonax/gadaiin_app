@@ -24,8 +24,12 @@ const ItemMiniHeaderHistory = ({ data }) => {
       )}  border-solid border-t-4 rounded-md my-[10px] text-neutral-100 `}
     >
       <div className="px-4 py-2 font-inter">
-        {" "}
-        <Stack direction="row" spacing={2} justifyContent="space-between">
+        <Stack
+          direction="row"
+          spacing={2}
+          justifyContent="space-between"
+          className="pb-[3px]"
+        >
           <p className="font-bold text-base">{data.idtransaksi}</p>
           <Stack direction="row">
             <div className="flex items-center justify-center rounded-lg bg-neutral-100 text-sm text-neutral-10 px-2.5">
@@ -33,12 +37,12 @@ const ItemMiniHeaderHistory = ({ data }) => {
             </div>
           </Stack>
         </Stack>
-        <Divider className="pt-2"></Divider>
         <p className="text-ellipsis font-bold text-sm overflow-hidden whitespace-nowrap py-[4px]">
           {data.nama}
         </p>
+        <Divider className="pt-1 border-[#EEEEEE]"></Divider>
         <Stack
-          className="py-1 text-neutral-100 text-sm font-normal items-center"
+          className="pt-[10px] pb-1 text-neutral-100 text-sm font-normal items-center"
           direction="row"
         >
           <Icon
@@ -49,7 +53,7 @@ const ItemMiniHeaderHistory = ({ data }) => {
           <p>{data.barang}</p>
         </Stack>
         <Stack
-          className="py-1 text-neutral-100 text-base leading-[18px] font-normal items-center"
+          className="pt-1 pb-[10px] text-neutral-100 text-base leading-[18px] font-normal items-center"
           direction="row"
         >
           <Icon

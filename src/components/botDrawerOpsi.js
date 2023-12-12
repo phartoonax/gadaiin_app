@@ -52,17 +52,40 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data, usedIn }) => {
     fotoBarang: JSON.parse(localStorage.getItem("savedImage-Profile")),
   };
   let route;
+  let options;
+  let kataBatal;
 
   switch (usedIn) {
     case "Perpanjang":
       route = "/detail/perpanjang/pelanggan";
+      kataBatal = "Apakah anda yakin mau membatalkan perpanjang gadai?";
+      options =
+        data.status === "Batal"
+          ? ["Detail", "History"]
+          : ["Detail", "Cetak Ulang", "Batal", "History"];
       break;
     case "Tebus":
       route = "/detail/tebus/pelanggan";
+      kataBatal = "Apakah anda yakin mau membatalkan tebus gadai?";
+      options =
+        data.status === "Batal"
+          ? ["Detail", "History"]
+          : ["Detail", "Cetak Ulang", "Batal", "History"];
       break;
-    // Add more cases as needed
     default:
       route = "/detail/gadai/pelanggan";
+      kataBatal = "Apakah anda yakin mau membatalkan gadai?";
+      options =
+        data.status === "Aktif"
+          ? [
+              "Detail",
+              "Tebus Gadai",
+              "Perpanjang Gadai",
+              "Cetak Ulang",
+              "Batal",
+              "History",
+            ]
+          : ["Detail", "History"];
   }
   // Unique functions to console.log for each option
   const handleDetailClick = () => {
@@ -108,18 +131,6 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data, usedIn }) => {
     History: handleHistoryClick,
   };
 
-  const options =
-    data.status === "Aktif"
-      ? [
-          "Detail",
-          "Tebus Gadai",
-          "Perpanjang Gadai",
-          "Cetak Ulang",
-          "Batal",
-          "History",
-        ]
-      : ["Detail", "History"];
-
   return (
     <>
       <SwipeableDrawer
@@ -131,10 +142,10 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data, usedIn }) => {
         disableSwipeToOpen={true}
       >
         <div className="w-full pt-[5px] pb-[12px] flex-col justify-center items-center gap-[10px] inline-flex">
-          <div className="w-[38px] h-[2px] bg-green-600 rounded-md"></div>
+          <div className="w-[38px] h-[2px]  bg-success-Pressed rounded-md"></div>
         </div>
         <Stack
-          className="px-4"
+          className="px-4  pb-[15px]"
           direction="row"
           justifyContent="space-between"
           alignItems="center"
@@ -144,7 +155,7 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data, usedIn }) => {
             style={{
               width: "62px",
               justifyContent: "flex-start",
-              paddingLeft: "0px",
+              padding: "0px",
             }}
           >
             <Icon
@@ -164,11 +175,11 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data, usedIn }) => {
           divider={
             <Divider
               variant="fullWidth"
-              sx={{ marginY: "4px" }}
+              sx={{ marginY: "6px" }}
               color="#EEEEEE"
             ></Divider>
           }
-          sx={{ px: "16px", mb: "8px" }}
+          sx={{ px: " 17px", mb: "8px" }}
         >
           {options.map((name) => (
             <ButtonOpsiItem title={name} onClickFunctions={optionHandlers} />
@@ -190,7 +201,7 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data, usedIn }) => {
         }}
       >
         <DialogContentText className="text-center text-sm font-semibold leading-[18px] text-neutral-100 ">
-          Apakah anda yakin mau membatalkan gadai?
+          {kataBatal}
         </DialogContentText>
         <Stack
           direction="row"

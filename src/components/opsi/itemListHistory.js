@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { Card, CardContent, Chip, Stack } from "@mui/material";
+import { Card, CardContent, Chip, Divider, Stack } from "@mui/material";
 import React from "react";
 import {
   getTextIconColor,
@@ -70,7 +70,7 @@ const ItemListHistory = (data) => {
     >
       <CardContent
         sx={{
-          py: "4px",
+          py: "10px",
           px: "16px",
           display: "block",
 
@@ -83,10 +83,27 @@ const ItemListHistory = (data) => {
             direction="row"
             spacing={2}
             justifyContent="space-between"
+            alignItems={"center"}
+            className="py-[3px]"
+          >
+            <p className="font-bold text-base">{dats.idtransaksi}</p>
+            <Chip
+              variant="outlined"
+              className={`border h-[18px] my-[3px] py-[10px] font-normal text-xs leading-[14px]  ${getTextIconColor(
+                status
+              )} ${getChipsBorderColor(status)} ${getDateColor(status)}`}
+              label={status === "Aktif" ? "Gadai" : status}
+            />
+          </Stack>
+          <Divider className="pt-1 border-[#EEEEEE]"></Divider>
+          <Stack
+            direction="row"
+            spacing={2}
+            justifyContent="space-between"
             alignItems="center"
           >
             <Stack
-              className="py-1.5 text-neutral-100 text-base leading-[18px] font-normal items-center"
+              className="py-1.5 pt-3 text-neutral-100 text-base leading-[18px] font-normal items-center"
               direction="row"
             >
               <Icon
@@ -106,19 +123,13 @@ const ItemListHistory = (data) => {
                 </p>
               )}
             </Stack>
-            <Chip
-              variant="outlined"
-              className={`border h-[18px] font-normal text-xs leading-[14px] px-1 ${getTextIconColor(
-                status
-              )} ${getChipsBorderColor(status)} ${getDateColor(status)}`}
-              label={status === "Aktif" ? "Gadai" : status}
-            ></Chip>
           </Stack>
           <Stack
             direction="row"
             spacing={2}
             justifyContent="space-between"
             alignItems="center"
+            paddingBottom={"2px"}
           >
             {isPeriode(status) ? (
               <Stack

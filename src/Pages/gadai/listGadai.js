@@ -121,7 +121,7 @@ function ListGadai() {
             handlerBackButton={handleBackButton}
           />
         </div>
-        <div className="bg-white pt-[68px] w-full">
+        <div className="bg-white pt-[58px] w-full">
           <BotNavbarNfab
             iconKiri={iconKiri}
             iconKanan={iconKanan}

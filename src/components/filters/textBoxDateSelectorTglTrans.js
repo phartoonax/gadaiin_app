@@ -36,7 +36,7 @@ const TextboxDateSelectorTglTrans = ({
   return (
     <>
       <Stack gap={"10px"}>
-        <div className="text-sm text-[15px] font-bold">{title}</div>
+        <div className="text-sm font-bold text-black">{title}</div>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Stack direction="row" justifyContent="space-between" width="100%">
             <MobileDatePicker
@@ -56,6 +56,9 @@ const TextboxDateSelectorTglTrans = ({
                     sx: {
                       paddingLeft: "0px",
                       borderRadius: "8px",
+                      "::placeholder": {
+                        color: "neutral.70",
+                      },
                       border: "1px solid",
                       borderColor: valueDatePicker1
                         ? "neutral.100"
@@ -104,6 +107,9 @@ const TextboxDateSelectorTglTrans = ({
                     sx: {
                       paddingLeft: "0px",
                       borderRadius: "8px",
+                      "::placeholder": {
+                        color: "neutral.70",
+                      },
                       border: "1px solid",
                       borderColor: valueDatePicker2
                         ? "neutral.100"

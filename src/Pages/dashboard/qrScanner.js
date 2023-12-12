@@ -113,31 +113,34 @@ const QRScanner = () => {
                 fill="none"
                 d="M23,0 L0,0 L0,23"
                 stroke="rgba(255, 0, 0, 0.5)"
-                strokeWidth="5"
+                strokeWidth="2"
               />
               <path
                 fill="none"
                 d="M0,77 L0,100 L23,100"
                 stroke="rgba(255, 0, 0, 0.5)"
-                strokeWidth="5"
+                strokeWidth="2"
               />
               <path
                 fill="none"
                 d="M77,100 L100,100 L100,77"
                 stroke="rgba(255, 0, 0, 0.5)"
-                strokeWidth="5"
+                strokeWidth="2"
               />
               <path
                 fill="none"
                 d="M100,23 L100,0 77,0"
                 stroke="rgba(255, 0, 0, 0.5)"
-                strokeWidth="5"
+                strokeWidth="2"
               />
             </svg>
           )}
           viewFinderBorder={80}
           onError={handleError}
-          constraints={{ advanced: [{ torch: isTorchOn }], facingMode }}
+          constraints={{
+            facingMode,
+            advanced: [{ torch: isTorchOn }],
+          }}
         />
         <div
           className="absolute top-[20%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-white text-center text-sm font-normal leading-[18px]"

@@ -511,19 +511,23 @@ const Login = (props) => {
                         {...registerLogin("email", {
                           type: "email",
                           required: true,
+                          pattern: {
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                            message: "Format email salah",
+                          },
                         })}
                         className={`input-border pl-10 bg-neutral-10 border ${
                           errorsLogin.email
-                            ? "border-red-500"
+                            ? "border-danger-Main bg-danger-Surface"
                             : watchLogin("email") !== "" &&
                               watchLogin("email") !== undefined
                             ? "border-neutral-100"
                             : "border-neutral-40"
-                        }  text-[#101C42] placeholder:text-[#6E7377] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0`}
+                        }  text-[#101C42] placeholder:text-[#6E7377] sm:text-sm rounded-lg block w-full p-2.5 `}
                       />
-                    </div>{" "}
+                    </div>
                     {errorsLogin.email && (
-                      <span className="pt-2 text-left w-auto text-xs leading-[14px] text-red-500 block">
+                      <span className="pt-2 text-left w-auto text-xs leading-[14px] text-danger-Main block">
                         Format email salah
                       </span>
                     )}
@@ -570,7 +574,7 @@ const Login = (props) => {
                       </button>
                     </div>{" "}
                     {errorsLogin.password && (
-                      <span className="pt-2 text-left w-auto text-xs leading-[14px] text-red-500 block">
+                      <span className="pt-2 text-left w-auto text-xs leading-[14px] text-danger-Main block">
                         Password harus terisi
                       </span>
                     )}

@@ -60,7 +60,7 @@ function AppBarWithSearch({
         style={{ fontSize: "24px", flex: "none" }}
       />
       <input
-        className="bg-transparent text-neutral-100 outline-none w-full focus:w-full  placeholder:text-neutral-80 focus:border-none"
+        className="bg-transparent text-neutral-100 text-sm outline-none w-full focus:w-full  placeholder:text-neutral-60 focus:border-none"
         type="text"
         placeholder={placeholder}
         value={searchInput}

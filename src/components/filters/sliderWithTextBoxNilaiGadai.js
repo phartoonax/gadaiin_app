@@ -22,7 +22,7 @@ const SliderWithTextboxNilaiGadai = ({
   return (
     <>
       <Stack gap={"10px"}>
-        <div className="text-sm text-[15px] font-bold">{title}</div>
+        <div className="text-sm text-black font-bold">{title}</div>
 
         <Stack
           direction="row"
