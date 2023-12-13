@@ -119,7 +119,7 @@ const FormDataPelangganGadai = () => {
             sx: { borderRadius: "8px", marginX: "16px", padding: "16px" },
           }}
         >
-          <DialogContentText className="text-center text-sm font-semibold leading-[18px] text-neutral-100 ">
+          <DialogContentText className="text-center text-sm font-semibold leading-[18px] text-black ">
             Apakah anda yakin data pelanggan yang anda masukkan sudah benar?
           </DialogContentText>
           <Stack
@@ -162,8 +162,6 @@ const FormDataPelangganGadai = () => {
               color: "neutral.10",
               width: "100%",
               paddingY: "10px",
-              fontWeight: 500,
-              fontSize: "15px",
             }}
             disabled={!isFormComplete}
             className={`${
@@ -171,7 +169,7 @@ const FormDataPelangganGadai = () => {
                 ? "bg-themeColor text-neutral-10"
                 : "bg-neutral-30 text-neutral-70"
             }
-            hover:bg-themeColor`}
+            hover:bg-themeColor text-sm font-bold`}
             onClick={() => setIsDialogOpenConfirmationPass(true)}
           >
             Selanjutnya

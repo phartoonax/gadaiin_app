@@ -134,7 +134,6 @@ function DetailDataTransaksiPerpanjang() {
           elevation={5}
         >
           <Stack direction={"row"} gap={"10px"} className="">
-            {" "}
             <Button
               variant="contained"
               sx={{
@@ -142,11 +141,9 @@ function DetailDataTransaksiPerpanjang() {
                 color: "neutral.10",
                 width: "100%",
                 paddingY: "10px",
-                fontWeight: 500,
-                fontSize: "15px",
               }}
               disabled={false}
-              className="bg-themeColor text-neutral-10 hover:bg-themeColor border border-neutral-40"
+              className="bg-themeColor text-neutral-10 hover:bg-themeColor border border-neutral-40 text-sm font-bold"
               onClick={() => handleNavigateToBack()}
             >
               Sebelumnya

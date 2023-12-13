@@ -180,11 +180,9 @@ function FormDataTransaksiTebus() {
                 color: "neutral.10",
                 width: "100%",
                 paddingY: "10px",
-                fontWeight: 500,
-                fontSize: "15px",
               }}
               disabled={false}
-              className="bg-neutral-10 text-neutral-100 hover:bg-neutral-10 border border-neutral-40"
+              className="bg-neutral-10 text-neutral-100 hover:bg-neutral-10 border border-neutral-40 font-bold text-sm"
               onClick={() => handleNavigateToBack()}
             >
               Sebelumnya
@@ -196,8 +194,6 @@ function FormDataTransaksiTebus() {
                 color: "neutral.10",
                 width: "100%",
                 paddingY: "10px",
-                fontWeight: 500,
-                fontSize: "15px",
               }}
               disabled={!isFormComplete}
               className={`${
@@ -205,7 +201,7 @@ function FormDataTransaksiTebus() {
                   ? "bg-themeColor text-neutral-10"
                   : "bg-neutral-30 text-neutral-70"
               }
-  hover:bg-themeColor`}
+  hover:bg-themeColor  font-bold text-sm`}
               onClick={() => setIsDialogOpenConfirmationPass(true)}
             >
               Simpan
@@ -227,7 +223,7 @@ function FormDataTransaksiTebus() {
             sx: { borderRadius: "8px", marginX: "16px", padding: "16px" },
           }}
         >
-          <DialogContentText className="text-center text-sm font-semibold leading-[18px] text-neutral-100 ">
+          <DialogContentText className="text-center text-sm font-semibold leading-[18px] text-black ">
             Apakah anda yakin data gadai yang anda masukkan sudah benar?
           </DialogContentText>
           <Stack

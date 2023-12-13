@@ -97,7 +97,7 @@ function PilihLokasi() {
         }}
       >
         {" "}
-        <DialogContentText className="text-center text-sm font-semibold leading-[18px] text-neutral-100 ">
+        <DialogContentText className="text-center text-sm font-semibold leading-[18px] text-black ">
           Apakah anda yakin lokasi anda di {selectedData.namalokasi}?
         </DialogContentText>
         <Stack

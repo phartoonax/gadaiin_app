@@ -1,21 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { Button, Paper, Stack } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogContentText,
+  Paper,
+  Snackbar,
+  Stack,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AppBarPlain from "../../components/appBarPlain";
 import PhotoCameraForm from "../../components/form/photoCameraForm";
+import axios from "axios";
+import { urlAPI } from "../../variableGlobal";
 
 function Profile() {
   const dataProfile = JSON.parse(localStorage.getItem("dataProfile"));
   const navigate = useNavigate();
   const [isFormProfileChangeFilled, setIsFormProfileChangeFilled] =
     useState(false);
+  const [isSnackbarBerhasilGantiPassword, setIsSnackbarBerhasilGantiPassword] =
+    useState(false);
 
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
+    register: registerProfileChange,
+    handleSubmit: handleSubmitProfileChange,
+    formState: { errors: errorsProfileChange },
   } = useForm();
 
   const {
@@ -23,6 +34,7 @@ function Profile() {
     handleSubmit: handleSubmitChangePass,
     // reset: resetChangePass,
     setValue: setValueChangePass,
+    setError: setErrorChangePass,
     formState: { errors: errorsChangePass },
     getValues: getValuesChangePass,
   } = useForm();
@@ -34,7 +46,7 @@ function Profile() {
   const [valuePhoneProfile, setValuePhoneProfile] = useState(dataProfile.phone);
   const [savedImage, setSavedImage] = useState(
     JSON.parse(localStorage.getItem("savedImage-ProfileFromCamera")) ||
-      dataProfile.picture[0]
+      dataProfile.picture
   );
 
   const [isDialogOpenChangePass, setIsDialogOpenChangePass] = useState(false);
@@ -49,6 +61,10 @@ function Profile() {
     isConfrimNewPasswordChangeVisible,
     setIsConfrimNewPasswordChangeVisible,
   ] = useState(false);
+  const [isDialogLogoutOpen, setIsDialogLogoutOpen] = useState(false);
+  const [isDialogUbahPassOpen, setIsDialogUbahPassOpen] = useState(false);
+
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState(undefined);
 
   function toggleCurrentPasswordChangeVisibility() {
     setIsCurrentPasswordChangeVisible((prevState) => !prevState);
@@ -104,7 +120,7 @@ function Profile() {
       valueEmailProfile !== dataProfile.email ||
       valueUsernameProfile !== dataProfile.name ||
       valuePhoneProfile !== dataProfile.phone ||
-      savedImage !== dataProfile.picture[0];
+      savedImage !== dataProfile.picture;
 
     setIsFormProfileChangeFilled(isFormProfileChangeFilled);
   }, [valueEmailProfile, valueUsernameProfile, valuePhoneProfile, savedImage]);
@@ -122,6 +138,7 @@ function Profile() {
     setValueChangePass("changeoldpassword", "");
     setValueChangePass("changenewpassword", "");
     setValueChangePass("changeconfirmnewpassword", "");
+    setPasswordErrorMessage(undefined);
 
     setIsCurrentPasswordChangeVisible(false);
     setIsNewPasswordChangeVisible(false);
@@ -141,6 +158,66 @@ function Profile() {
     localStorage.removeItem("savedImage-ProfileFromCamera");
     navigate(-1);
   }
+
+  const handlerSubmitChangePass = async () => {
+    try {
+      const values = getValuesChangePass();
+      const response = await axios.put(
+        urlAPI + "profile/ubahpassword",
+        {
+          passwordlama: values.changeoldpassword, // old password
+          passwordbaru: values.changenewpassword, // new password
+        },
+        {
+          headers: {
+            access_token: localStorage.getItem("accessToken"),
+          },
+        }
+      );
+
+      if (response.data.isValid) {
+        // The password is valid
+        // Submit the form or do something else
+        toggleDialogChangePass();
+        setIsSnackbarBerhasilGantiPassword(true);
+      } else {
+        // The password is not valid
+        // Set the error message
+        setIsDialogOpenChangePass(true);
+        errorsChangePass.changeoldpassword.message =
+          "The old password is incorrect.";
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      // Handle the error
+      setIsDialogOpenChangePass(true);
+      setPasswordErrorMessage(error.response.data.message);
+    }
+  };
+  const onSubmitClick = async (data) => {
+    const values = getValuesChangePass();
+    // Perform validation
+    if (values.changenewpassword !== values.changeconfirmnewpassword) {
+      setErrorChangePass("changeconfirmnewpassword", {
+        type: "manual",
+        message: "tidak ada Password baru tidak sesuai",
+      });
+      console.log("Validation failed");
+      return; // Stop execution if validation fails
+    }
+    console.log("Validation passed");
+    try {
+      // Your axios call and other logic goes here
+      setIsDialogUbahPassOpen(true);
+      setIsDialogOpenChangePass(false);
+    } catch (error) {
+      console.error(error);
+      // Handle the error
+    }
+
+    // Continue with the rest of the function...
+    // Your axios call and other logic goes here
+  };
 
   return (
     <>
@@ -186,7 +263,7 @@ function Profile() {
                           isCurrentPasswordChangeVisible ? "text" : "password"
                         }
                         className={`input-border pl-2  border text-[#1F2933] sm:text-sm rounded-lg block w-full p-2.5  ${
-                          errorsChangePass.changeoldpassword
+                          passwordErrorMessage
                             ? "border-danger-Main bg-danger-Surface"
                             : isFormPasswordChangeFilled
                             ? "border-black bg-neutral-10"
@@ -211,9 +288,9 @@ function Profile() {
                         </button>
                       </div>
                     </div>
-                    {errorsChangePass.changeoldpassword && (
+                    {passwordErrorMessage && (
                       <span className="text-danger-Main text-xs leading-[14px] pt-2">
-                        {errorsChangePass.changeoldpassword.message}
+                        {passwordErrorMessage}
                       </span>
                     )}
                   </div>
@@ -308,7 +385,7 @@ function Profile() {
                 <div className="px-3 pb-4 pt-2 sm:px-6 flex gap-2.5 justify-between">
                   <button
                     disabled={!isFormPasswordChangeFilled}
-                    onClick={handleSubmitChangePass(toggleDialogChangePass)}
+                    onClick={() => handleSubmitChangePass(onSubmitClick())}
                     type="button"
                     className={` font-bold py-3.5 px-5 w-2/4 rounded-xl  ${
                       isFormPasswordChangeFilled
@@ -330,6 +407,94 @@ function Profile() {
             </div>
           </div>
         )}
+        <Dialog
+          className="rounded-lg w-full "
+          open={isDialogLogoutOpen}
+          onClose={() => setIsDialogLogoutOpen(false)}
+          PaperProps={{
+            sx: {
+              borderRadius: "8px",
+              marginX: "16px",
+              paddingY: "16px",
+              paddingX: "12px",
+              width: "100%",
+            },
+          }}
+        >
+          <DialogContentText className="text-center text-sm font-semibold leading-[18px] text-black ">
+            {"Apakah anda yakin mau logout?"}
+          </DialogContentText>
+          <Stack
+            direction="row"
+            gap={"10px"}
+            className="w-full justify-between pt-4"
+          >
+            <Button
+              variant="contained"
+              className="text-neutral-10 bg-success-Main rounded-xl px-5 py-3.5 w-full text-base font-bold hover:bg-success-Main"
+              onClick={() => {
+                setIsDialogLogoutOpen(false);
+                navigate("/");
+                localStorage.clear();
+              }}
+            >
+              Ya
+            </Button>
+            <Button
+              variant="outlined"
+              className="text-success-Main border-success-Main hover:border-success-Main rounded-xl px-5 py-3.5 w-full text-base font-bold"
+              onClick={() => {
+                setIsDialogLogoutOpen(false);
+              }}
+            >
+              Tidak
+            </Button>
+          </Stack>
+        </Dialog>
+        <Dialog
+          className="rounded-lg w-full "
+          open={isDialogUbahPassOpen}
+          onClose={() => setIsDialogUbahPassOpen(false)}
+          PaperProps={{
+            sx: {
+              borderRadius: "8px",
+              marginX: "16px",
+              paddingY: "16px",
+              paddingX: "12px",
+              width: "100%",
+            },
+          }}
+        >
+          <DialogContentText className="text-center text-sm font-semibold leading-[18px] text-black ">
+            {"Apakah anda yakin mau ubah password?"}
+          </DialogContentText>
+          <Stack
+            direction="row"
+            gap={"10px"}
+            className="w-full justify-between pt-4"
+          >
+            <Button
+              variant="contained"
+              className="text-neutral-10 bg-success-Main rounded-xl px-5 py-3.5 w-full text-base font-bold hover:bg-success-Main"
+              onClick={() => {
+                setIsDialogUbahPassOpen(false);
+                handleSubmitChangePass(handlerSubmitChangePass)();
+              }}
+            >
+              Ya
+            </Button>
+            <Button
+              variant="outlined"
+              className="text-success-Main border-success-Main hover:border-success-Main rounded-xl px-5 py-3.5 w-full text-base font-bold"
+              onClick={() => {
+                setIsDialogUbahPassOpen(false);
+                setIsDialogOpenChangePass(true);
+              }}
+            >
+              Tidak
+            </Button>
+          </Stack>
+        </Dialog>
         <div className="px-4 pt-5 w-full">
           <form onChange={handleFormProfileChange}>
             <Stack gap={"20px"}>
@@ -342,14 +507,14 @@ function Profile() {
                   name="emailprofile"
                   defaultValue={valueEmailProfile}
                   onChange={(e) => setValueEmailProfile(e.target.value)}
-                  {...register("emailprofile", {
+                  {...registerProfileChange("emailprofile", {
                     type: "email",
                     required: true,
                   })}
                   className={`input-border pl-2 bg-gray-50 border border-neutral-60 text-neutral-100 text-sm  rounded-lg  focus:border-[#101C42] block w-full px-4 py-[15px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white  ${
                     valueEmailProfile ? "border-[#101C42]" : "border-neutral-60"
                   } ${
-                    errors.emailprofile
+                    errorsProfileChange.emailprofile
                       ? "border-[#E53A34] bg-[#FCF3F2]"
                       : "border-neutral-60"
                   }`}
@@ -364,7 +529,7 @@ function Profile() {
                   name="usernameprofile"
                   defaultValue={valueUsernameProfile}
                   onChange={(e) => setValueUsernameProfile(e.target.value)}
-                  {...register("usernameprofile", {
+                  {...registerProfileChange("usernameprofile", {
                     type: "text",
                     required: true,
                   })}
@@ -373,7 +538,7 @@ function Profile() {
                       ? "border-[#101C42]"
                       : "border-neutral-60"
                   } ${
-                    errors.usernameprofile
+                    errorsProfileChange.usernameprofile
                       ? "border-[#E53A34] bg-[#FCF3F2]"
                       : "border-neutral-60"
                   }`}
@@ -394,9 +559,8 @@ function Profile() {
                     defaultValue={valuePhoneProfile}
                     onChange={(e) => {
                       setValuePhoneProfile(e.target.value);
-                      console.log(valuePhoneProfile);
                     }}
-                    {...register("phoneprofile", {
+                    {...registerProfileChange("phoneprofile", {
                       type: "number",
                       required: true,
                     })}
@@ -405,7 +569,7 @@ function Profile() {
                         ? "border-[#101C42]"
                         : "border-neutral-60"
                     } ${
-                      errors.phoneprofile
+                      errorsProfileChange.phoneprofile
                         ? "border-[#E53A34] bg-[#FCF3F2]"
                         : "border-neutral-60"
                     }`}
@@ -445,7 +609,7 @@ function Profile() {
                 variant="contained"
                 onClick={
                   isFormProfileChangeFilled
-                    ? handleSubmit(handleSimpanButton)
+                    ? handleSubmitProfileChange(handleSimpanButton)
                     : null
                 }
                 enabled={isFormProfileChangeFilled ? false : true}
@@ -484,8 +648,7 @@ function Profile() {
           <Button
             variant="contained"
             onClick={() => {
-              navigate("/");
-              localStorage.clear();
+              setIsDialogLogoutOpen(true);
             }}
             sx={{
               borderRadius: "8px",
@@ -501,6 +664,18 @@ function Profile() {
           </Button>
         </Paper>
       </div>
+      <Snackbar
+        open={isSnackbarBerhasilGantiPassword}
+        onClose={() => setIsSnackbarBerhasilGantiPassword(false)}
+        autoHideDuration={1500}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <div
+          className={`rounded-full border mt-12  text-sm px-[8px] py-[7px]              bg-success-Surface border-success-Pressed text-success-Main`}
+        >
+          {"Password Berhasil Diubah"}
+        </div>
+      </Snackbar>
     </>
   );
 }

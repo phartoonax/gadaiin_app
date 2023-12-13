@@ -36,16 +36,6 @@ const Dashboard = (props) => {
         });
         const data = response.data.data.datauser;
         setDataDashboard(data);
-        const getImage = await axios.get(
-          urlAPI + "profile/" + data?.gambar,
-          // "https://a845-202-80-216-36.ngrok-free.app/gadai/foto1-1702345901289562.jpg",
-          {
-            headers: { access_token: localStorage.getItem("accessToken") },
-            responseType: "blob",
-          }
-        );
-        const imageObjectURL = URL.createObjectURL(getImage.data);
-        setSavedImage(imageObjectURL);
       } catch (error) {
         console.error("Error:", error.response.data.message);
       }
@@ -92,14 +82,44 @@ const Dashboard = (props) => {
     },
   ];
   //! WILL BE SET FROM API
-  const dataProfile = {
-    name: "Bagas",
-    email: "ADMIN@EMAIL.COM",
-    phone: 87884044994,
-    password: "123456",
-    picture: savedImage ?? "https://placehold.co/290x290?text=Hello+Bagas", //change this if want to simulate null image
-  };
-  localStorage.setItem("dataProfile", JSON.stringify(dataProfile));
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.get(urlAPI + "profile/get", {
+          headers: {
+            access_token: localStorage.getItem("accessToken"),
+          },
+        });
+        const data = response.data.data;
+        const getImage = await axios
+          .get(
+            data?.gambar,
+            // "https://a845-202-80-216-36.ngrok-free.app/gadai/foto1-1702345901289562.jpg",
+            {
+              headers: { access_token: localStorage.getItem("accessToken") },
+              responseType: "blob",
+            }
+          )
+          .then((res) => {
+            const imageObjectURL = URL.createObjectURL(res.data);
+            setSavedImage(imageObjectURL);
+            return imageObjectURL;
+          });
+        const dataProfile = {
+          uuiduser: data.uuiduser,
+          name: data.username,
+          email: data.email,
+          phone: data.hp,
+          password: "",
+          picture: getImage ?? "https://placehold.co/290x290?text=Hello+Bagas",
+        };
+        localStorage.setItem("dataProfile", JSON.stringify(dataProfile));
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    })();
+  }, []);
+
   const lokasi = JSON.parse(localStorage.getItem("lokasi"));
 
   const renderdat = datatemp.map((data) => (

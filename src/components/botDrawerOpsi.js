@@ -200,7 +200,7 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data, usedIn }) => {
           },
         }}
       >
-        <DialogContentText className="text-center text-sm font-semibold leading-[18px] text-neutral-100 ">
+        <DialogContentText className="text-center text-sm font-semibold leading-[18px] text-black ">
           {kataBatal}
         </DialogContentText>
         <Stack

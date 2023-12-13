@@ -179,7 +179,7 @@ const QRScanner = () => {
           },
         }}
       >
-        <DialogContentText className="text-center text-sm font-normal leading-[18px] text-neutral-100 font-inter">
+        <DialogContentText className="text-center text-sm font-normal leading-[18px] text-black font-inter">
           {" Apakah anda mau mengubah status data gadai dengan kode "}
           <span className="font-bold">CX3705</span>
           {" atas nama "}

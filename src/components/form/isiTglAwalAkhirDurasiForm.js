@@ -157,16 +157,20 @@ const IsiTglAwalAkhirDurasiForm = ({
         disableSwipeToOpen={true}
       >
         {" "}
-        <div className="w-full pt-[5px] pb-[12px] flex-col justify-center items-center gap-[10px] inline-flex">
-          <div className="w-[38px] h-[2px] bg-green-600 rounded-md"></div>
+        <div className="w-full pt-[5px] pb-[6px] flex-col justify-center items-center gap-[10px] inline-flex">
+          <div className="w-[38px] h-[2px] bg-success-Pressed rounded-md"></div>
         </div>
-        <Stack className="px-4" direction="row" justifyContent="space-between">
+        <Stack
+          className="px-4 pb-[19px]"
+          direction="row"
+          justifyContent="space-between"
+        >
           <IconButton
             onClick={() => isDrawerDurasiGadaiOpen(false)}
             style={{
               width: "62px",
               justifyContent: "flex-start",
-              paddingLeft: "0px",
+              padding: "0px",
             }}
           >
             <Icon
@@ -175,7 +179,7 @@ const IsiTglAwalAkhirDurasiForm = ({
               style={{ fontSize: "24px" }}
             ></Icon>
           </IconButton>
-          <div className="text-base leading-[18px] font-bold text-success-Main text-center items-center flex ">
+          <div className="text-sm font-bold text-success-Main text-center items-center flex ">
             Lama Gadai
           </div>
           <div style={{ width: "62px" }}></div>{" "}
@@ -190,7 +194,7 @@ const IsiTglAwalAkhirDurasiForm = ({
               key={index}
               direction="row"
               alignItems="center"
-              className="py-[10px] text-base text-black font-bold"
+              className=" text-sm text-black font-bold"
               onClick={() => {
                 handleDurasiGadaiChange(item);
               }}

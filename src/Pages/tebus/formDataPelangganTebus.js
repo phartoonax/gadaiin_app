@@ -82,8 +82,6 @@ function FormDataPelangganTebus() {
               color: "neutral.10",
               width: "100%",
               paddingY: "10px",
-              fontWeight: 500,
-              fontSize: "15px",
             }}
             disabled={!isFormComplete}
             className={`${
@@ -91,7 +89,7 @@ function FormDataPelangganTebus() {
                 ? "bg-themeColor text-neutral-10"
                 : "bg-neutral-30 text-neutral-70"
             }
-            hover:bg-themeColor`}
+            hover:bg-themeColor text-sm font-bold`}
             onClick={() => handleSetCustomerData()}
           >
             Selanjutnya

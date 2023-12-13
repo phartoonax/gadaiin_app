@@ -184,13 +184,13 @@ const FormPilihPelanggan = () => {
           sx: { borderRadius: "8px", marginX: "16px", padding: "16px" },
         }}
       >
-        <DialogContentText className="text-center text-sm font-semibold leading-[18px] text-neutral-100 pb-4">
+        <DialogContentText className="text-center text-sm font-semibold leading-[18px] text-black pb-4">
           Apakah anda yakin ingin memilih data untuk pelanggan di bawah ini ?
         </DialogContentText>
         <DialogContent className="border border-neutral-100 rounded-lg overflow-hidden p-0 h-[120px] font-sans">
           <Stack direction="row" gap={"10px"}>
             <div className="h-[120px] w-[120px] bg-red-600 rounded-[4px] flex-shrink-0"></div>
-            <Stack className="font-normal text-sm leading-[14px] text-black items-start py-[7px] mr-1 w-full overflow-hidden justify-center">
+            <Stack className="font-normal text-xs leading-[14px] text-black items-start py-[7px] mr-1 w-full overflow-hidden justify-center">
               <p className="font-bold text-sm leading-[18px] w-full overflow-auto overflow-ellipsis max-h-[52px]">
                 {pickedCustomer?.name}
               </p>
