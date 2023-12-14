@@ -56,21 +56,27 @@ const ChipKelengkapanForm = ({
           </Button>
         </Stack>
         <Grid container direction="row" wrap="wrap" spacing={1}>
-          {chipValues.slice(0, 5).map((value) => (
-            <Grid item key={value}>
+          {chipValues.slice(0, 5).map((value, index) => (
+            <Grid item key={value.kelengkapan}>
               <Chip
-                label={value}
+                label={value.kelengkapan}
                 variant={
-                  SelectedChipValues.includes(value) ? "solid" : "outlined"
+                  SelectedChipValues.map((item) => item.kelengkapan).includes(
+                    value.kelengkapan
+                  )
+                    ? "solid"
+                    : "outlined"
                 }
                 color={"success"}
                 className={`font-normal text-sm px-0.5 py-[7px] max-w-[150px] overflow-ellipsis focus:bg-themeColor ${
-                  SelectedChipValues.includes(value)
+                  SelectedChipValues.map((item) => item.kelengkapan).includes(
+                    value.kelengkapan
+                  )
                     ? "text-neutral-10"
                     : "text-themeColor"
                 }`}
                 onClick={() =>
-                  handleChipClick ? handleChipClick(value) : null
+                  handleChipClick ? handleChipClick(value.kelengkapan) : null
                 }
               />
             </Grid>

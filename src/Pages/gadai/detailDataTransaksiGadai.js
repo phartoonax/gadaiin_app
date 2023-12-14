@@ -18,28 +18,51 @@ function DetailDataTransaksiGadai() {
   const location = useLocation();
   const dataPelanggan = location?.state?.dataDetailPelangganGadai || null;
 
-  const [valueBunga, setValueBunga] = useState();
+  const [valueBunga, setValueBunga] = useState(
+    dataPelanggan?.bunga || undefined
+  );
   const [valueNominal, setValueNominal] = useState();
 
   const handleNavigateToBack = () => {
     Navigate(-1);
   };
   const setDurasiDanBungaValue = (durasi, bunga) => {
-    setValueBunga(bunga);
+    // setValueBunga(bunga);
+  };
+
+  const convertLamaGadai = (lamaGadai) => {
+    const daysInYear = 365;
+    const daysInMonth = 30;
+    const daysInWeek = 7;
+
+    if (lamaGadai >= daysInYear) {
+      const years = Math.floor(lamaGadai / daysInYear);
+      return years + " Tahun";
+    } else if (lamaGadai >= daysInMonth) {
+      const months = Math.floor(lamaGadai / daysInMonth);
+      return months + " Bulan";
+    } else if (lamaGadai >= daysInWeek) {
+      const weeks = Math.floor(lamaGadai / daysInWeek);
+      return weeks + " Minggu";
+    } else {
+      return lamaGadai + " Hari";
+    }
   };
 
   const [showFullPageModal, setShowFullPageModal] = useState(false);
 
   useEffect(() => {
     // Calculate nominal value
-    if (valueBunga) {
+    if (valueBunga && dataPelanggan?.nilaipinjaman) {
       const bunga = parseFloat(valueBunga) / 100;
-      const nominal = Number(dataPelanggan?.harga.replace(/\./g, ""));
+      const nominal = Number(
+        String(dataPelanggan?.nilaipinjaman).replace(/\./g, "")
+      );
       const hasil = bunga * nominal;
 
       setValueNominal(pemisahRibuan(Math.round(hasil)));
     }
-  }, [dataPelanggan?.harga, valueBunga]);
+  }, [dataPelanggan?.nilaipinjaman, valueBunga]);
 
   return (
     <>
@@ -63,13 +86,13 @@ function DetailDataTransaksiGadai() {
               enabled={false}
               title={"No. Gadai"}
               isRequired={false}
-              valueForm={dataPelanggan?.noGadai || undefined}
+              valueForm={dataPelanggan?.kodegadai || undefined}
             />
             <IsiFormDefault
               enabled={false}
               title={"Jaminan"}
               isRequired={true}
-              valueForm={dataPelanggan?.jaminan || undefined}
+              valueForm={dataPelanggan?.jaminanbarang || undefined}
             />
             <ChipKelengkapanForm
               title={"Kelengkapan"}
@@ -84,11 +107,11 @@ function DetailDataTransaksiGadai() {
               enabled={false}
               title={"IMEI / No. Seri"}
               isRequired={true}
-              valueForm={dataPelanggan?.noSeri || undefined}
+              valueForm={dataPelanggan?.noseri || undefined}
             />
             <IsiTglAwalAkhirDurasiForm
-              tglKreditLama={dataPelanggan?.tglKredit}
-              durasiGadaiLama={dataPelanggan?.lamaGadai}
+              tglKreditLama={dataPelanggan?.tglkredit}
+              durasiGadaiLama={convertLamaGadai(dataPelanggan?.lamagadai)}
               setDurasiDanBungaValue={setDurasiDanBungaValue}
               enabled={false}
             />
@@ -96,7 +119,9 @@ function DetailDataTransaksiGadai() {
               enabled={false}
               title={"Nilai Pinjaman"}
               isRequired={true}
-              valueForm={dataPelanggan?.harga || undefined}
+              valueForm={
+                pemisahRibuan(dataPelanggan?.nilaipinjaman) || undefined
+              }
             />
             <IsiBungaForm valueBunga={valueBunga} valueNominal={valueNominal} />
             <PhotoCameraForm

@@ -260,11 +260,11 @@ function generateRandomDataGadai(designatedFor, jumlah) {
     const dataPelanggan = generateRandomDataCustomer(1)[0];
 
     return {
-      idtransaksi: "CGX" + getRandomInt(100000, 999999),
+      uuidgadai: "CGX" + getRandomInt(100000, 999999),
       lokasi: "KDC",
-      nama: dataPelanggan.name,
-      notelp: dataPelanggan.phoneNumber,
-      noktp: dataPelanggan.noCustomer,
+      namacustomer: dataPelanggan.namacustomer,
+      telp: dataPelanggan.telp,
+      noidentitas: dataPelanggan.noidentitas,
       alamat: dataPelanggan.address,
       kelengkapan: [
         "Sertifikat",
@@ -274,12 +274,12 @@ function generateRandomDataGadai(designatedFor, jumlah) {
         "STNK",
         "BPKB",
       ],
-      noSeri: "1234567890",
+      noseri: "1234567890",
       status: statuses[getRandomInt(0, statuses.length - 1)],
-      barang: barang,
-      harga: getRandomIntRounded(1000000, 5000000),
+      jaminanbarang: barang,
+      nilaipinjaman: getRandomIntRounded(1000000, 5000000),
       bunga: getRandomInt(5, 35) + "%",
-      periodegadai: periodegadai,
+      lamagadai: periodegadai,
       tglkredit: formatDate(tglkredit),
       tgljatuhtempo: formatDate(tgljatuhtempo),
     };
@@ -327,9 +327,9 @@ function generateRandomDataCustomer(jumlah) {
       return randomNumber;
     }
     return {
-      name: generateName(),
-      phoneNumber: generateRandomPhoneNumber(),
-      noCustomer: generateRandomIDBadgeNumber(),
+      namacustomer: generateName(),
+      telp: generateRandomPhoneNumber(),
+      noidentitas: generateRandomIDBadgeNumber(),
       address: "Jl. Raya Kediri - Pare No. 1, Kediri",
     };
   }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import AppBarPlain from "../../components/appBarPlain";
 import ProgressIndicatorDetail from "../../components/detail/progressIndicatorDetail";
@@ -6,12 +6,42 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Paper, Stack } from "@mui/material";
 import IsiFormDefault from "../../components/form/isiDefaultForm";
 import PhotoCameraForm from "../../components/form/photoCameraForm";
+import axios from "axios";
+import { urlAPI } from "../../variableGlobal";
 
 function DetailDataPelangganGadai() {
   const navigation = useNavigate();
   const location = useLocation();
-  const dataPelanggan = location?.state?.dataDetailPelangganGadai || null;
+
+  // const lokasi = JSON.parse(localStorage.getItem("lokasi"));
+
+  const [dataPelanggan, setDataPelanggan] = useState(
+    location?.state?.dataDetailPelangganGadai || null
+  );
+  const dataUUID = location?.state?.uuidDetail || null;
+
   const isFormComplete = true;
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.post(
+          urlAPI + "gadai/detail",
+          {
+            uuidgadai: dataUUID,
+          },
+          {
+            headers: {
+              access_token: localStorage.getItem("accessToken"),
+            },
+          }
+        );
+        console.log(response.data.data);
+        setDataPelanggan(response.data.data);
+      } catch {}
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSetCustomerData = () => {
     navigation("/detail/gadai/transaksi", {
@@ -33,14 +63,14 @@ function DetailDataPelangganGadai() {
               title={"Nama"}
               isRequired={true}
               type={"button"}
-              valueForm={dataPelanggan?.name || undefined}
+              valueForm={dataPelanggan?.namacustomer || undefined}
             />
             <IsiFormDefault
               enabled={false}
               title={"Telpon"}
               type={"number"}
               isRequired={true}
-              valueForm={dataPelanggan?.phoneNumber || undefined}
+              valueForm={dataPelanggan?.telp || undefined}
             />
             <IsiFormDefault
               enabled={false}
@@ -52,13 +82,13 @@ function DetailDataPelangganGadai() {
               enabled={false}
               title={"No. Identitas Sesuai KTP"}
               isRequired={true}
-              valueForm={dataPelanggan?.noCustomer || undefined}
+              valueForm={dataPelanggan?.noidentitas || undefined}
             />
             <PhotoCameraForm
               title={"Foto Pelanggan"}
               savedImage={dataPelanggan?.fotoCustomer}
               setSavedImage={null}
-              idPelanggan={dataPelanggan?.noCustomer}
+              idPelanggan={dataPelanggan?.uuidcustomer}
               enabled={false}
             />
             <div className="h-16" />

@@ -12,6 +12,7 @@ import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { urlAPI } from "../../variableGlobal";
+import { pemisahRibuan } from "../../functionGlobal";
 
 const Dashboard = (props) => {
   const navigate = useNavigate();
@@ -23,9 +24,10 @@ const Dashboard = (props) => {
   const [shouldRender, setShouldRender] = useState(false);
   const [shouldRenderBackground, setShouldRenderBackground] = useState(false);
 
-  const [dataDashboard, setDataDashboard] = useState(null);
+  const [dataUserDashboard, setDataUserDashboard] = useState(null);
   const [savedImage, setSavedImage] = useState(null);
 
+  const [dataTransaksiTerakhir, setDataTransaksiTerakhir] = useState(null);
   const [dataRangkuman, setDataRangkuman] = useState(null);
 
   useEffect(() => {
@@ -38,7 +40,7 @@ const Dashboard = (props) => {
           },
         });
         const data = response.data.data.datauser;
-        setDataDashboard(data);
+        setDataUserDashboard(data);
       } catch (error) {
         const errorMssg = error.response?.data?.message || error.message;
         console.error("Error:", errorMssg);
@@ -46,6 +48,73 @@ const Dashboard = (props) => {
     };
 
     fetchData();
+
+    //GET DATA TRANSAKSI TERAKHIR
+    (async () => {
+      try {
+        const response = await axios.post(
+          urlAPI + "get-transaksi-terakhir",
+          {
+            uuidlokasi: lokasi.uuidLokasi,
+          },
+          {
+            headers: {
+              access_token: localStorage.getItem("accessToken"),
+            },
+          }
+        );
+        const getLogo = (status) => {
+          switch (status) {
+            case "Aktif":
+            case "PERPANJANG":
+              return "uil:hourglass";
+            case "TEBUS":
+              return "uil:money-withdraw";
+
+            default:
+              return "uil:balance-scale";
+          }
+        };
+        const getDatenTime = (date, time) => {
+          const dateSplit = date.split("-");
+          const timeSplit = time.split(":");
+          const year = dateSplit[0];
+          const month = dateSplit[1] - 1;
+          const day = dateSplit[2];
+          const hour = timeSplit[0];
+          const minute = timeSplit[1];
+          const dateObj = new Date(year, month, day, hour, minute);
+
+          const options = {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+          };
+          let str = dateObj.toLocaleString("id-ID", options);
+          str = str.replace(",", "");
+
+          return str;
+        };
+        const data = response.data.data;
+        let arrayData = data.map((item) => ({
+          uuidtransaksi: item.uuidtrans,
+          jenis: item.jenis,
+          id: item.kodetrans,
+          name: item.namacustomer,
+          value: "Rp " + pemisahRibuan(item.nilaipinjaman),
+          transaksi: getDatenTime(item.tgltrans, item.jam),
+          logo: getLogo(item.jenis),
+        }));
+
+        setDataTransaksiTerakhir(arrayData);
+      } catch (error) {
+        const errorMssg = error.response?.data?.message || error.message;
+        console.error("Error:", errorMssg);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -62,30 +131,6 @@ const Dashboard = (props) => {
     }
   }, [isMenuOpen]);
 
-  const datatemp = [
-    {
-      id: "GDJBD231020",
-      name: "Badrun Sukmawati Badrun Sukmawati Badrun Sukmawati",
-      value: "Rp 126.000.000",
-      transaksi: "14/08/2023 16:40",
-      logo: "uil:balance-scale",
-    },
-    {
-      id: "GDJBD231020",
-      name: "Badrun Sukmawati",
-      value: "Rp 82.430.000",
-      transaksi: "14/08/2023 16:40",
-      logo: "uil:hourglass",
-    },
-    {
-      id: "GDJBD231020",
-      name: "Badrun Sukmawati Badrun Sukmawati",
-      value: "Rp 52.150.000",
-      transaksi: "14/08/2023 16:40",
-      logo: "uil:money-withdraw",
-    },
-  ];
-
   const lokasi = JSON.parse(localStorage.getItem("lokasi"));
 
   useEffect(() => {
@@ -100,12 +145,12 @@ const Dashboard = (props) => {
         const data = response.data.data;
         //GET SET DATA USER-PROFILE-IMAGE
         const getImage =
-          data.image === undefined
+          data.gambar === undefined
             ? null
             : await axios
                 .get(
                   data?.gambar,
-                  // "https://a845-202-80-216-36.ngrok-free.app/gadai/foto1-1702345901289562.jpg",
+
                   {
                     headers: {
                       access_token: localStorage.getItem("accessToken"),
@@ -147,41 +192,59 @@ const Dashboard = (props) => {
         console.error("Error:", error);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const renderdat = datatemp.map((data) => (
-    <div className="w-full px-2.5 flex flex-col justify-start items-start font-inter overflow-ellipsis">
-      <div className="w-full py-1 flex items-center justify-between gap-2">
-        <div className="relative flex-shrink-0">
-          <Icon
-            className="text-success-Main"
-            icon={data.logo}
-            style={{ fontSize: "14px" }}
-          />
-        </div>
-        <div
-          //  className="flex flex-col items-start gap-0.5 flex-auto flex-shrink "
-          className="flex flex-col items-start gap-0.5 flex-auto overflow-hidden"
-        >
-          <div className="text-xxs tracking-wide font-normal">{data.id}</div>
-          <div className="text-xs leading-[14px] tracking-wide font-semibold max-h-5 truncate max-w-full">
-            {data.name}
+  const renderdat = dataTransaksiTerakhir ? (
+    dataTransaksiTerakhir.map((data) => (
+      <div
+        className="w-full px-2.5 flex flex-col justify-start items-start font-inter overflow-ellipsis"
+        onClick={() => {
+          const tujuan =
+            data.jenis === "TEBUS"
+              ? "/tebus"
+              : data.jenis === "PERPANJANG"
+              ? "/perpanjang"
+              : "/gadai";
+          navigate("/detail" + tujuan + "/pelanggan", {
+            state: { uuidDetail: data.uuidtransaksi },
+          });
+        }}
+      >
+        <div className="w-full py-1 flex items-center justify-between gap-2">
+          <div className="relative flex-shrink-0">
+            <Icon
+              className="text-success-Main"
+              icon={data.logo}
+              style={{ fontSize: "14px" }}
+            />
+          </div>
+          <div
+            //  className="flex flex-col items-start gap-0.5 flex-auto flex-shrink "
+            className="flex flex-col items-start gap-0.5 flex-auto overflow-hidden"
+          >
+            <div className="text-xxs tracking-wide font-normal">{data.id}</div>
+            <div className="text-xs leading-[14px] tracking-wide font-semibold max-h-5 truncate max-w-full">
+              {data.name}
+            </div>
+          </div>
+          <div className="flex flex-col items-end gap-0.5 flex-1 min-w-[96px] flex-shrink-0">
+            <div className="text-xxs tracking-wide font-normal">
+              {data.transaksi}
+            </div>
+            <div className="text-xs leading-[14px]  tracking-wide font-normal">
+              {data.value}
+            </div>
           </div>
         </div>
-        <div className="flex flex-col items-end gap-0.5 flex-1 min-w-[96px] flex-shrink-0">
-          <div className="text-xxs tracking-wide font-normal">
-            {data.transaksi}
-          </div>
-          <div className="text-xs leading-[14px]  tracking-wide font-normal">
-            {data.value}
-          </div>
+        <div className="w-full">
+          <Divider variant="fullWidth"></Divider>
         </div>
       </div>
-      <div className="w-full">
-        <Divider variant="fullWidth"></Divider>
-      </div>
-    </div>
-  ));
+    ))
+  ) : (
+    <div>Loading...</div>
+  );
 
   const changeMenuState = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -226,7 +289,7 @@ const Dashboard = (props) => {
             </div>
             <div className="ml-1 flex flex-col">
               <span className="font-bold text-base text-neutral-10">
-                Happy Working, {dataDashboard?.username} !
+                Happy Working, {dataUserDashboard?.username} !
               </span>
               {/* replace with the actual username */}
               <Stack

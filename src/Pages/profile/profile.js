@@ -174,8 +174,8 @@ function Profile() {
       const response = await axios.put(
         urlAPI + "profile/ubahpassword",
         {
-          passwordlama: values.changeoldpassword, // old password
-          passwordbaru: values.changenewpassword, // new password
+          passwordlama: values.changeoldpassword,
+          passwordbaru: values.changenewpassword,
         },
         {
           headers: {
@@ -184,10 +184,11 @@ function Profile() {
         }
       );
 
-      if (response.data.isValid) {
+      if (response.data.success) {
         // The password is valid
         // Submit the form or do something else
         toggleDialogChangePass();
+        setIsDialogOpenChangePass(false);
         setIsSnackbarBerhasilGantiPassword(true);
       } else {
         // The password is not valid

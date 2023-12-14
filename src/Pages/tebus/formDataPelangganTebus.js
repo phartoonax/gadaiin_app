@@ -32,14 +32,14 @@ function FormDataPelangganTebus() {
               title={"Nama"}
               isRequired={true}
               type={"button"}
-              valueForm={dataPelanggan?.name || undefined}
+              valueForm={dataPelanggan?.namacustomer || undefined}
             />
             <IsiFormDefault
               enabled={false}
               title={"Telpon"}
               type={"number"}
               isRequired={true}
-              valueForm={dataPelanggan?.phoneNumber || undefined}
+              valueForm={dataPelanggan?.telp || undefined}
             />
             <IsiFormDefault
               enabled={false}
@@ -51,13 +51,13 @@ function FormDataPelangganTebus() {
               enabled={false}
               title={"No. Identitas Sesuai KTP"}
               isRequired={true}
-              valueForm={dataPelanggan?.noCustomer || undefined}
+              valueForm={dataPelanggan?.noidentitas || undefined}
             />
             <PhotoCameraForm
               title={"Foto Pelanggan"}
               savedImage={dataPelanggan?.fotoCustomer}
               setSavedImage={null}
-              idPelanggan={dataPelanggan?.noCustomer}
+              idPelanggan={dataPelanggan?.uuidcustomer}
               enabled={false}
             />
             <div className="h-16" />
