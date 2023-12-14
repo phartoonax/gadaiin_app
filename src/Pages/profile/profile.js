@@ -8,7 +8,7 @@ import {
   Stack,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AppBarPlain from "../../components/appBarPlain";
 import PhotoCameraForm from "../../components/form/photoCameraForm";
@@ -123,7 +123,16 @@ function Profile() {
       savedImage !== dataProfile.picture;
 
     setIsFormProfileChangeFilled(isFormProfileChangeFilled);
-  }, [valueEmailProfile, valueUsernameProfile, valuePhoneProfile, savedImage]);
+  }, [
+    valueEmailProfile,
+    valueUsernameProfile,
+    valuePhoneProfile,
+    savedImage,
+    dataProfile.email,
+    dataProfile.name,
+    dataProfile.phone,
+    dataProfile.picture,
+  ]);
 
   function handleFormPasswordChangeChange(event) {
     // Check if all forms are filled
@@ -188,10 +197,11 @@ function Profile() {
           "The old password is incorrect.";
       }
     } catch (error) {
-      console.error("Error:", error);
       // Handle the error
+      const errorMssg = error.response.data.message || error.message;
+      console.error("Error:", errorMssg);
       setIsDialogOpenChangePass(true);
-      setPasswordErrorMessage(error.response.data.message);
+      setPasswordErrorMessage(errorMssg);
     }
   };
   const onSubmitClick = async (data) => {

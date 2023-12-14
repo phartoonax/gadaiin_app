@@ -108,10 +108,11 @@ const Login = (props) => {
         // Handle unsuccessful login
       }
     } catch (error) {
-      console.error("Error:", error.response.data.message);
-      setMessageSnackBarLogin(error.response.data.message);
+      const errorMssg = error.response.data.message || error.message;
+      setMessageSnackBarLogin(errorMssg);
       setIsLoginSuccess(false);
       setIsSnackBarLoginOpen(true);
+      console.error("Error:", errorMssg);
     }
   };
 
