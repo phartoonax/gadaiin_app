@@ -108,7 +108,7 @@ const Login = (props) => {
         // Handle unsuccessful login
       }
     } catch (error) {
-      const errorMssg = error.response.data.message || error.message;
+      const errorMssg = error.response?.data?.message || error.message;
       setMessageSnackBarLogin(errorMssg);
       setIsLoginSuccess(false);
       setIsSnackBarLoginOpen(true);

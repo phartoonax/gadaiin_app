@@ -198,7 +198,7 @@ function Profile() {
       }
     } catch (error) {
       // Handle the error
-      const errorMssg = error.response.data.message || error.message;
+      const errorMssg = error.response?.data?.message || error.message;
       console.error("Error:", errorMssg);
       setIsDialogOpenChangePass(true);
       setPasswordErrorMessage(errorMssg);

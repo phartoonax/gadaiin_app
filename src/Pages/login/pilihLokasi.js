@@ -33,7 +33,7 @@ function PilihLokasi() {
         setData(response.data.data);
         setDisplayData(response.data.data);
       } catch (error) {
-        const errorMssg = error.response.data.message || error.message;
+        const errorMssg = error.response?.data?.message || error.message;
         console.error("Error:", errorMssg);
       }
     };

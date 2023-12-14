@@ -37,7 +37,7 @@ const Dashboard = (props) => {
         const data = response.data.data.datauser;
         setDataDashboard(data);
       } catch (error) {
-        const errorMssg = error.response.data.message || error.message;
+        const errorMssg = error.response?.data?.message || error.message;
         console.error("Error:", errorMssg);
       }
     };
