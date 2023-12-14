@@ -142,7 +142,7 @@ const ItemListHistory = (data) => {
                   className={`${getTextIconColor(status)} } mr-1`}
                 ></Icon>
                 <p className="font-normal text-sm  text-neutral-100">
-                  {dats.periodegadai} ({formatDate(dats.tglkredit)} -{" "}
+                  {dats.periodegadai} ({formatDate(dats.tglkredit)} -
                   {formatDate(dats.tgljatuhtempo)})
                 </p>
               </Stack>

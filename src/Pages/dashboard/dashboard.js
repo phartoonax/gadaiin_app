@@ -26,7 +26,10 @@ const Dashboard = (props) => {
   const [dataDashboard, setDataDashboard] = useState(null);
   const [savedImage, setSavedImage] = useState(null);
 
+  const [dataRangkuman, setDataRangkuman] = useState(null);
+
   useEffect(() => {
+    //GET DATA USER-DASHBOARD
     const fetchData = async () => {
       try {
         const response = await axios.get(urlAPI + "get-profile-dashboard", {
@@ -82,46 +85,69 @@ const Dashboard = (props) => {
       logo: "uil:money-withdraw",
     },
   ];
-  //! WILL BE SET FROM API
+
+  const lokasi = JSON.parse(localStorage.getItem("lokasi"));
+
   useEffect(() => {
     (async () => {
       try {
+        //GET SET DATA USER-PROFILE
         const response = await axios.get(urlAPI + "profile/get", {
           headers: {
             access_token: localStorage.getItem("accessToken"),
           },
         });
         const data = response.data.data;
-        const getImage = await axios
-          .get(
-            data?.gambar,
-            // "https://a845-202-80-216-36.ngrok-free.app/gadai/foto1-1702345901289562.jpg",
-            {
-              headers: { access_token: localStorage.getItem("accessToken") },
-              responseType: "blob",
-            }
-          )
-          .then((res) => {
-            const imageObjectURL = URL.createObjectURL(res.data);
-            setSavedImage(imageObjectURL);
-            return imageObjectURL;
-          });
+        //GET SET DATA USER-PROFILE-IMAGE
+        const getImage =
+          data.image === undefined
+            ? null
+            : await axios
+                .get(
+                  data?.gambar,
+                  // "https://a845-202-80-216-36.ngrok-free.app/gadai/foto1-1702345901289562.jpg",
+                  {
+                    headers: {
+                      access_token: localStorage.getItem("accessToken"),
+                    },
+                    responseType: "blob",
+                  }
+                )
+                .then((res) => {
+                  const imageObjectURL = URL.createObjectURL(res.data);
+                  setSavedImage(imageObjectURL);
+                  return imageObjectURL;
+                });
         const dataProfile = {
           uuiduser: data.uuiduser,
           name: data.username,
           email: data.email,
           phone: data.hp,
           password: "",
-          picture: getImage ?? "https://placehold.co/290x290?text=Hello+Bagas",
+          picture: getImage ?? "",
         };
         localStorage.setItem("dataProfile", JSON.stringify(dataProfile));
+
+        //GET SET DATA RANGKUMAN GADAI
+        const dataTransaksiTerakhir = await axios.post(
+          urlAPI + "get-rangkuman-gadai",
+          {
+            uuidlokasi: lokasi.uuidLokasi,
+          },
+          {
+            headers: {
+              access_token: localStorage.getItem("accessToken"),
+            },
+          }
+        );
+        const dataTransaksi = dataTransaksiTerakhir.data.data;
+        setDataRangkuman(dataTransaksi);
+        //GET SET DATA GRAFIK
       } catch (error) {
         console.error("Error:", error);
       }
     })();
   }, []);
-
-  const lokasi = JSON.parse(localStorage.getItem("lokasi"));
 
   const renderdat = datatemp.map((data) => (
     <div className="w-full px-2.5 flex flex-col justify-start items-start font-inter overflow-ellipsis">
@@ -201,7 +227,7 @@ const Dashboard = (props) => {
             <div className="ml-1 flex flex-col">
               <span className="font-bold text-base text-neutral-10">
                 Happy Working, {dataDashboard?.username} !
-              </span>{" "}
+              </span>
               {/* replace with the actual username */}
               <Stack
                 gap={"4px"}
@@ -244,11 +270,11 @@ const Dashboard = (props) => {
               >
                 Grafik
               </div>
-            </div>{" "}
+            </div>
             <div className="relative w-full ">
               {activeTab === "Rangkuman" && (
                 <div className="transition-transform duration-200 ease-in-out pb-20">
-                  <Rangkuman />
+                  <Rangkuman dataRangkuman={dataRangkuman} />
                 </div>
               )}
               {activeTab === "Grafik" && (
@@ -260,7 +286,6 @@ const Dashboard = (props) => {
           </div>
           <div className="fixed inset-x-0 -bottom-0.5 w-full bg-transparent flex z-50">
             <div className="relative w-full z-50 -mr-1">
-              {" "}
               <svg
                 className="w-full h-14 z-50  drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] "
                 viewBox="0 0 118 56"
@@ -278,7 +303,7 @@ const Dashboard = (props) => {
                   children={
                     <HomeIcon height={"24px"} width={"24px"} color="black" />
                   }
-                ></IconButton>{" "}
+                ></IconButton>
               </div>
             </div>
             <div className="z-[60]">
@@ -304,7 +329,6 @@ const Dashboard = (props) => {
                   onClick={changeMenuState}
                   className="w-[76px] h-[76px] bottom-5 border-4 border-neutral-10 left-1/2 transform -translate-x-1/2 bg-success-Main hover:bg-success-Main shadow-[0_12px_17px_0px_rgba(0,0,0,0.16)] "
                 >
-                  {" "}
                   <img
                     className="w-9 auto justify-center items-center inline"
                     src={iconFAB}

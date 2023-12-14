@@ -31,7 +31,6 @@ const ListItem = ({ data, usedIn }) => {
       )}  border-solid border-t-4 rounded-md my-[20px] text-neutral-100 `}
     >
       <div className="px-4 py-2">
-        {" "}
         <Stack direction="row" spacing={2} justifyContent="space-between">
           <p className="font-bold text-base">{data.idtransaksi}</p>
           <Stack direction="row">

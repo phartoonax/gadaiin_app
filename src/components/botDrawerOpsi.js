@@ -167,7 +167,7 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data, usedIn }) => {
           <div className="text-base leading-[18px] font-bold text-success-Main text-center items-center flex ">
             Opsi
           </div>
-          <div style={{ width: "62px" }}></div>{" "}
+          <div style={{ width: "62px" }}></div>
           {/* Empty div to push the second item to the middle */}
         </Stack>
         <Stack

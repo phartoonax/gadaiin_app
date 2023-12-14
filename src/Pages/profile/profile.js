@@ -206,14 +206,29 @@ function Profile() {
   };
   const onSubmitClick = async (data) => {
     const values = getValuesChangePass();
+    let hasErrors = false;
+
     // Perform validation
     if (values.changenewpassword !== values.changeconfirmnewpassword) {
       setErrorChangePass("changeconfirmnewpassword", {
         type: "manual",
-        message: "tidak ada Password baru tidak sesuai",
+        message: "Password baru dan Konfirmasi Password baru tidak sesuai",
       });
       console.log("Validation failed");
-      return; // Stop execution if validation fails
+      hasErrors = true;
+    }
+
+    if (/\s/.test(values.changenewpassword)) {
+      setErrorChangePass("changenewpassword", {
+        type: "manual",
+        message: "Format password tidak sesuai",
+      });
+      console.log("Validation failed");
+      hasErrors = true;
+    }
+
+    if (hasErrors) {
+      return; // Stop execution if any validation errors occurred
     }
     console.log("Validation passed");
     try {
@@ -245,7 +260,7 @@ function Profile() {
           >
             <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
               <div
-                className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                className="fixed inset-0 bg-neutral-100 bg-opacity-75 transition-opacity"
                 aria-hidden="true"
               ></div>
               <span
@@ -265,6 +280,10 @@ function Profile() {
                         placeholder=""
                         {...registerChangePass("changeoldpassword", {
                           required: true,
+                          pattern: {
+                            value: /^[^\s]*$/,
+                            message: "Format password tidak sesuai",
+                          },
                           validate: (value) =>
                             value === dataProfile.password ||
                             "Password lama tidak sesuai",
@@ -307,16 +326,26 @@ function Profile() {
                   <div className="px-3 py-2">
                     <div className="text-start pb-2">
                       <h5 className="font-bold leading-6">Password Baru</h5>
+                      <p className="font-normal text-xs text-neutral-100">
+                        * Password hanya dapat diisi A-z/1-9/ simbol tanda baca
+                        & minimal 6 karakter
+                      </p>
                     </div>
                     <div className="relative w-full">
                       <input
                         placeholder=""
                         {...registerChangePass("changenewpassword", {
                           required: true,
+                          pattern: {
+                            value: /^[^\s]*$/,
+                            message: "Format password tidak sesuai",
+                          },
                         })}
                         type={isNewPasswordChangeVisible ? "text" : "password"}
                         className={`input-border pl-2  border text-[#1F2933] sm:text-sm rounded-lg block w-full p-2.5  ${
-                          isFormPasswordChangeFilled
+                          errorsChangePass.changenewpassword
+                            ? "border-danger-Main bg-danger-Surface"
+                            : isFormPasswordChangeFilled
                             ? "border-black bg-neutral-10"
                             : "border-gray-300 bg-neutral-10"
                         }`}
@@ -338,6 +367,11 @@ function Profile() {
                         </button>
                       </div>
                     </div>
+                    {errorsChangePass.changenewpassword && (
+                      <span className="text-[#E53A34] text-xs leading-[14px] font-normal">
+                        {errorsChangePass.changenewpassword.message}
+                      </span>
+                    )}
                   </div>
                   <div className="px-3 py-2">
                     <div className="text-start pb-2">
@@ -350,6 +384,10 @@ function Profile() {
                         placeholder=""
                         {...registerChangePass("changeconfirmnewpassword", {
                           required: true,
+                          pattern: {
+                            value: /^[^\s]*$/,
+                            message: "Format password tidak sesuai",
+                          },
                           validate: (value) =>
                             value ===
                               getValuesChangePass("changenewpassword") ||
@@ -513,26 +551,37 @@ function Profile() {
                   <span className="text-neutral-100">Email</span>
                   <span className="text-danger-Main">*</span>
                 </div>
-                <input
-                  name="emailprofile"
-                  defaultValue={valueEmailProfile}
-                  onChange={(e) => setValueEmailProfile(e.target.value)}
-                  {...registerProfileChange("emailprofile", {
-                    type: "email",
-                    required: true,
-                  })}
-                  className={`input-border pl-2 bg-gray-50 border border-neutral-60 text-neutral-100 text-sm  rounded-lg  focus:border-[#101C42] block w-full px-4 py-[15px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white  ${
-                    valueEmailProfile ? "border-[#101C42]" : "border-neutral-60"
-                  } ${
-                    errorsProfileChange.emailprofile
-                      ? "border-[#E53A34] bg-[#FCF3F2]"
-                      : "border-neutral-60"
-                  }`}
-                />
+                <div>
+                  <input
+                    name="emailprofile"
+                    defaultValue={valueEmailProfile}
+                    onChange={(e) => setValueEmailProfile(e.target.value)}
+                    {...registerProfileChange("emailprofile", {
+                      type: "email",
+                      required: true,
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                        message: "Format email salah",
+                      },
+                    })}
+                    className={`input-border pl-2 bg-neutral-10 border text-neutral-100 text-sm rounded-lg block w-full px-4 py-[15px] ${
+                      errorsProfileChange.emailprofile
+                        ? "border-danger-Main bg-danger-Surface"
+                        : valueEmailProfile
+                        ? "border-neutral-100"
+                        : "border-neutral-60"
+                    }`}
+                  />
+                  {errorsProfileChange.emailprofile && (
+                    <span className="pt-2 text-left w-auto text-xs leading-[14px] text-danger-Main block">
+                      {errorsProfileChange.emailprofile.message}
+                    </span>
+                  )}
+                </div>
               </Stack>
               <Stack gap={"8px"}>
                 <div className="text-base font-bold">
-                  <span className="text-neutral-100">Nama User</span>{" "}
+                  <span className="text-neutral-100">Nama User</span>
                   <span className="text-danger-Main">*</span>
                 </div>
                 <input
@@ -543,20 +592,20 @@ function Profile() {
                     type: "text",
                     required: true,
                   })}
-                  className={`input-border pl-2 bg-gray-50 border border-neutral-60 text-neutral-100 text-sm  rounded-lg  focus:border-[#101C42] block w-full px-4 py-[15px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white ${
+                  className={`input-border pl-2 bg-neutral-10 border text-neutral-100 text-sm  rounded-lg    block w-full px-4 py-[15px]       ${
                     valueUsernameProfile
-                      ? "border-[#101C42]"
+                      ? "border-neutral-100"
                       : "border-neutral-60"
                   } ${
                     errorsProfileChange.usernameprofile
-                      ? "border-[#E53A34] bg-[#FCF3F2]"
+                      ? "border-danger-Main bg-danger-Surface"
                       : "border-neutral-60"
                   }`}
                 />
               </Stack>
               <Stack gap={"8px"}>
                 <div className="text-base font-bold">
-                  <span className="text-neutral-100">No HP</span>{" "}
+                  <span className="text-neutral-100">No HP</span>
                   <span className="text-danger-Main">*</span>
                 </div>
                 <div className="relative">
@@ -574,13 +623,13 @@ function Profile() {
                       type: "number",
                       required: true,
                     })}
-                    className={`input-border pl-12 bg-gray-50 border border-neutral-60 text-neutral-100 text-sm rounded-lg  focus:border-[#101C42] block w-full px-4 py-[15px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0 ${
+                    className={`input-border pl-12 bg-neutral-10 border text-neutral-100 text-sm rounded-lg block w-full px-4 py-[15px] ${
                       valuePhoneProfile
-                        ? "border-[#101C42]"
+                        ? "border-neutral-100"
                         : "border-neutral-60"
                     } ${
                       errorsProfileChange.phoneprofile
-                        ? "border-[#E53A34] bg-[#FCF3F2]"
+                        ? "border-danger-Main bg-danger-Surface"
                         : "border-neutral-60"
                     }`}
                   />
@@ -617,11 +666,7 @@ function Profile() {
               </Button>
               <Button
                 variant="contained"
-                onClick={
-                  isFormProfileChangeFilled
-                    ? handleSubmitProfileChange(handleSimpanButton)
-                    : null
-                }
+                onClick={handleSubmitProfileChange(handleSimpanButton)}
                 enabled={isFormProfileChangeFilled ? false : true}
                 disableElevation={isFormProfileChangeFilled ? false : true}
                 sx={{

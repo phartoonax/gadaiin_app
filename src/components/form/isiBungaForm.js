@@ -19,7 +19,6 @@ const IsiBungaForm = ({ valueBunga, valueNominal }) => {
           </span>
         </Stack>
         <Stack gap="20px" direction="row">
-          {" "}
           <div className="relative ">
             <input
               type={"text"}

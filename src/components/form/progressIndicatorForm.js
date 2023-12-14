@@ -12,7 +12,6 @@ import React from "react";
 const ProgressIndicatorForm = ({ isFirstDone }) => {
   return (
     <>
-      {" "}
       <Stack
         className="px-4 bg-neutral-20 w-screen py-[11px] h-[50px]"
         spacing={2}

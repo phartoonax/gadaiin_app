@@ -43,7 +43,6 @@ function DetailDataTransaksiGadai() {
 
   return (
     <>
-      {" "}
       <div className="w-screen h-screen flex flex-col justify-start items-start  font-inter">
         <div className="fixed top-0 z-50">
           <AppBarPlain
@@ -122,7 +121,6 @@ function DetailDataTransaksiGadai() {
           elevation={5}
         >
           <Stack direction={"row"} gap={"10px"} className="">
-            {" "}
             <Button
               variant="contained"
               sx={{

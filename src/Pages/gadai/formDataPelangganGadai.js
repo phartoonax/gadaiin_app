@@ -16,11 +16,16 @@ const FormDataPelangganGadai = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dataPelanggan = location?.state?.dataPelanggan || null;
-  const [savedImage, setSavedImage] = useState(
-    JSON.parse(
-      localStorage.getItem("savedImage-" + dataPelanggan?.noCustomer)
-    ) || null
-  );
+  const [savedImage, setSavedImage] = useState(() => {
+    if (dataPelanggan && dataPelanggan.noCustomer) {
+      return (
+        JSON.parse(
+          localStorage.getItem("savedImage-" + dataPelanggan.noCustomer)
+        ) || null
+      );
+    }
+    return JSON.parse(localStorage.getItem("savedImage-TempCustomer")) || null;
+  });
   const [valueName, setValueName] = useState(dataPelanggan?.name || undefined);
   const [valuePhoneNumber, setValuePhoneNumber] = useState(
     dataPelanggan?.phoneNumber || undefined
@@ -38,17 +43,17 @@ const FormDataPelangganGadai = () => {
     useState(false);
   useEffect(() => {
     if (
-      dataPelanggan?.name &&
-      dataPelanggan?.phoneNumber &&
-      dataPelanggan?.address &&
-      dataPelanggan?.noCustomer &&
+      valueName &&
+      valuePhoneNumber &&
+      valueAddress &&
+      valueNoCustomer &&
       savedImage
     ) {
       setIsFormComplete(true);
     } else {
       setIsFormComplete(false);
     }
-  }, [dataPelanggan, savedImage]);
+  }, [savedImage, valueAddress, valueName, valueNoCustomer, valuePhoneNumber]);
 
   const handleSetCustomerData = () => {
     navigate("/form/gadai/transaksi");
@@ -105,7 +110,7 @@ const FormDataPelangganGadai = () => {
               title={"Foto Pelanggan"}
               savedImage={savedImage}
               setSavedImage={setSavedImage}
-              idPelanggan={dataPelanggan?.noCustomer}
+              idPelanggan={dataPelanggan?.noCustomer ?? "TempCustomer"}
               enabled={true}
             />
             <div className="h-16" />

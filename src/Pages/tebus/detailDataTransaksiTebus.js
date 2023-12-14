@@ -130,7 +130,6 @@ function DetailDataTransaksiTebus() {
           elevation={5}
         >
           <Stack direction={"row"} gap={"10px"} className="">
-            {" "}
             <Button
               variant="contained"
               sx={{

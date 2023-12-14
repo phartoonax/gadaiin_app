@@ -156,7 +156,6 @@ const IsiTglAwalAkhirDurasiForm = ({
         swipeAreaWidth={"38px"}
         disableSwipeToOpen={true}
       >
-        {" "}
         <div className="w-full pt-[5px] pb-[6px] flex-col justify-center items-center gap-[10px] inline-flex">
           <div className="w-[38px] h-[2px] bg-success-Pressed rounded-md"></div>
         </div>
@@ -182,7 +181,7 @@ const IsiTglAwalAkhirDurasiForm = ({
           <div className="text-sm font-bold text-success-Main text-center items-center flex ">
             Lama Gadai
           </div>
-          <div style={{ width: "62px" }}></div>{" "}
+          <div style={{ width: "62px" }}></div>
           {/* Empty div to push the second item to the middle */}
         </Stack>
         <Stack

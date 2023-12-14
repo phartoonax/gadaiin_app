@@ -131,13 +131,11 @@ const Login = (props) => {
     setIsResetPassFilled(false);
     resetForgetPass();
     setIsDialogOpenResetPass((prevState) => !prevState);
-    console.log(isDialogOpenResetPass);
   }
   function toggleDialogRegister() {
     resetRegister();
     setIsFormRegisterFilled(false);
     setIsDialogOpenRegister((prevState) => !prevState);
-    console.log(isDialogOpenRegister);
     if (isDialogOpenRegister === true) {
       setIsSnackbarRegisterOpen(true);
     }
@@ -146,15 +144,16 @@ const Login = (props) => {
   function handleFormLoginChange(event) {
     // Check if all forms are filled
     const isFormFilled =
-      event.target.form[0].value !== "" && event.target.form[1].value !== "";
+      event.target.form[0].value.trim() !== "" &&
+      event.target.form[1].value.trim() !== "";
     setIsFormFilled(isFormFilled);
   }
   function handleFormRegisterChange(event) {
     // Check if all forms are filled
     const isFormRegisterFilled =
-      event.target.form[0].value !== "" &&
-      event.target.form[1].value !== "" &&
-      event.target.form[3].value !== "";
+      event.target.form[0].value.trim() !== "" &&
+      event.target.form[1].value.trim() !== "" &&
+      event.target.form[3].value.trim() !== "";
     setIsFormRegisterFilled(isFormRegisterFilled);
   }
   // function handleTestButtonClick() {
@@ -380,6 +379,10 @@ const Login = (props) => {
                           placeholder=""
                           {...registerRegister("passwordregister", {
                             required: true,
+                            pattern: {
+                              value: /^[^\s]*$/,
+                              message: "Format password tidak sesuai",
+                            },
                           })}
                           type={isPasswordRegisterVisible ? "text" : "password"}
                           className={`input-border pl-2 bg-neutral-10 border border-gray-300 text-[#1F2933] sm:text-sm rounded-lg block w-full p-2.5  ${
@@ -408,6 +411,11 @@ const Login = (props) => {
                           </button>
                         </div>
                       </div>
+                      <p className="text-neutral-70 text-xs leading-[14px] pt-2">
+                        {
+                          "Password hanya dapat diisi A-z/1-9 & minimal 6 karakter"
+                        }
+                      </p>
                     </div>
                     <div className="px-3 py-2 justify-between">
                       <div className="text-start pb-2">
@@ -420,6 +428,10 @@ const Login = (props) => {
                           placeholder=""
                           {...registerRegister("konfirmasipasswordregister", {
                             required: true,
+                            pattern: {
+                              value: /^[^\s]*$/,
+                              message: "Format password tidak sesuai",
+                            },
                             validate: (value) =>
                               value === password ||
                               "Konfirmasi password tidak sama dengan password",
@@ -545,7 +557,10 @@ const Login = (props) => {
                       <input
                         {...registerLogin("password", {
                           required: true,
-
+                          pattern: {
+                            value: /^[^\s]*$/,
+                            message: "Format password tidak sesuai",
+                          },
                           maxLength: 20,
                         })}
                         placeholder="Password"
@@ -573,7 +588,7 @@ const Login = (props) => {
                           }
                         />
                       </button>
-                    </div>{" "}
+                    </div>
                     {errorsLogin.password && (
                       <span className="pt-2 text-left w-auto text-xs leading-[14px] text-danger-Main block">
                         Password harus terisi
@@ -605,7 +620,7 @@ const Login = (props) => {
                   </p>
                 </form>
               </div>
-            </div>{" "}
+            </div>
             <p className="text-sm font-normal  text-[#1EBF65] dark:text-gray-400 py-14">
               {"Tidak Punya Akun? "}
               <button

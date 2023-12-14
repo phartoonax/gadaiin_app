@@ -53,9 +53,7 @@ function BotNavBarNFab({
     <>
       <div>
         <div className="fixed inset-x-0 -bottom-0.5 w-full bg-transparent flex z-50">
-          {" "}
           <div className="relative w-full z-50 -mr-1">
-            {" "}
             <svg
               className="w-full h-14 z-50  drop-shadow-[0_35px_35px_rgba(0,0,0,0.85)]"
               viewBox="0 0 118 56"
@@ -70,7 +68,6 @@ function BotNavBarNFab({
             </svg>
             <div className="absolute bottom-3 right-[45%] transform translate-x-1/2">
               <IconButton onClick={() => setDrawerFilterOpen(true)}>
-                {" "}
                 <Icon
                   className={
                     isFilterApplied ? "text-success-Main" : "text-neutral-100"
@@ -78,11 +75,10 @@ function BotNavBarNFab({
                   icon={iconKiri}
                   style={{ fontSize: "24px" }}
                 />
-              </IconButton>{" "}
+              </IconButton>
             </div>
           </div>
           <div className="z-[60]">
-            {" "}
             <svg
               className="w-32 h-14 drop-shadow-[0_-3px_10px_ 0px_rgba(0,0,0,0.85)] z-10"
               viewBox="0 0 128 56"

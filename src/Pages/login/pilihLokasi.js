@@ -30,8 +30,11 @@ function PilihLokasi() {
           {},
           { headers }
         );
-        setData(response.data.data);
-        setDisplayData(response.data.data);
+        const dataLokasinonEmpty = response.data.data.filter(
+          (item) => item.namalokasi !== ""
+        );
+        setData(dataLokasinonEmpty);
+        setDisplayData(dataLokasinonEmpty);
       } catch (error) {
         const errorMssg = error.response?.data?.message || error.message;
         console.error("Error:", errorMssg);
@@ -97,7 +100,6 @@ function PilihLokasi() {
           },
         }}
       >
-        {" "}
         <DialogContentText className="text-center text-sm font-semibold leading-[18px] text-black ">
           Apakah anda yakin lokasi anda di {selectedData.namalokasi}?
         </DialogContentText>
