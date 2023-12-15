@@ -60,9 +60,8 @@ const CheckBoxInputCashback = ({
           </span>
         </Stack>
         <textarea
-          disabled={!isCheckBoxChecked}
+          disabled={isEnabled ? !isCheckBoxChecked : true}
           rows="4"
-          s
           value={textboxValue}
           onChange={(e) => setTextboxValue(e.target.value)}
           className="border border-neutral-40 rounded-lg focus:border-neutral-100 px-4 py-2"

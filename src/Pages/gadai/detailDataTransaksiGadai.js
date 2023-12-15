@@ -10,7 +10,7 @@ import PageKelengkapanForm from "../../components/form/pageKelengkapanForm";
 import IsiTglAwalAkhirDurasiForm from "../../components/form/isiTglAwalAkhirDurasiForm";
 import IsiBungaForm from "../../components/form/isiBungaForm";
 import { useEffect } from "react";
-import { pemisahRibuan } from "../../functionGlobal";
+import { convertLamaGadai, pemisahRibuan } from "../../functionGlobal";
 import PhotoCameraForm from "../../components/form/photoCameraForm";
 
 function DetailDataTransaksiGadai() {
@@ -18,9 +18,7 @@ function DetailDataTransaksiGadai() {
   const location = useLocation();
   const dataPelanggan = location?.state?.dataDetailPelangganGadai || null;
 
-  const [valueBunga, setValueBunga] = useState(
-    dataPelanggan?.bunga || undefined
-  );
+  const valueBunga = dataPelanggan?.bunga || undefined;
   const [valueNominal, setValueNominal] = useState();
 
   const handleNavigateToBack = () => {
@@ -28,25 +26,6 @@ function DetailDataTransaksiGadai() {
   };
   const setDurasiDanBungaValue = (durasi, bunga) => {
     // setValueBunga(bunga);
-  };
-
-  const convertLamaGadai = (lamaGadai) => {
-    const daysInYear = 365;
-    const daysInMonth = 30;
-    const daysInWeek = 7;
-
-    if (lamaGadai >= daysInYear) {
-      const years = Math.floor(lamaGadai / daysInYear);
-      return years + " Tahun";
-    } else if (lamaGadai >= daysInMonth) {
-      const months = Math.floor(lamaGadai / daysInMonth);
-      return months + " Bulan";
-    } else if (lamaGadai >= daysInWeek) {
-      const weeks = Math.floor(lamaGadai / daysInWeek);
-      return weeks + " Minggu";
-    } else {
-      return lamaGadai + " Hari";
-    }
   };
 
   const [showFullPageModal, setShowFullPageModal] = useState(false);
@@ -80,7 +59,7 @@ function DetailDataTransaksiGadai() {
               enabled={false}
               title={"Lokasi"}
               isRequired={false}
-              valueForm={"Jabodetabek" || undefined}
+              valueForm={dataPelanggan?.namalokasi || undefined}
             />
             <IsiFormDefault
               enabled={false}

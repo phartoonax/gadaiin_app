@@ -1,16 +1,43 @@
 import { Button, Paper, Stack } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PhotoCameraForm from "../../components/form/photoCameraForm";
 import IsiFormDefault from "../../components/form/isiDefaultForm";
 import ProgressIndicatorDetail from "../../components/detail/progressIndicatorDetail";
 import AppBarPlain from "../../components/appBarPlain";
+import axios from "axios";
+import { urlAPI } from "../../variableGlobal";
 
 function DetailDataPelangganTebus() {
   const navigation = useNavigate();
   const location = useLocation();
-  const dataPelanggan = location?.state?.dataDetailPelangganGadai || null;
+  const [dataPelanggan, setDataPelanggan] = useState(
+    location?.state?.dataDetailPelangganGadai || null
+  );
+
+  const dataUUID = location?.state?.uuidDetail || null;
   const isFormComplete = true;
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.post(
+          urlAPI + "tebus/detail",
+          {
+            uuidgadaitebus: dataUUID,
+          },
+          {
+            headers: {
+              access_token: localStorage.getItem("accessToken"),
+            },
+          }
+        );
+        console.log(response.data.data);
+        setDataPelanggan(response.data.data);
+      } catch {}
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSetCustomerData = () => {
     navigation("/detail/tebus/transaksi", {
@@ -45,7 +72,7 @@ function DetailDataPelangganTebus() {
               enabled={false}
               title={"Alamat Tinggal"}
               isRequired={true}
-              valueForm={dataPelanggan?.address || undefined}
+              valueForm={dataPelanggan?.alamat || undefined}
             />
             <IsiFormDefault
               enabled={false}

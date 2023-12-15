@@ -32,7 +32,7 @@ const ListItem = ({ data, usedIn }) => {
     >
       <div className="px-4 py-2">
         <Stack direction="row" spacing={2} justifyContent="space-between">
-          <p className="font-bold text-base">{data.idtransaksi}</p>
+          <p className="font-bold text-base">{data.kodegadai}</p>
           <Stack direction="row">
             <div className="rounded-lg bg-neutral-100 text-neutral-10 px-2.5 text-sm font-bold flex items-center">
               {data.lokasi}
@@ -52,13 +52,13 @@ const ListItem = ({ data, usedIn }) => {
         <Divider className="pt-2"></Divider>
         <Stack gap={"0px"} className="pb-1">
           <p className="text-ellipsis font-bold text-sm leading-[18px] overflow-hidden whitespace-nowrap py-[3px]">
-            {data.nama}
+            {data.namacustomer}
           </p>
           <p
             className="text-xs font-semibold text-neutral-60 leading-[14px] pt-[3px]
 pb-1"
           >
-            +{data.notelp}
+            +{data.telp}
           </p>
         </Stack>
         <Stack
@@ -70,7 +70,7 @@ pb-1"
             icon={"heroicons-solid:shopping-bag"}
             className={`${getTextIconColor(status)} mr-1`}
           ></Icon>
-          <p className="text-sm font-normal">{data.barang}</p>
+          <p className="text-sm font-normal">{data.jaminanbarang}</p>
         </Stack>
         <Stack
           className="py-1 text-neutral-100 text-base leading-[18px] font-normal"
@@ -82,8 +82,8 @@ pb-1"
             className={`${getTextIconColor(status)} } mr-1`}
           />
           <p className="text-sm font-normal">
-            Rp{pemisahRibuan(data.harga)} ({data.bunga} | Rp
-            {pemisahRibuan(hitungBunga(data.harga, data.bunga))})
+            Rp{pemisahRibuan(data.nilaipinjaman)} ({data.bunga} | Rp
+            {pemisahRibuan(hitungBunga(data.nilaipinjaman, data.bunga))})
           </p>
         </Stack>
         <Stack
@@ -95,7 +95,7 @@ pb-1"
             icon={"heroicons-outline:clock"}
             className={`${getTextIconColor(status)} } mr-1`}
           ></Icon>
-          <p className="text-sm font-normal">{data.periodegadai}</p>
+          <p className="text-sm font-normal">{data.lamagadai}</p>
         </Stack>
       </div>
       <Stack

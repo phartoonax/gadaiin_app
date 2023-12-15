@@ -50,20 +50,22 @@ const IsiTglAwalAkhirDurasiForm = ({
     setIsDrawerDurasiGadaiOpen(true);
   }
 
-  function handleDurasiGadaiChange(item) {
+  function handleDurasiGadaiChange(durasi, persentase) {
     function addDays(date, days) {
       date.setDate(date.getDate() + days);
       return date;
     }
-    setDurasiGadai(item.durasi);
+    setDurasiGadai(durasi);
     let periodeInDays;
 
-    if (item.durasi.includes("Hari")) {
-      periodeInDays = parseInt(item.durasi.split(" ")[0]);
-    } else if (item.durasi.includes("Bulan")) {
-      periodeInDays = parseInt(item.durasi.split(" ")[0]) * 30;
-    } else if (item.durasi.includes("Tahun")) {
-      periodeInDays = parseInt(item.durasi.split(" ")[0]) * 365;
+    if (durasi.includes("Hari")) {
+      periodeInDays = parseInt(durasi.split(" ")[0]);
+    } else if (durasi.includes("Minggu")) {
+      periodeInDays = parseInt(durasi.split(" ")[0]) * 7;
+    } else if (durasi.includes("Bulan")) {
+      periodeInDays = parseInt(durasi.split(" ")[0]) * 30;
+    } else if (durasi.includes("Tahun")) {
+      periodeInDays = parseInt(durasi.split(" ")[0]) * 365;
     }
 
     const tgljatuhtempo = addDays(new Date(tglKredit), periodeInDays);
@@ -75,7 +77,7 @@ const IsiTglAwalAkhirDurasiForm = ({
       })
     );
     if (setDurasiDanBungaValue) {
-      setDurasiDanBungaValue(item.durasi, item.persentase);
+      setDurasiDanBungaValue(durasi, persentase);
     }
     setIsDrawerDurasiGadaiOpen(false);
   }
@@ -86,7 +88,12 @@ const IsiTglAwalAkhirDurasiForm = ({
         (entry) => entry.durasi === durasiGadaiLama
       );
       if (correspondingEntry) {
-        handleDurasiGadaiChange(correspondingEntry);
+        handleDurasiGadaiChange(
+          correspondingEntry.durasi,
+          correspondingEntry.persentase
+        );
+      } else {
+        handleDurasiGadaiChange(durasiGadaiLama);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -195,7 +202,7 @@ const IsiTglAwalAkhirDurasiForm = ({
               alignItems="center"
               className=" text-sm text-black font-bold"
               onClick={() => {
-                handleDurasiGadaiChange(item);
+                handleDurasiGadaiChange(item.durasi, item.persentase);
               }}
             >
               <div className="">{item.durasi}</div>

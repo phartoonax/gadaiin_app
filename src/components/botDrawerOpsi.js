@@ -35,7 +35,7 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data, usedIn }) => {
     noCustomer: data.noktp,
     fotoCustomer: JSON.parse(localStorage.getItem("savedImage-Profile")),
 
-    noGadai: data.idtransaksi.substring(3),
+    noGadai: data.kode.substring(3),
     jaminan: data.barang,
     kelengkapan: [
       "Sertifikat",

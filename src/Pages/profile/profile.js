@@ -48,6 +48,7 @@ function Profile() {
     JSON.parse(localStorage.getItem("savedImage-ProfileFromCamera")) ||
       dataProfile.picture
   );
+  const isEmailPerusahaanValid = Boolean(dataProfile.emailperusahaan);
 
   const [isDialogOpenChangePass, setIsDialogOpenChangePass] = useState(false);
   const [isFormPasswordChangeFilled, setIsFormPasswordChangeFilled] =
@@ -164,7 +165,7 @@ function Profile() {
 
   function handleSimpanButton() {
     localStorage.setItem("savedImage-Profile", JSON.stringify(savedImage));
-    
+
     localStorage.removeItem("savedImage-ProfileFromCamera");
     navigate(-1);
   }
@@ -550,13 +551,14 @@ function Profile() {
             <Stack gap={"20px"}>
               <Stack gap={"8px"}>
                 <div className="text-base font-bold">
-                  <span className="text-neutral-100">Email</span>
+                  <span className="text-neutral-100">Email </span>
                   <span className="text-danger-Main">*</span>
                 </div>
                 <div>
                   <input
                     name="emailprofile"
                     defaultValue={valueEmailProfile}
+                    disabled={true}
                     onChange={(e) => setValueEmailProfile(e.target.value)}
                     {...registerProfileChange("emailprofile", {
                       type: "email",
@@ -566,13 +568,7 @@ function Profile() {
                         message: "Format email salah",
                       },
                     })}
-                    className={`input-border pl-2 bg-neutral-10 border text-neutral-100 text-sm rounded-lg block w-full px-4 py-[15px] ${
-                      errorsProfileChange.emailprofile
-                        ? "border-danger-Main bg-danger-Surface"
-                        : valueEmailProfile
-                        ? "border-neutral-100"
-                        : "border-neutral-60"
-                    }`}
+                    className={`input-border pl-2 bg-neutral-20 border-neutral-40 border text-neutral-100 text-sm rounded-lg block w-full px-4 py-[15px]`}
                   />
                   {errorsProfileChange.emailprofile && (
                     <span className="pt-2 text-left w-auto text-xs leading-[14px] text-danger-Main block">
@@ -583,31 +579,24 @@ function Profile() {
               </Stack>
               <Stack gap={"8px"}>
                 <div className="text-base font-bold">
-                  <span className="text-neutral-100">Nama User</span>
+                  <span className="text-neutral-100">Nama User </span>
                   <span className="text-danger-Main">*</span>
                 </div>
                 <input
                   name="usernameprofile"
                   defaultValue={valueUsernameProfile}
+                  disabled={true}
                   onChange={(e) => setValueUsernameProfile(e.target.value)}
                   {...registerProfileChange("usernameprofile", {
                     type: "text",
                     required: true,
                   })}
-                  className={`input-border pl-2 bg-neutral-10 border text-neutral-100 text-sm  rounded-lg    block w-full px-4 py-[15px]       ${
-                    valueUsernameProfile
-                      ? "border-neutral-100"
-                      : "border-neutral-60"
-                  } ${
-                    errorsProfileChange.usernameprofile
-                      ? "border-danger-Main bg-danger-Surface"
-                      : "border-neutral-60"
-                  }`}
+                  className={`input-border pl-2 bg-neutral-20 border-neutral-40  border text-neutral-100 text-sm  rounded-lg    block w-full px-4 py-[15px]`}
                 />
               </Stack>
               <Stack gap={"8px"}>
                 <div className="text-base font-bold">
-                  <span className="text-neutral-100">No HP</span>
+                  <span className="text-neutral-100">No HP </span>
                   <span className="text-danger-Main">*</span>
                 </div>
                 <div className="relative">
@@ -618,6 +607,7 @@ function Profile() {
                     name="phoneprofile"
                     type="number"
                     defaultValue={valuePhoneProfile}
+                    disabled={true}
                     onChange={(e) => {
                       setValuePhoneProfile(e.target.value);
                     }}
@@ -625,15 +615,7 @@ function Profile() {
                       type: "number",
                       required: true,
                     })}
-                    className={`input-border pl-12 bg-neutral-10 border text-neutral-100 text-sm rounded-lg block w-full px-4 py-[15px] ${
-                      valuePhoneProfile
-                        ? "border-neutral-100"
-                        : "border-neutral-60"
-                    } ${
-                      errorsProfileChange.phoneprofile
-                        ? "border-danger-Main bg-danger-Surface"
-                        : "border-neutral-60"
-                    }`}
+                    className={`input-border pl-12 bg-neutral-20 border-neutral-40  border text-neutral-100 text-sm rounded-lg block w-full px-4 py-[15px]`}
                   />
                 </div>
               </Stack>
@@ -641,32 +623,35 @@ function Profile() {
                 savedImage={savedImage}
                 setSavedImage={setSavedImage} //TODO: MUNGKIN PERUBAHAN TERHADAP DELETE PROFILE PICTURE, DELETE JIKA ADA FOTO SEBELUMNYA BALIK KE FOTO SEBELUMNYA
                 idPelanggan={"ProfileFromCamera"}
-                enabled={true}
+                enabled={false}
               />
-              <Button
-                variant="outlined"
-                className="text-sm leading-[18px]"
-                sx={{
-                  textTransform: "capitalize",
-                  borderRadius: "6px",
-                  borderColor: "neutral.100",
-                  color: "neutral.100",
-                  width: "100%",
-                  paddingY: "10px",
-                  fontWeight: "bold",
-                  ":hover": {
+              {isEmailPerusahaanValid && (
+                <Button
+                  variant="outlined"
+                  className="text-sm leading-[18px]"
+                  sx={{
+                    textTransform: "capitalize",
+                    borderRadius: "6px",
                     borderColor: "neutral.100",
                     color: "neutral.100",
-                  },
-                }}
-                onClick={(event) => {
-                  event.preventDefault();
-                  toggleDialogChangePass();
-                }}
-              >
-                Ganti Password
-              </Button>
+                    width: "100%",
+                    paddingY: "10px",
+                    fontWeight: "bold",
+                    ":hover": {
+                      borderColor: "neutral.100",
+                      color: "neutral.100",
+                    },
+                  }}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    toggleDialogChangePass();
+                  }}
+                >
+                  Ganti Password
+                </Button>
+              )}
               <Button
+                hidden={true}
                 variant="contained"
                 onClick={handleSubmitProfileChange(handleSimpanButton)}
                 enabled={isFormProfileChangeFilled ? false : true}

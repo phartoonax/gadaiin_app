@@ -4,6 +4,9 @@
  * @description Global function untuk menyimpan semua fungsi yang digunakan di banyak komponen.
  * **/
 
+import axios from "axios";
+import { urlAPI } from "./variableGlobal";
+
 /**
  * @description Mengembalikan nama kelas CSS untuk warna ikon & teks berdasarkan status.
  * @param {string} status - Nama Status item.
@@ -136,9 +139,11 @@ const getChipsBorderColor = (status) => {
  * @author Henry
  */
 const pemisahRibuan = (harga) => {
+  if (harga === undefined) {
+    return "-";
+  }
   return harga.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
-
 /**
  * @description Menghitung jumlah bunga berdasarkan harga dan persentase bunga.
  * @param {number} harga - Harga barang yang digadaikan.
@@ -260,7 +265,7 @@ function generateRandomDataGadai(designatedFor, jumlah) {
     const dataPelanggan = generateRandomDataCustomer(1)[0];
 
     return {
-      uuidgadai: "CGX" + getRandomInt(100000, 999999),
+      kodegadai: "CGX" + getRandomInt(100000, 999999),
       lokasi: "KDC",
       namacustomer: dataPelanggan.namacustomer,
       telp: dataPelanggan.telp,
@@ -336,6 +341,55 @@ function generateRandomDataCustomer(jumlah) {
   return Array.from({ length: jumlah }, generateData);
 }
 
+/**
+ * @description
+ * @author Henry
+ * @date 15/12/2023 - 10:40:46 AM
+ * @param {*} urlImage
+ */
+async function getImageFromAPI(urlImage) {
+  try {
+    const url = new URL(urlImage);
+    const path = url.pathname.substring(1); // remove the leading '/'
+    const res = await axios.get(
+      urlAPI + path,
+
+      {
+        headers: {
+          access_token: localStorage.getItem("accessToken"),
+        },
+        responseType: "blob",
+      }
+    );
+
+    const imageObjectURL = URL.createObjectURL(res.data);
+    return imageObjectURL;
+  } catch (error) {
+    console.error(error);
+    // Return a default image or handle the error in some other way
+    return null;
+  }
+}
+
+const convertLamaGadai = (lamaGadai) => {
+  const daysInYear = 365;
+  const daysInMonth = 30;
+  const daysInWeek = 7;
+
+  if (lamaGadai >= daysInYear) {
+    const years = Math.floor(lamaGadai / daysInYear);
+    return years + " Tahun";
+  } else if (lamaGadai >= daysInMonth) {
+    const months = Math.floor(lamaGadai / daysInMonth);
+    return months + " Bulan";
+  } else if (lamaGadai >= daysInWeek) {
+    const weeks = Math.floor(lamaGadai / daysInWeek);
+    return weeks + " Minggu";
+  } else {
+    return lamaGadai + " Hari";
+  }
+};
+
 export {
   getDateColor,
   getTextIconColor,
@@ -346,4 +400,6 @@ export {
   hitungBunga,
   generateRandomDataGadai,
   generateRandomDataCustomer,
+  getImageFromAPI,
+  convertLamaGadai,
 };

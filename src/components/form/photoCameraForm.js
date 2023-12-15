@@ -9,9 +9,11 @@ import { useNavigate } from "react-router-dom";
  * @param {string} savedImage URL gambar yang disimpan
  * @param {function} setSavedImage Fungsi untuk mengatur savedImage
  * @param {string} idPelanggan ID pelanggan
+ * @param {string} type - Tipe formulir, bisa "barang", "bukti", atau lainnya
+ * @param {boolean} enabled - Penanda untuk menentukan apakah formulir diaktifkan atau tidak
  * @returns {*} Sebuah formulir kamera dengan judul dan gambar yang ditentukan
  * @author Henry
- * @date 28/11/2023 - 11:09:13 AM
+ * @date 15/12/2023 - 13:09:13 AM
  */
 const PhotoCameraForm = ({
   title,

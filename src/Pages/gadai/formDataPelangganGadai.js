@@ -17,24 +17,26 @@ const FormDataPelangganGadai = () => {
   const location = useLocation();
   const dataPelanggan = location?.state?.dataPelanggan || null;
   const [savedImage, setSavedImage] = useState(() => {
-    if (dataPelanggan && dataPelanggan.noCustomer) {
+    if (dataPelanggan && dataPelanggan?.noidentitas) {
       return (
         JSON.parse(
-          localStorage.getItem("savedImage-" + dataPelanggan.noCustomer)
+          localStorage.getItem("savedImage-" + dataPelanggan?.noidentitas)
         ) || null
       );
     }
     return JSON.parse(localStorage.getItem("savedImage-TempCustomer")) || null;
   });
-  const [valueName, setValueName] = useState(dataPelanggan?.name || undefined);
+  const [valueName, setValueName] = useState(
+    dataPelanggan?.namacustomer || undefined
+  );
   const [valuePhoneNumber, setValuePhoneNumber] = useState(
-    dataPelanggan?.phoneNumber || undefined
+    dataPelanggan?.telp || undefined
   );
   const [valueAddress, setValueAddress] = useState(
-    dataPelanggan?.address || undefined
+    dataPelanggan?.alamat || undefined
   );
   const [valueNoCustomer, setValueNoCustomer] = useState(
-    dataPelanggan?.noCustomer || undefined
+    dataPelanggan?.noidentitas || undefined
   );
 
   const [isFormComplete, setIsFormComplete] = useState(false);

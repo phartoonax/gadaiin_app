@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { pemisahRibuan } from "../../functionGlobal";
+import { convertLamaGadai, pemisahRibuan } from "../../functionGlobal";
 import PageKelengkapanForm from "../../components/form/pageKelengkapanForm";
 import { Button, Paper, Stack } from "@mui/material";
 import PhotoCameraForm from "../../components/form/photoCameraForm";
@@ -18,28 +18,30 @@ function DetailDataTransaksiPerpanjang() {
   const location = useLocation();
   const dataPelanggan = location?.state?.dataDetailPelangganGadai || null;
 
-  const [valueBunga, setValueBunga] = useState();
+  const valueBunga = dataPelanggan?.bunga || undefined;
   const [valueNominal, setValueNominal] = useState();
 
   const handleNavigateToBack = () => {
     Navigate(-1);
   };
   const setDurasiDanBungaValue = (durasi, bunga) => {
-    setValueBunga(bunga);
+    // setValueBunga(bunga);
   };
 
   const [showFullPageModal, setShowFullPageModal] = useState(false);
 
   useEffect(() => {
     // Calculate nominal value
-    if (valueBunga) {
+    if (valueBunga && dataPelanggan?.nilaipinjaman) {
       const bunga = parseFloat(valueBunga) / 100;
-      const nominal = Number(dataPelanggan?.harga.replace(/\./g, ""));
+      const nominal = Number(
+        String(dataPelanggan?.nilaipinjaman).replace(/\./g, "")
+      );
       const hasil = bunga * nominal;
 
       setValueNominal(pemisahRibuan(Math.round(hasil)));
     }
-  }, [dataPelanggan?.harga, valueBunga]);
+  }, [dataPelanggan?.nilaipinjaman, valueBunga]);
 
   return (
     <>
@@ -57,19 +59,19 @@ function DetailDataTransaksiPerpanjang() {
               enabled={false}
               title={"Lokasi"}
               isRequired={false}
-              valueForm={"Jabodetabek" || undefined}
+              valueForm={dataPelanggan?.namalokasi || undefined}
             />
             <IsiFormDefault
               enabled={false}
               title={"No. Gadai"}
               isRequired={false}
-              valueForm={dataPelanggan?.noGadai || undefined}
+              valueForm={dataPelanggan?.kodegadai || undefined}
             />
             <IsiFormDefault
               enabled={false}
               title={"Jaminan"}
               isRequired={true}
-              valueForm={dataPelanggan?.jaminan || undefined}
+              valueForm={dataPelanggan?.jaminanbarang || undefined}
             />
             <ChipKelengkapanForm
               title={"Kelengkapan"}
@@ -84,17 +86,17 @@ function DetailDataTransaksiPerpanjang() {
               enabled={false}
               title={"IMEI / No. Seri"}
               isRequired={true}
-              valueForm={dataPelanggan?.noSeri || undefined}
+              valueForm={dataPelanggan?.noseri || undefined}
             />
             <IsiFormDefault
               enabled={false}
               title={"No. Transfer"}
               isRequired={true}
-              valueForm={dataPelanggan?.noSeri || undefined}
+              valueForm={dataPelanggan?.kodebayar || undefined}
             />
             <IsiTglAwalAkhirDurasiForm
-              tglKreditLama={dataPelanggan?.tglKredit}
-              durasiGadaiLama={dataPelanggan?.lamaGadai}
+              tglKreditLama={dataPelanggan?.tglkredit}
+              durasiGadaiLama={convertLamaGadai(dataPelanggan?.lamagadai)}
               setDurasiDanBungaValue={setDurasiDanBungaValue}
               enabled={false}
             />
@@ -102,7 +104,9 @@ function DetailDataTransaksiPerpanjang() {
               enabled={false}
               title={"Nilai Pinjaman"}
               isRequired={true}
-              valueForm={dataPelanggan?.harga || undefined}
+              valueForm={
+                pemisahRibuan(dataPelanggan?.nilaipinjaman) || undefined
+              }
             />
             <IsiBungaForm valueBunga={valueBunga} valueNominal={valueNominal} />
             <PhotoCameraForm

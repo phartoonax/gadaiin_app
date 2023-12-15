@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BotNavbarNfab from "../../components/botNavBarnFAB";
 import AppBarWithSearch from "../../components/appBarWithSearch";
 import ListItem from "../../components/listItem";
 import { generateRandomDataGadai } from "../../functionGlobal";
 import { useNavigate } from "react-router-dom";
-
-const arrayisi = generateRandomDataGadai(null, 6);
+import axios from "axios";
+import { urlAPI } from "../../variableGlobal";
 
 /**
  * @description Komponen untuk menampilkan daftar gadai. Komponen ini mengelola filter dan pengurutan data, serta navigasi ke halaman lain menggunakan Action Button (FAB).
@@ -14,8 +14,37 @@ const arrayisi = generateRandomDataGadai(null, 6);
  * @date 27/11/2023 - 11:30:00 PM
  */
 function ListGadai() {
-  const [filteredArray, setFilteredArray] = useState(arrayisi);
+  const [arrayisi, setArrayisi] = useState(null);
+  const [filteredArray, setFilteredArray] = useState();
+  const lokasi = JSON.parse(localStorage.getItem("lokasi"));
   const navigate = useNavigate();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.post(
+          urlAPI + "gadai/search",
+          {
+            uuidlokasi: lokasi.uuidLokasi,
+          },
+          {
+            headers: {
+              access_token: localStorage.getItem("accessToken"),
+            },
+          }
+        );
+        const data = response.data.data;
+        console.log(data);
+        setArrayisi(data);
+        setFilteredArray(data);
+      } catch (error) {
+        const errorMssg = error.response?.data?.message || error.message;
+
+        console.error("Error:", errorMssg);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleFilterChangeFAB = (newArray) => {
     const filtered = arrayisi.filter((item) => {
@@ -132,15 +161,19 @@ function ListGadai() {
             status={null}
           />
           <div className="mx-4">
-            {filteredArray.map((data, index) => (
-              <div
-                className={`${
-                  index === filteredArray.length - 1 ? "pb-24" : ""
-                }`}
-              >
-                <ListItem data={data} usedIn="Gadai" />
-              </div>
-            ))}
+            {filteredArray ? (
+              filteredArray.map((data, index) => (
+                <div
+                  className={`${
+                    index === filteredArray.length - 1 ? "pb-24" : ""
+                  }`}
+                >
+                  <ListItem data={data} usedIn="Gadai" />
+                </div>
+              ))
+            ) : (
+              <p>No items to display.</p>
+            )}
           </div>
         </div>
       </div>

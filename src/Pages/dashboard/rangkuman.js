@@ -117,7 +117,7 @@ const Rangkuman = (dataRangkuman) => {
               <div className="h-1"></div>
               <p className="font-bold text-[12px] leading-5 tracking-wide">
                 {data.dataRangkuman.gadaijatuhtempo.jmltrans ?? 0}
-                <span className="text-neutral-70">transaksi</span>
+                <span className="text-neutral-70"> transaksi</span>
               </p>
             </CardContent>
           </Card>
@@ -166,7 +166,7 @@ const Rangkuman = (dataRangkuman) => {
               <div className="h-1"></div>
               <p className="font-bold text-[12px] leading-5 tracking-wide">
                 {data.dataRangkuman.lelang.jmltrans ?? 0}
-                <span className="text-neutral-70">transaksi</span>
+                <span className="text-neutral-70"> transaksi</span>
               </p>
             </CardContent>
           </Card>

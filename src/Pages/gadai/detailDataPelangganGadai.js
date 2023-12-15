@@ -76,7 +76,7 @@ function DetailDataPelangganGadai() {
               enabled={false}
               title={"Alamat Tinggal"}
               isRequired={true}
-              valueForm={dataPelanggan?.address || undefined}
+              valueForm={dataPelanggan?.alamat || undefined}
             />
             <IsiFormDefault
               enabled={false}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppBarWithSearch from "../../components/appBarWithSearch";
 import {
   Divider,
@@ -13,7 +13,9 @@ import { Icon } from "@iconify/react";
 import ItemCustomerForm from "../../components/form/itemCustomerForm";
 import IsiFormDefault from "../../components/form/isiDefaultForm";
 import { useNavigate } from "react-router-dom";
-import { generateRandomDataCustomer } from "../../functionGlobal";
+import axios from "axios";
+import { urlAPI } from "../../variableGlobal";
+import { getImageFromAPI } from "../../functionGlobal";
 
 /**
  * @description
@@ -23,8 +25,36 @@ import { generateRandomDataCustomer } from "../../functionGlobal";
  */
 
 const FormPilihPelanggan = () => {
-  const generatedArray = generateRandomDataCustomer(6);
-  const [displayedArray, setDisplayedArray] = useState(generatedArray); //setDisplayed will be used in search
+  const [listCustomer, setListCustomer] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.post(
+          urlAPI + "customer/cari",
+          {
+            page: "0",
+            limit: "10",
+          },
+          {
+            headers: {
+              access_token: localStorage.getItem("accessToken"),
+            },
+          }
+        );
+        const data = response.data.data;
+        console.log(data);
+        setListCustomer(data);
+        setDisplayedArray(data);
+      } catch (error) {
+        const errorMssg = error.response?.data?.message || error.message;
+        console.error("Error:", errorMssg);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const [displayedArray, setDisplayedArray] = useState(listCustomer); //setDisplayed will be used in search
 
   const [pickedCustomer, setPickedCustomer] = useState(null);
 
@@ -53,9 +83,9 @@ const FormPilihPelanggan = () => {
     setIsDialogOpenConfirmCustomerPass(false);
     const data =
       "https://placehold.co/290x290?text=Hello+" +
-      pickedCustomer?.name.split(" ")[0];
+      pickedCustomer?.namacustomer.split(" ")[0];
     localStorage.setItem(
-      "savedImage-" + pickedCustomer?.noCustomer,
+      "savedImage-" + pickedCustomer?.noidentitas,
       JSON.stringify(data)
     );
     navigate("/form/gadai/pelanggan", {
@@ -109,15 +139,18 @@ const FormPilihPelanggan = () => {
             ></Icon>
           </IconButton>
         </Stack>
-        {displayedArray.map((item, index) => (
-          <ItemCustomerForm
-            name={item.name}
-            phoneNumber={item.phoneNumber}
-            noCustomer={item.noCustomer}
-            onClickHandler={() => handleOpenDialogConfirmCustomerPass(item)}
-          />
-        ))}
-
+        {listCustomer ? (
+          displayedArray.map((item, index) => (
+            <ItemCustomerForm
+              name={item.namacustomer}
+              phoneNumber={item.telp}
+              noCustomer={item.noidentitas}
+              onClickHandler={() => handleOpenDialogConfirmCustomerPass(item)}
+            />
+          ))
+        ) : (
+          <p>Belum ada data pelanggan</p>
+        )}
         <div />
       </Stack>
       <Dialog
@@ -189,10 +222,15 @@ const FormPilihPelanggan = () => {
         </DialogContentText>
         <DialogContent className="border border-neutral-100 rounded-lg overflow-hidden p-0 h-[120px] font-sans">
           <Stack direction="row" gap={"10px"}>
-            <div className="h-[120px] w-[120px] bg-red-600 rounded-[4px] flex-shrink-0"></div>
+            <div className="h-[120px] w-[120px] bg-red-600 rounded-[4px] flex-shrink-0">
+              <img
+                src={getImageFromAPI(pickedCustomer?.foto)}
+                alt="foto Pelanggan"
+              />
+            </div>
             <Stack className="font-normal text-xs leading-[14px] text-black items-start py-[7px] mr-1 w-full overflow-hidden justify-center">
               <p className="font-bold text-sm leading-[18px] w-full overflow-auto overflow-ellipsis max-h-[52px]">
-                {pickedCustomer?.name}
+                {pickedCustomer?.namacustomer}
               </p>
               <Stack
                 className="px-0.5 py-[10px]"
@@ -202,7 +240,7 @@ const FormPilihPelanggan = () => {
                 gap={"4px"}
               >
                 <Icon icon={"heroicons-outline:phone"} fontSize={"16px"} />
-                <p>+{pickedCustomer?.phoneNumber}</p>
+                <p>+{pickedCustomer?.telp}</p>
               </Stack>
               <Stack
                 gap={"4px"}
@@ -215,7 +253,7 @@ const FormPilihPelanggan = () => {
                   icon={"heroicons-outline:identification"}
                   fontSize={"16px"}
                 />
-                <p>{pickedCustomer?.noCustomer}</p>
+                <p>{pickedCustomer?.noidentitas}</p>
               </Stack>
             </Stack>
           </Stack>

@@ -1,22 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AppBarPlain from "../../components/appBarPlain";
 import ProgressIndicatorDetail from "../../components/detail/progressIndicatorDetail";
 import { Button, Paper, Stack } from "@mui/material";
 import IsiFormDefault from "../../components/form/isiDefaultForm";
 import PhotoCameraForm from "../../components/form/photoCameraForm";
+import axios from "axios";
+import { urlAPI } from "../../variableGlobal";
 
 function DetailDataPelangganPerpanjang() {
   const navigation = useNavigate();
   const location = useLocation();
-  const dataPelanggan = location?.state?.dataDetailPelangganGadai || null;
+  const [dataPelanggan, setDataPelanggan] = useState(
+    location?.state?.dataDetailPelangganGadai || null
+  );
+
+  const dataUUID = location?.state?.uuidDetail || null;
+
   const isFormComplete = true;
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.post(
+          urlAPI + "perpanjang/detail",
+          {
+            uuidgadaidtl: dataUUID,
+          },
+          {
+            headers: {
+              access_token: localStorage.getItem("accessToken"),
+            },
+          }
+        );
+        console.log(response.data.data);
+        setDataPelanggan(response.data.data);
+      } catch {}
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSetCustomerData = () => {
     navigation("/detail/perpanjang/transaksi", {
       state: { dataDetailPelangganGadai: dataPelanggan },
     });
   };
+
   return (
     <>
       <div className="w-screen h-screen flex flex-col justify-start items-start  font-inter">
@@ -44,7 +73,7 @@ function DetailDataPelangganPerpanjang() {
               enabled={false}
               title={"Alamat Tinggal"}
               isRequired={true}
-              valueForm={dataPelanggan?.address || undefined}
+              valueForm={dataPelanggan?.alamat || undefined}
             />
             <IsiFormDefault
               enabled={false}

@@ -12,10 +12,11 @@ import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { urlAPI } from "../../variableGlobal";
-import { pemisahRibuan } from "../../functionGlobal";
+import { getImageFromAPI, pemisahRibuan } from "../../functionGlobal";
 
 const Dashboard = (props) => {
   const navigate = useNavigate();
+  const lokasi = JSON.parse(localStorage.getItem("lokasi"));
 
   const [activeTab, setActiveTab] = useState("Rangkuman");
 
@@ -131,8 +132,6 @@ const Dashboard = (props) => {
     }
   }, [isMenuOpen]);
 
-  const lokasi = JSON.parse(localStorage.getItem("lokasi"));
-
   useEffect(() => {
     (async () => {
       try {
@@ -144,29 +143,16 @@ const Dashboard = (props) => {
         });
         const data = response.data.data;
         //GET SET DATA USER-PROFILE-IMAGE
-        const getImage =
-          data.gambar === undefined
-            ? null
-            : await axios
-                .get(
-                  data?.gambar,
-
-                  {
-                    headers: {
-                      access_token: localStorage.getItem("accessToken"),
-                    },
-                    responseType: "blob",
-                  }
-                )
-                .then((res) => {
-                  const imageObjectURL = URL.createObjectURL(res.data);
-                  setSavedImage(imageObjectURL);
-                  return imageObjectURL;
-                });
+        let getImage = null;
+        if (data.gambar !== undefined) {
+          getImage = await getImageFromAPI(data.gambar);
+        }
+        setSavedImage(getImage);
         const dataProfile = {
           uuiduser: data.uuiduser,
           name: data.username,
           email: data.email,
+          emailperusahaan: data.emailperusahaan,
           phone: data.hp,
           password: "",
           picture: getImage ?? "",
@@ -174,7 +160,7 @@ const Dashboard = (props) => {
         localStorage.setItem("dataProfile", JSON.stringify(dataProfile));
 
         //GET SET DATA RANGKUMAN GADAI
-        const dataTransaksiTerakhir = await axios.post(
+        const dataRangkuman = await axios.post(
           urlAPI + "get-rangkuman-gadai",
           {
             uuidlokasi: lokasi.uuidLokasi,
@@ -185,7 +171,7 @@ const Dashboard = (props) => {
             },
           }
         );
-        const dataTransaksi = dataTransaksiTerakhir.data.data;
+        const dataTransaksi = dataRangkuman.data.data;
         setDataRangkuman(dataTransaksi);
         //GET SET DATA GRAFIK
       } catch (error) {
