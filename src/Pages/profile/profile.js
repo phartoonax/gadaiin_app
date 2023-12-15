@@ -164,6 +164,7 @@ function Profile() {
 
   function handleSimpanButton() {
     localStorage.setItem("savedImage-Profile", JSON.stringify(savedImage));
+    
     localStorage.removeItem("savedImage-ProfileFromCamera");
     navigate(-1);
   }
