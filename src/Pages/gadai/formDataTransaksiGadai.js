@@ -11,6 +11,8 @@ import IsiBungaForm from "../../components/form/isiBungaForm";
 import { useEffect } from "react";
 import { pemisahRibuan } from "../../functionGlobal";
 import { useNavigate } from "react-router-dom";
+import { Axios } from "axios";
+import { urlAPI } from "../../variableGlobal";
 
 /**
  * @description Komponen ini digunakan untuk mengelola data transaksi gadai. Pengguna dapat memasukkan data transaksi, seperti jaminan, kelengkapan, nomor seri, bunga, nilai pinjaman, dan foto barang. Data ini kemudian disimpan di localStorage dan dapat dihapus jika diperlukan. Komponen ini juga mengelola navigasi dan konfirmasi pengiriman data.
@@ -50,13 +52,28 @@ const FormDataTransaksiGadai = () => {
   const [isDialogOpenConfirmationPass, setIsDialogOpenConfirmationPass] =
     useState(false);
 
-  const defaultChipValues = [
-    "Surat Keterangan Hak Milik",
-    "BPKB",
-    "STNK",
-    "Kardus",
-    "Charger",
-  ];
+  const [defaultChipValues, setDefaultChipValues] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await Axios.post(
+          urlAPI + "gadai/kelengkapan",
+     
+          {
+            headers: {
+              access_token: localStorage.getItem("accessToken"),
+            },
+          }
+        );
+        const data = response.data.data;
+        console.log(data);
+      } catch (error) {
+        const errorMssg = error.response?.data?.message || error.message;
+        console.error("Error:", errorMssg);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     // Calculate nominal value
