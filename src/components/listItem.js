@@ -9,6 +9,8 @@ import {
   getCardBorderColor,
   pemisahRibuan,
   hitungBunga,
+  formatTanggal,
+  convertLamaGadai,
 } from "../functionGlobal";
 
 /**
@@ -32,10 +34,10 @@ const ListItem = ({ data, usedIn }) => {
     >
       <div className="px-4 py-2">
         <Stack direction="row" spacing={2} justifyContent="space-between">
-          <p className="font-bold text-base">{data.kodegadai}</p>
+          <p className="font-bold text-base">{data.kode}</p>
           <Stack direction="row">
             <div className="rounded-lg bg-neutral-100 text-neutral-10 px-2.5 text-sm font-bold flex items-center">
-              {data.lokasi}
+              {data.kodelokasi}
             </div>
             <IconButton
               sx={{ padding: 0, marginRight: "-8px" }}
@@ -82,7 +84,7 @@ pb-1"
             className={`${getTextIconColor(status)} } mr-1`}
           />
           <p className="text-sm font-normal">
-            Rp{pemisahRibuan(data.nilaipinjaman)} ({data.bunga} | Rp
+            Rp{pemisahRibuan(data.nilaipinjaman)} ({data.bunga}% | Rp
             {pemisahRibuan(hitungBunga(data.nilaipinjaman, data.bunga))})
           </p>
         </Stack>
@@ -95,7 +97,9 @@ pb-1"
             icon={"heroicons-outline:clock"}
             className={`${getTextIconColor(status)} } mr-1`}
           ></Icon>
-          <p className="text-sm font-normal">{data.lamagadai}</p>
+          <p className="text-sm font-normal">
+            {convertLamaGadai(data.lamagadai)}
+          </p>
         </Stack>
       </div>
       <Stack
@@ -121,7 +125,9 @@ pb-1"
           className=" pl-4 pt-1 pb-2 text-start"
         >
           <div className="text-xs font-normal text-neutral-70">Tgl Kredit</div>
-          <div className="text-sm font-bold">{data.tglkredit}</div>
+          <div className="text-sm font-bold">
+            {formatTanggal(data.tglkredit)}
+          </div>
         </Stack>
         <Stack
           direction="column"
@@ -129,7 +135,9 @@ pb-1"
           className=" pr-4 pt-1 pb-2 text-end"
         >
           <div className="text-xs font-normal text-neutral-70">Jatuh Tempo</div>
-          <div className="text-sm font-bold">{data.tgljatuhtempo}</div>
+          <div className="text-sm font-bold">
+            {formatTanggal(data.tgljatuhtempo)}
+          </div>
         </Stack>
       </Stack>
       <BotDrawerOpsi

@@ -16,32 +16,13 @@ import { urlAPI } from "../../variableGlobal";
 function ListGadai() {
   const [arrayisi, setArrayisi] = useState(null);
   const [filteredArray, setFilteredArray] = useState();
+  const [paramTambahan, setParamTambahan] = useState({});
   const lokasi = JSON.parse(localStorage.getItem("lokasi"));
   const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
-      try {
-        const response = await axios.post(
-          urlAPI + "gadai/search",
-          {
-            uuidlokasi: lokasi.uuidLokasi,
-          },
-          {
-            headers: {
-              access_token: localStorage.getItem("accessToken"),
-            },
-          }
-        );
-        const data = response.data.data;
-        console.log(data);
-        setArrayisi(data);
-        setFilteredArray(data);
-      } catch (error) {
-        const errorMssg = error.response?.data?.message || error.message;
-
-        console.error("Error:", errorMssg);
-      }
+      searchGadai();
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -141,6 +122,39 @@ function ListGadai() {
     navigate("/main", { replace: true });
   }
 
+  const searchGadai = async () => {
+    try {
+      const response = await axios.post(
+        urlAPI + "gadai/search",
+        {
+          uuidlokasi: lokasi.uuidLokasi,
+          ...paramTambahan,
+        },
+        {
+          headers: {
+            access_token: localStorage.getItem("accessToken"),
+          },
+        }
+      );
+      const data = response.data.data;
+      console.log(data);
+      setArrayisi(data);
+      setFilteredArray(data);
+    } catch (error) {
+      const errorMssg = error.response?.data?.message || error.message;
+      console.error("Error:", errorMssg);
+      return null;
+    }
+  };
+
+  //? CARI CARA SUPAYA BISA SEARCH DAN FILTER BERSAMAAN
+  function cariGadai(keyword) {
+    var tempParam = paramTambahan;
+    tempParam.search = keyword;
+    setParamTambahan(tempParam);
+    searchGadai(tempParam);
+  }
+
   return (
     <>
       <div className="font-inter w-screen h-screen flex flex-col justify-start items-start">
@@ -148,6 +162,10 @@ function ListGadai() {
           <AppBarWithSearch
             placeholder={"Cari Data Gadai"}
             handlerBackButton={handleBackButton}
+            onSearchChange={cariGadai}
+            onClearSearch={() => {
+              searchGadai(lokasi.uuidLokasi);
+            }}
           />
         </div>
         <div className="bg-white pt-[58px] w-full">

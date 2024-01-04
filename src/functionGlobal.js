@@ -17,8 +17,11 @@ import { urlAPI } from "./variableGlobal";
 const getTextIconColor = (status) => {
   switch (status) {
     case "Aktif":
+    case "Gadai":
     case "Perpanjang":
       return "text-success-Main";
+    case "Batal Tebus":
+    case "Batal Perpanjang":
     case "Batal":
       return "text-danger-Main";
     case "Tebus":
@@ -42,8 +45,11 @@ const getTextIconColor = (status) => {
 const getDateColor = (status) => {
   switch (status) {
     case "Aktif":
+    case "Gadai":
     case "Perpanjang":
       return "bg-success-Surface";
+    case "Batal Tebus":
+    case "Batal Perpanjang":
     case "Batal":
       return "bg-danger-Surface";
     case "Tebus":
@@ -67,7 +73,11 @@ const getDateColor = (status) => {
 const getCardBorderColor = (status) => {
   switch (status) {
     case "Aktif":
+    case "Gadai":
+    case "Perpanjang":
       return "border-t-success-Main";
+    case "Batal Tebus":
+    case "Batal Perpanjang":
     case "Batal":
       return "border-t-danger-Main";
     case "Tebus":
@@ -91,8 +101,11 @@ const getCardBorderColor = (status) => {
 const getCardGradientColor = (status) => {
   switch (status) {
     case "Aktif":
+    case "Gadai":
     case "Perpanjang":
       return "linear-gradient(88.36deg, rgba(30, 191, 101, 0.5) -5.28%, rgba(30, 191, 101, 0) 10.98%),linear-gradient(0deg, #FFFFFF, #FFFFFF);";
+    case "Batal Tebus":
+    case "Batal Perpanjang":
     case "Batal":
       return "linear-gradient(88.36deg, rgba(210, 28, 28, 0.5) -5.28%, rgba(210, 28, 28, 0) 10.98%),linear-gradient(0deg, #FFFFFF, #FFFFFF);";
     case "Tebus":
@@ -116,8 +129,11 @@ const getCardGradientColor = (status) => {
 const getChipsBorderColor = (status) => {
   switch (status) {
     case "Aktif":
+    case "Gadai":
     case "Perpanjang":
       return "border-success-Main";
+    case "Batal Tebus":
+    case "Batal Perpanjang":
     case "Batal":
       return "border-danger-Main";
     case "Tebus":
@@ -371,6 +387,13 @@ async function getImageFromAPI(urlImage) {
   }
 }
 
+/**
+ * @description
+ * @author Henry
+ * @date 04/01/2024 - 4:39:14 PM
+ * @param {*} lamaGadai
+ * @return {*}
+ */
 const convertLamaGadai = (lamaGadai) => {
   const daysInYear = 365;
   const daysInMonth = 30;
@@ -390,6 +413,22 @@ const convertLamaGadai = (lamaGadai) => {
   }
 };
 
+/**
+ * @description
+ * @author Henry
+ * @date 04/01/2024 - 4:40:32 PM
+ * @param {*} tanggal
+ * @return {*}
+ */
+function formatTanggal(tanggal) {
+  const date = new Date(tanggal);
+  return date.toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
+
 export {
   getDateColor,
   getTextIconColor,
@@ -402,4 +441,5 @@ export {
   generateRandomDataCustomer,
   getImageFromAPI,
   convertLamaGadai,
+  formatTanggal,
 };

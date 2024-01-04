@@ -33,7 +33,7 @@ const ItemMiniHeaderHistory = ({ data }) => {
           <p className="font-bold text-base">{data.idtransaksi}</p>
           <Stack direction="row">
             <div className="flex items-center justify-center rounded-lg bg-neutral-100 text-sm text-neutral-10 px-2.5">
-              {data.lokasi}
+              {data.kodelokasi}
             </div>
           </Stack>
         </Stack>

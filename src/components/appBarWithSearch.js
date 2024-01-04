@@ -27,11 +27,19 @@ function AppBarWithSearch({
   const handleSearchInputChange = (event) => {
     setSearchInput(event.target.value);
     setIsSearchFilled(event.target.value !== "");
+
+    if (onSearchChange) {
+      onSearchChange(event.target.value);
+    }
   };
 
   const handleClearSearch = () => {
     setSearchInput("");
     setIsSearchFilled(false);
+
+    if (onClearSearch) {
+      onClearSearch();
+    }
   };
 
   const [isInputFocused, setIsInputFocused] = useState(false);

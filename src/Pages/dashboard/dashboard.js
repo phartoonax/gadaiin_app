@@ -104,7 +104,7 @@ const Dashboard = (props) => {
           jenis: item.jenis,
           id: item.kodetrans,
           name: item.namacustomer,
-          value: "Rp " + pemisahRibuan(item.nilaipinjaman),
+          value: "Rp " + pemisahRibuan(item.harga),
           transaksi: getDatenTime(item.tgltrans, item.jam),
           logo: getLogo(item.jenis),
         }));
