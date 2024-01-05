@@ -255,7 +255,7 @@ const Dashboard = (props) => {
                 <img
                   alt=""
                   src={savedImage ?? DefaultPerson}
-                  className={`h-[50px] w-[50px] rounded-full`}
+                  className={`h-[50px] w-[50px] rounded-full bg-neutral-10`}
                   onClick={() => {
                     navigate("/profile");
                     localStorage.setItem(

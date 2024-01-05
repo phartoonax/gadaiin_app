@@ -1,11 +1,10 @@
 import BotNavbarNfab from "../../components/botNavBarnFAB";
 import AppBarWithSearch from "../../components/appBarWithSearch";
 import { useNavigate } from "react-router-dom";
-import { generateRandomDataGadai } from "../../functionGlobal";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ListItem from "../../components/listItem";
-
-const arrayisi = generateRandomDataGadai("Perpanjangan", 6);
+import axios from "axios";
+import { urlAPI } from "../../variableGlobal";
 
 /**
  * @description Komponen untuk menampilkan daftar perpanjangan gadai. Komponen ini mengelola filter dan pengurutan data, serta navigasi ke halaman scanner QR.
@@ -14,7 +13,17 @@ const arrayisi = generateRandomDataGadai("Perpanjangan", 6);
  * @date 27/11/2023 - 11:30:00 PM
  */
 const ListPerpanjangan = () => {
+  const [arrayisi, setArrayisi] = useState(null);
+  const [paramTambahan, setParamTambahan] = useState({});
   const [filteredArray, setFilteredArray] = useState(arrayisi);
+  const lokasi = JSON.parse(localStorage.getItem("lokasi"));
+
+  useEffect(() => {
+    (async () => {
+      getDataPerpanjangan();
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleFilterChangeFAB = (newArray) => {
     const filtered = arrayisi.filter((item) => {
@@ -93,12 +102,52 @@ const ListPerpanjangan = () => {
   function handleBackButton() {
     navigate("/main", { replace: true });
   }
-  
+
+  const getDataPerpanjangan = async () => {
+    try {
+      const response = await axios.post(
+        urlAPI + "perpanjang/search",
+        {
+          uuidlokasi: lokasi.uuidLokasi,
+          ...paramTambahan,
+        },
+        {
+          headers: {
+            access_token: localStorage.getItem("accessToken"),
+          },
+        }
+      );
+      const data = response.data.data;
+      console.log(data);
+      setArrayisi(data);
+      setFilteredArray(data);
+    } catch (error) {
+      const errorMssg = error.response?.data?.message || error.message;
+      console.error("Error:", errorMssg);
+      return null;
+    }
+  };
+
+  //? CARI CARA SUPAYA BISA SEARCH DAN FILTER BERSAMAAN
+  function searchPerpanjangan(keyword) {
+    var tempParam = paramTambahan;
+    tempParam.search = keyword;
+    setParamTambahan(tempParam);
+    getDataPerpanjangan();
+  }
+
   return (
     <>
       <div className="font-inter w-screen h-screen flex flex-col justify-start items-start">
         <div className="fixed top-0 z-50 w-full">
-          <AppBarWithSearch placeholder={"Cari Data Perpanjangan Gadai"}      handlerBackButton={handleBackButton}/>
+          <AppBarWithSearch
+            placeholder={"Cari Data Perpanjangan Gadai"}
+            handlerBackButton={handleBackButton}
+            onSearchChange={searchPerpanjangan}
+            onClearSearch={() => {
+              searchPerpanjangan();
+            }}
+          />
         </div>
         <div className="bg-white pt-[68px] w-full">
           <BotNavbarNfab
@@ -110,15 +159,19 @@ const ListPerpanjangan = () => {
             status={"Perpanjangan"}
           />
           <div className="mx-4">
-            {filteredArray.map((data, index) => (
-              <div
-                className={`${
-                  index === filteredArray.length - 1 ? "pb-24" : ""
-                }`}
-              >
-                <ListItem data={data} usedIn="Perpanjang" />
-              </div>
-            ))}
+            {filteredArray ? (
+              filteredArray.map((data, index) => (
+                <div
+                  className={`${
+                    index === filteredArray.length - 1 ? "pb-24" : ""
+                  }`}
+                >
+                  <ListItem data={data} usedIn="Perpanjang" />
+                </div>
+              ))
+            ) : (
+              <p>No items to display.</p>
+            )}
           </div>
         </div>
       </div>

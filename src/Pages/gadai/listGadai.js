@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import BotNavbarNfab from "../../components/botNavBarnFAB";
 import AppBarWithSearch from "../../components/appBarWithSearch";
 import ListItem from "../../components/listItem";
-import { generateRandomDataGadai } from "../../functionGlobal";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { urlAPI } from "../../variableGlobal";
@@ -14,7 +13,7 @@ import { urlAPI } from "../../variableGlobal";
  * @date 27/11/2023 - 11:30:00 PM
  */
 function ListGadai() {
-  const [arrayisi, setArrayisi] = useState(null);
+  const [arrayisi, setArrayisi] = useState(null); //! POTENTIALLY REDUNDANT. REMOVE WHEN CONFIRMED.
   const [filteredArray, setFilteredArray] = useState();
   const [paramTambahan, setParamTambahan] = useState({});
   const lokasi = JSON.parse(localStorage.getItem("lokasi"));
@@ -22,7 +21,7 @@ function ListGadai() {
 
   useEffect(() => {
     (async () => {
-      searchGadai();
+      getDataGadai();
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -122,7 +121,7 @@ function ListGadai() {
     navigate("/main", { replace: true });
   }
 
-  const searchGadai = async () => {
+  const getDataGadai = async () => {
     try {
       const response = await axios.post(
         urlAPI + "gadai/search",
@@ -152,7 +151,7 @@ function ListGadai() {
     var tempParam = paramTambahan;
     tempParam.search = keyword;
     setParamTambahan(tempParam);
-    searchGadai(tempParam);
+    getDataGadai();
   }
 
   return (
@@ -164,7 +163,7 @@ function ListGadai() {
             handlerBackButton={handleBackButton}
             onSearchChange={cariGadai}
             onClearSearch={() => {
-              searchGadai(lokasi.uuidLokasi);
+              cariGadai();
             }}
           />
         </div>

@@ -49,7 +49,7 @@ const PhotoCameraForm = ({
         <div className="px-4 pt-4 pb-[23px] w-full rounded-md bg-neutral-20">
           <Stack alignItems={"center"}>
             {savedImage && (
-              <Box className="h-[120px] w-[120px] rounded-[4px] bg-green-500 overflow-hidden">
+              <Box className="h-[120px] w-[120px] rounded-[4p overflow-hidden flex">
                 <img src={savedImage} alt="captured" />
               </Box>
             )}

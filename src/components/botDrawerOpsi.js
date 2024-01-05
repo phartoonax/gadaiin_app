@@ -51,13 +51,16 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data, usedIn }) => {
     harga: pemisahRibuan(data.harga),
     fotoBarang: JSON.parse(localStorage.getItem("savedImage-Profile")),
   };
+
   let route;
   let options;
   let kataBatal;
+  let varState;
 
   switch (usedIn) {
     case "Perpanjang":
       route = "/detail/perpanjang/pelanggan";
+      varState = "uuidgadaidtl";
       kataBatal = "Apakah anda yakin mau membatalkan perpanjang gadai?";
       options =
         data.status === "Batal"
@@ -66,6 +69,7 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data, usedIn }) => {
       break;
     case "Tebus":
       route = "/detail/tebus/pelanggan";
+      varState = "uuidgadaitebus";
       kataBatal = "Apakah anda yakin mau membatalkan tebus gadai?";
       options =
         data.status === "Batal"
@@ -74,6 +78,7 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data, usedIn }) => {
       break;
     default:
       route = "/detail/gadai/pelanggan";
+      varState = "uuidgadai";
       kataBatal = "Apakah anda yakin mau membatalkan gadai?";
       options =
         data.status === "Aktif"
@@ -90,13 +95,15 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data, usedIn }) => {
   // Unique functions to console.log for each option
   const handleDetailClick = () => {
     console.log("Clicked option: Detail");
+    console.log(data);
     Navigate(route, {
-      state: { dataDetailPelangganGadai: tempPerpanjangData },
+      state: { uuidDetail: data[varState] },
     });
   };
 
   const handleTebusGadaiClick = () => {
     console.log("Clicked option: Tebus Gadai");
+    console.log(data);
     Navigate("/form/tebus/pelanggan", {
       state: { dataPelangganPerpanjang: tempPerpanjangData },
     });
@@ -104,6 +111,7 @@ const BotDrawerOpsi = ({ openDrawer, setOpenDrawer, data, usedIn }) => {
 
   const handlePerpanjangGadaiClick = () => {
     console.log("Clicked option: Perpanjang Gadai");
+    console.log(data);
     Navigate("/form/perpanjang/pelanggan", {
       state: { dataPelangganPerpanjang: tempPerpanjangData },
     });

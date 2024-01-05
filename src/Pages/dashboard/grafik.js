@@ -1,17 +1,53 @@
 import { Icon } from "@iconify/react";
 import Chart from "react-apexcharts";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MonthRangePicker } from "@viniarruda/react-month-range-picker";
 import { Dialog, DialogContent, DialogActions, Button } from "@mui/material";
+import axios from "axios";
+import { urlAPI } from "../../variableGlobal";
 
 const Grafik = (props) => {
+  const lokasi = JSON.parse(localStorage.getItem("lokasi"));
   const [dialogOpen, setDialogOpen] = useState(false);
   const [startDate, setStartDate] = useState("Jan 2023");
   const [endDate, setEndDate] = useState("Des 2023");
+  const [dataGrafikNilai, setDataGrafikNilai] = useState([]);
+  const [dataGrafikTrans, setDataGrafikTrans] = useState([]);
+  const [dataXAxis, setDataXAxis] = useState([
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ]);
 
   const chartRef = useRef(null);
 
+  useEffect(() => {
+    (async () => {
+      resetDates();
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleRangeSelect = (params) => {
+    //? GET DATE FROM MONTH PICKER -> GET DATA FROM API WITH DATE => SET DATE TO CHART
+    getDataGrafik(
+      params.startMonth + "/" + params.startYear,
+      params.endMonth + "/" + params.endYear
+    );
+
+    setDialogOpen(false);
+  };
+
+  const handleChartChange = (param, dataGrafikFull) => {
     const getMonth = (month) => {
       // eslint-disable-next-line default-case
       switch (month) {
@@ -41,28 +77,78 @@ const Grafik = (props) => {
           return "Dec";
       }
     };
-    setStartDate(getMonth(params.startMonth) + " " + params.startYear);
-    setEndDate(getMonth(params.endMonth) + " " + params.endYear);
+    setStartDate(getMonth(param.startMonth) + " " + param.startYear);
+    setEndDate(getMonth(param.endMonth) + " " + param.endYear);
 
-    const startMonthIndex = params.startMonth;
-    const endMonthIndex = params.endMonth;
+    const startMonthIndex = param.startMonth;
+    const endMonthIndex = param.endMonth;
 
     chartRef.current.chart.zoomX(startMonthIndex, endMonthIndex);
 
-    console.log("Start Month: " + startDate + ", End Month: " + endDate);
-    closeDialog();
-  };
-  const openDialog = () => {
-    setDialogOpen(true);
-  };
+    const dataGrafikTempNilai = dataGrafikFull.map((item) => item.nilai);
+    const dataGrafikTempJmlh = dataGrafikFull.map((item) => item.jumlahtrans);
+    const dataXAxis = dataGrafikFull.map((item) => getMonth(item.bulan));
+    const dataGrafik = [
+      {
+        name: "Nilai Gadai",
+        data: dataGrafikTempNilai,
+      },
+    ];
+    setDataGrafikTrans(dataGrafikTempJmlh);
+    setDataGrafikNilai(dataGrafik);
+    setDataXAxis(dataXAxis);
 
-  const closeDialog = () => {
-    setDialogOpen(false);
+    console.log("From changer: " + dataGrafik);
   };
 
   const resetDates = () => {
-    setStartDate("Jan 2023");
-    setEndDate("Des 2023");
+    const currentDate = new Date();
+    const oneYearAgo = new Date();
+
+    oneYearAgo.setMonth(currentDate.getMonth() - 11);
+
+    const currentMonth = ("0" + (currentDate.getMonth() + 1)).slice(-2);
+    const currentYear = currentDate.getFullYear();
+
+    const oneYearAgoMonth = ("0" + (oneYearAgo.getMonth() + 1)).slice(-2);
+    const oneYearAgoYear = oneYearAgo.getFullYear();
+
+    const startDate = oneYearAgoMonth + "/" + oneYearAgoYear;
+    const endDate = currentMonth + "/" + currentYear;
+
+    getDataGrafik(startDate, endDate);
+  };
+
+  const getDataGrafik = async (tanggalStart, tanggalEnd) => {
+    try {
+      const response = await axios.post(
+        urlAPI + "get-data-grafik",
+        {
+          uuidlokasi: lokasi.uuidLokasi,
+          bulantahunbawah: tanggalStart,
+          bulantahunatas: tanggalEnd,
+        },
+        {
+          headers: {
+            access_token: localStorage.getItem("accessToken"),
+          },
+        }
+      );
+      const data = response.data.data;
+      console.log(data);
+
+      const rangeBulan = {
+        startMonth: data[0].bulan,
+        startYear: data[0].tahun,
+        endMonth: data[data.length - 1].bulan,
+        endYear: data[data.length - 1].tahun,
+      };
+      handleChartChange(rangeBulan, data);
+    } catch (error) {
+      const errorMssg = error.response?.data?.message || error.message;
+      console.error("Error:", errorMssg);
+      return null;
+    }
   };
 
   return (
@@ -71,9 +157,9 @@ const Grafik = (props) => {
         <div className="block mx-4 mt-4 w-full">
           <div
             className="rounded-lg border border-neutral-40  mb-4 px-4 py-3 flex flex-row justify-between items-start max-w-full bg-neutral-10"
-            onClick={openDialog}
+            onClick={() => setDialogOpen(true)}
           >
-            <p className="text-neutral-100 text-sm">
+            <p className="text-neutral-100 text-sm font-normal">
               {startDate + " - " + endDate}
             </p>
             <Icon
@@ -82,12 +168,12 @@ const Grafik = (props) => {
               style={{ fontSize: "24px" }}
             />
           </div>
-          <Dialog open={dialogOpen} onClose={closeDialog}>
+          <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
             <DialogContent>
               <MonthRangePicker onRangeSelect={handleRangeSelect} />
             </DialogContent>
             <DialogActions>
-              <Button onClick={closeDialog}>Close</Button>
+              <Button onClick={() => setDialogOpen(false)}>Close</Button>
             </DialogActions>
           </Dialog>
           <Chart
@@ -98,6 +184,25 @@ const Grafik = (props) => {
               stroke: { curve: "smooth", lineCap: "round", width: 1 },
               dataLabels: {
                 enabled: false,
+              },
+              tooltip: {
+                custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+                  var nilaiInJuta =
+                    series[seriesIndex][dataPointIndex] / 1000000;
+                  return (
+                    '<div class="arrow_box" style="padding: 6px 10px;     font-size: 12px;line-height: 16px; font-weight: 700;">' +
+                    "<span>" +
+                    nilaiInJuta +
+                    " Jt</span><br/>" +
+                    "<span>" +
+                    dataGrafikTrans[dataPointIndex] +
+                    " Trx</span>" +
+                    "</div>"
+                  );
+                },
+              },
+              noData: {
+                text: "Loading...",
               },
               chart: {
                 events: {
@@ -116,22 +221,30 @@ const Grafik = (props) => {
               },
               xaxis: {
                 min: 1,
-                max: 12,
-
-                categories: [
-                  "Jan",
-                  "Feb",
-                  "Mar",
-                  "Apr",
-                  "May",
-                  "Jun",
-                  "Jul",
-                  "Aug",
-                  "Sep",
-                  "Oct",
-                  "Nov",
-                  "Dec",
-                ],
+                max: dataXAxis.length,
+                categories: dataXAxis,
+                labels: {
+                  style: {
+                    colors: "#1F2933",
+                    fontFamily: "Inter, sans-serif",
+                    fontSize: "12px",
+                    fontWeight: 700,
+                  },
+                },
+              },
+              yaxis: {
+                labels: {
+                  formatter: function (value) {
+                    var nilaiInJuta = value / 1000000;
+                    return nilaiInJuta + " Jt";
+                  },
+                  style: {
+                    colors: "#1F2933",
+                    fontFamily: "Inter, sans-serif",
+                    fontSize: "12px",
+                    fontWeight: 700,
+                  },
+                },
               },
               fill: {
                 type: "gradient",
@@ -145,12 +258,7 @@ const Grafik = (props) => {
               },
               colors: ["#00A9D1"],
             }}
-            series={[
-              {
-                name: "test data",
-                data: [30, 40, 91, 50, 49, 125, 60, 70, 35, 74, 25, 71, 76],
-              },
-            ]}
+            series={dataGrafikNilai}
           />
         </div>
       </div>
